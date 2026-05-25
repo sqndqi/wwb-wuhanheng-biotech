@@ -1,69 +1,78 @@
 const products = [
   {
-    name: "GLP-class metabolic research controls",
+    name: "Prescription pharmaceutical supply",
+    category: "pharma",
+    summary: "Credential-gated pharmaceutical supply line for verified clinics, pharmacies, and wholesale buyers.",
+    tags: ["License required", "Prescription review", "No open checkout"],
+    code: "RX",
+    format: "Product list after approval",
+    price: "Released after verification",
+  },
+  {
+    name: "GLP-class metabolic products",
     category: "metabolic",
-    summary: "Metabolic assay reference programs sourced from the May 2026 internal price files.",
-    tags: ["Verification", "COA", "Cold-chain review"],
+    summary: "Metabolic product family handled through account approval, paperwork review, and lane screening.",
+    tags: ["Verification", "Prescription review", "Cold-chain review"],
     code: "GLP",
     format: "Lyophilized vial sets",
-    price: "Verified quote only",
+    price: "Released after verification",
   },
   {
-    name: "Growth-factor peptide research line",
+    name: "Peptide supply line",
     category: "peptide",
-    summary: "Restricted research peptide family with batch identity and packaging documentation.",
-    tags: ["Restricted", "Batch docs", "Institutional"],
-    code: "GFP",
+    summary: "Peptide catalog access for verified accounts with batch identity and packaging documentation.",
+    tags: ["License required", "Batch docs", "COA"],
+    code: "PEP",
     format: "Multiple vial configurations",
-    price: "Verified quote only",
+    price: "Released after verification",
   },
   {
-    name: "Regenerative and tissue-repair research line",
+    name: "Regenerative peptide line",
     category: "regenerative",
-    summary: "Peptide and blend programs for qualified R&D teams and method-development groups.",
-    tags: ["Research use", "Blend review", "COA"],
-    code: "RTR",
+    summary: "Regenerative and tissue-support peptide categories reviewed for authorized buyers only.",
+    tags: ["Credential review", "Blend review", "COA"],
+    code: "REG",
     format: "Single and blend vial sets",
-    price: "Verified quote only",
+    price: "Released after verification",
   },
   {
-    name: "Neuro and longevity assay materials",
+    name: "Specialty peptide line",
     category: "peptide",
-    summary: "Specialty research materials with documentation review before any quotation.",
-    tags: ["Assay support", "Screened", "No consumer sales"],
-    code: "NLA",
-    format: "Research vial programs",
-    price: "Verified quote only",
+    summary: "Specialty peptide categories with document review before availability and pricing are released.",
+    tags: ["Screened", "Restricted", "Account approval"],
+    code: "SPC",
+    format: "Vial programs",
+    price: "Released after verification",
   },
   {
-    name: "Endocrine assay controls",
+    name: "Endocrine and hormone line",
     category: "endocrine",
-    summary: "Hormone-related assay controls handled through stricter destination and buyer screening.",
-    tags: ["Extra review", "Export screen", "COA"],
-    code: "EAC",
-    format: "Assay-control sets",
-    price: "Restricted",
+    summary: "Endocrine and hormone-related products handled through stricter prescription and destination screening.",
+    tags: ["Extra review", "Prescription required", "Export screen"],
+    code: "END",
+    format: "Controlled account access",
+    price: "Restricted release",
   },
   {
-    name: "Copper peptide and cosmetic research line",
+    name: "Aesthetic and cosmetic peptide line",
     category: "regenerative",
-    summary: "Cosmetic and dermatology research materials with lot-level documentation requests.",
+    summary: "Aesthetic, cosmetic, and dermatology peptide categories with lot-level documentation requests.",
     tags: ["Lot docs", "Packaging review", "QC"],
-    code: "CPC",
+    code: "AEX",
     format: "Vial and bulk review",
-    price: "Verified quote only",
+    price: "Released after verification",
   },
   {
     name: "Custom vialing service",
     category: "vialing",
-    summary: "Configurable vialing, labeling, and packaging programs for qualified buyers.",
+    summary: "Configurable vialing, labeling, and packaging programs for approved buyer accounts.",
     tags: ["Custom", "Batch", "Labeling"],
     code: "CV",
     format: "Private-label packaging",
     price: "Project quote",
   },
   {
-    name: "Raw powder partnership sourcing",
+    name: "Wholesale raw-material sourcing",
     category: "partner",
     summary: "Partner-sourced raw materials with identity, destination, and documentation screening.",
     tags: ["Partner", "Screened", "Raw material"],
@@ -74,7 +83,7 @@ const products = [
   {
     name: "Analytical paperwork pack",
     category: "partner",
-    summary: "COA, test method, traceability, and packaging details assembled on request.",
+    summary: "COA, test method, traceability, prescription, and packaging details assembled on request.",
     tags: ["Docs", "QA"],
     code: "AP",
     format: "PDF documentation bundle",
@@ -90,9 +99,9 @@ const products = [
     price: "Partner quote",
   },
   {
-    name: "Distribution onboarding file",
+    name: "Licensed distribution onboarding",
     category: "partner",
-    summary: "Qualification flow for distributors, institutions, and procurement teams.",
+    summary: "Qualification flow for distributors, pharmacies, clinics, institutions, and procurement teams.",
     tags: ["B2B", "Review", "Compliance"],
     code: "DO",
     format: "Buyer profile review",
@@ -161,7 +170,7 @@ function renderProducts() {
               ${product.tags.map((tag) => `<span class="pill">${tag}</span>`).join("")}
             </div>
             <button class="button secondary" type="button" data-quote="${product.name}">
-              Add to quote file
+              Add to verification file
             </button>
           </div>
         </article>
@@ -199,22 +208,22 @@ document.querySelector("#quoteButton").addEventListener("click", () => {
   const target = document.querySelector("#contact");
   target.scrollIntoView({ behavior: "smooth" });
   formNote.textContent = quoteItems.size
-    ? `${quoteItems.size} catalog program(s) selected. Add your company details before sending.`
-    : "Select catalog programs, then add your company details.";
+    ? `${quoteItems.size} supply line(s) selected. Add license, prescription, or buyer details before sending.`
+    : "Select supply lines, then add your verification details.";
 });
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   formNote.textContent =
-    "Inquiry prepared locally. Connect this form to email or a backend before publishing.";
+    "Verification request prepared locally. Connect this form to email or a secure backend before accepting documents.";
 });
 
 function updateRequestField() {
   const selected = Array.from(quoteItems);
   const currentValue = requestField.value.trim();
-  if (!selected.length || (currentValue && !currentValue.startsWith("Selected programs:"))) return;
+  if (!selected.length || (currentValue && !currentValue.startsWith("Selected supply lines:"))) return;
 
-  requestField.value = `Selected programs:\n${selected.map((item) => `- ${item}`).join("\n")}\n\nCompany:\nDestination country:\nIntended research category:`;
+  requestField.value = `Selected supply lines:\n${selected.map((item) => `- ${item}`).join("\n")}\n\nCompany:\nDestination country:\nAccount type:\nLicense or prescription details:`;
 }
 
 renderProducts();
