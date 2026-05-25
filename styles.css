@@ -385,37 +385,37 @@ p {
 .product-visual.image-pharma {
   background:
     linear-gradient(135deg, rgba(36, 75, 111, 0.78), rgba(24, 32, 36, 0.62)),
-    url("assets/lab-vials.jpg") center / cover no-repeat;
+    url("assets/vials-blue.jpg") center / cover no-repeat;
 }
 
 .product-visual.image-peptide {
   background:
     linear-gradient(135deg, rgba(15, 129, 116, 0.76), rgba(10, 85, 79, 0.62)),
-    url("assets/lab-vials.jpg") center / cover no-repeat;
+    url("assets/vials-lab-table.jpg") center / cover no-repeat;
 }
 
 .product-visual.image-metabolic {
   background:
     linear-gradient(135deg, rgba(201, 136, 45, 0.75), rgba(15, 129, 116, 0.64)),
-    url("assets/lab-vials.jpg") center / cover no-repeat;
+    url("assets/vials-blue.jpg") center / cover no-repeat;
 }
 
 .product-visual.image-regenerative {
   background:
     linear-gradient(135deg, rgba(15, 129, 116, 0.72), rgba(199, 104, 73, 0.62)),
-    url("assets/lab-vials.jpg") center / cover no-repeat;
+    url("assets/vials-pink.jpg") center / cover no-repeat;
 }
 
 .product-visual.image-endocrine {
   background:
     linear-gradient(135deg, rgba(92, 72, 135, 0.72), rgba(24, 32, 36, 0.62)),
-    url("assets/lab-vials.jpg") center / cover no-repeat;
+    url("assets/vials-lab-table.jpg") center / cover no-repeat;
 }
 
 .product-visual.image-vialing {
   background:
     linear-gradient(135deg, rgba(80, 104, 120, 0.74), rgba(10, 85, 79, 0.62)),
-    url("assets/lab-vials.jpg") center / cover no-repeat;
+    url("assets/vials-blue.jpg") center / cover no-repeat;
 }
 
 .product-visual.image-partner {
@@ -506,7 +506,6 @@ p {
 }
 
 .feature-band,
-.split-section,
 .contact-section {
   margin-top: 54px;
 }
@@ -538,21 +537,6 @@ p {
   margin-bottom: 18px;
   color: var(--amber);
   font-weight: 800;
-}
-
-.split-section {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
-  gap: 26px;
-  align-items: start;
-}
-
-.notice-card {
-  padding: 24px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-left: 6px solid var(--amber);
-  border-radius: 8px;
 }
 
 .contact-section {
@@ -624,7 +608,6 @@ p {
 
   .hero,
   .catalog-shell,
-  .split-section,
   .contact-section {
     grid-template-columns: 1fr;
   }

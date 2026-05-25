@@ -141,7 +141,7 @@ const catalogGroups = [
   {
     category: "pharma",
     family: "Prescription pharmaceuticals",
-    format: "Prescription or licensed-buyer access",
+    format: "Account-approved access",
     names: [
       "Sildenafil",
       "Tadalafil",
@@ -260,7 +260,7 @@ const categoryMeta = {
     image: "image-metabolic",
   },
   peptide: {
-    tags: ["License required", "Batch docs", "COA"],
+    tags: ["Account setup", "Batch docs", "COA"],
     image: "image-peptide",
   },
   regenerative: {
@@ -272,7 +272,7 @@ const categoryMeta = {
     image: "image-endocrine",
   },
   pharma: {
-    tags: ["License required", "Prescription review", "No open checkout"],
+    tags: ["Account setup", "Product paperwork", "Supply desk"],
     image: "image-pharma",
   },
   vialing: {
@@ -291,11 +291,11 @@ const products = catalogGroups.flatMap((group) =>
     return {
       name,
       category: group.category,
-      summary: `${group.family} item. Pricing, availability, documentation, and ordering instructions are released only after buyer verification.`,
+      summary: `${group.family} item. Availability, documentation, shipping review, and order terms are handled through direct WWB account onboarding.`,
       tags: meta.tags,
       code: makeCode(name, group.category, index),
       format: group.format,
-      price: "Released after verification",
+      price: "Account-based terms",
       image: meta.image,
     };
   })
@@ -367,7 +367,7 @@ function renderProducts() {
               ${product.tags.map((tag) => `<span class="pill">${tag}</span>`).join("")}
             </div>
             <button class="button secondary" type="button" data-quote="${product.name}">
-              Add to verification file
+              Add to account file
             </button>
           </div>
         </article>
@@ -405,14 +405,14 @@ document.querySelector("#quoteButton").addEventListener("click", () => {
   const target = document.querySelector("#contact");
   target.scrollIntoView({ behavior: "smooth" });
   formNote.textContent = quoteItems.size
-    ? `${quoteItems.size} supply line(s) selected. Add license, prescription, or buyer details before sending.`
-    : "Select supply lines, then add your verification details.";
+    ? `${quoteItems.size} supply line(s) selected. Add account and shipping details before sending.`
+    : "Select supply lines, then add your account details.";
 });
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   formNote.textContent =
-    "Verification request prepared locally. Connect this form to email or a secure backend before accepting documents.";
+    "Account request prepared locally. Connect this form to email or a secure backend before accepting documents.";
 });
 
 function updateRequestField() {
@@ -420,7 +420,7 @@ function updateRequestField() {
   const currentValue = requestField.value.trim();
   if (!selected.length || (currentValue && !currentValue.startsWith("Selected supply lines:"))) return;
 
-  requestField.value = `Selected supply lines:\n${selected.map((item) => `- ${item}`).join("\n")}\n\nCompany:\nDestination country:\nAccount type:\nLicense or prescription details:`;
+  requestField.value = `Selected supply lines:\n${selected.map((item) => `- ${item}`).join("\n")}\n\nCompany:\nDestination country:\nAccount type:\nShipping lane or account notes:`;
 }
 
 renderProducts();
