@@ -72,8 +72,14 @@
           <button class="category-filter" type="button" data-category="peptide">
             Peptide research
           </button>
-          <button class="category-filter" type="button" data-category="standards">
-            Analytical standards
+          <button class="category-filter" type="button" data-category="metabolic">
+            Metabolic controls
+          </button>
+          <button class="category-filter" type="button" data-category="regenerative">
+            Regenerative research
+          </button>
+          <button class="category-filter" type="button" data-category="endocrine">
+            Endocrine assay
           </button>
           <button class="category-filter" type="button" data-category="vialing">
             Vialing programs
@@ -85,7 +91,13 @@
           <div class="sidebar-panel">
             <strong>Latest internal source</strong>
             <span>WWB price files through May 21, 2026</span>
-            <p>Public pricing is withheld until buyer verification is complete.</p>
+            <p>Public pricing is withheld until buyer verification, destination review, and lawful-use screening are complete.</p>
+          </div>
+
+          <div class="sidebar-panel catalog-stats">
+            <strong>Catalog scope</strong>
+            <span>Peptides, assay controls, vialing, raw-material sourcing</span>
+            <span>COA and packaging review available</span>
           </div>
         </aside>
 
@@ -96,6 +108,12 @@
               <h2 id="catalog-title">Available programs</h2>
             </div>
             <a href="#contact">All inquiries</a>
+          </div>
+
+          <div class="catalog-alert">
+            <strong>Pricing policy:</strong>
+            price files are held for verified institutional and business buyers only.
+            Select programs below to build a request file.
           </div>
 
           <div class="product-grid" id="productGrid" aria-live="polite"></div>
@@ -164,7 +182,12 @@
           </label>
           <label>
             Request
-            <textarea name="request" rows="4" placeholder="Company, country, intended research category"></textarea>
+            <textarea
+              id="requestField"
+              name="request"
+              rows="5"
+              placeholder="Company, country, intended research category"
+            ></textarea>
           </label>
           <button class="button primary" type="submit">Prepare inquiry</button>
           <p class="form-note" id="formNote" role="status"></p>

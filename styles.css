@@ -318,6 +318,11 @@ p {
   font-size: 0.9rem;
 }
 
+.catalog-stats span {
+  padding-left: 12px;
+  border-left: 3px solid var(--line);
+}
+
 .catalog-main {
   min-width: 0;
 }
@@ -335,6 +340,21 @@ p {
   font-weight: 800;
 }
 
+.catalog-alert {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border: 1px solid #ecd8b7;
+  border-left: 5px solid var(--amber);
+  border-radius: 8px;
+  color: #705020;
+  background: #fff9ef;
+  line-height: 1.45;
+}
+
+.catalog-alert strong {
+  color: var(--ink);
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -342,7 +362,7 @@ p {
 }
 
 .product-card {
-  min-height: 292px;
+  min-height: 360px;
   display: flex;
   flex-direction: column;
   background: var(--white);
@@ -382,6 +402,36 @@ p {
 .product-body p {
   margin-bottom: 14px;
   font-size: 0.94rem;
+}
+
+.product-specs {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfdfd;
+}
+
+.product-specs div {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.product-specs dt {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.product-specs dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .product-meta {
