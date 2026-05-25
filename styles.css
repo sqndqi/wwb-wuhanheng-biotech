@@ -378,18 +378,65 @@ p {
   place-items: center;
   color: var(--white);
   background:
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.32), transparent 34%),
-    linear-gradient(135deg, var(--teal-dark), var(--blue));
+    linear-gradient(135deg, rgba(10, 85, 79, 0.76), rgba(36, 75, 111, 0.7)),
+    url("assets/lab-vials.jpg") center / cover no-repeat;
+}
+
+.product-visual.image-pharma {
+  background:
+    linear-gradient(135deg, rgba(36, 75, 111, 0.78), rgba(24, 32, 36, 0.62)),
+    url("assets/lab-vials.jpg") center / cover no-repeat;
+}
+
+.product-visual.image-peptide {
+  background:
+    linear-gradient(135deg, rgba(15, 129, 116, 0.76), rgba(10, 85, 79, 0.62)),
+    url("assets/lab-vials.jpg") center / cover no-repeat;
+}
+
+.product-visual.image-metabolic {
+  background:
+    linear-gradient(135deg, rgba(201, 136, 45, 0.75), rgba(15, 129, 116, 0.64)),
+    url("assets/lab-vials.jpg") center / cover no-repeat;
+}
+
+.product-visual.image-regenerative {
+  background:
+    linear-gradient(135deg, rgba(15, 129, 116, 0.72), rgba(199, 104, 73, 0.62)),
+    url("assets/lab-vials.jpg") center / cover no-repeat;
+}
+
+.product-visual.image-endocrine {
+  background:
+    linear-gradient(135deg, rgba(92, 72, 135, 0.72), rgba(24, 32, 36, 0.62)),
+    url("assets/lab-vials.jpg") center / cover no-repeat;
+}
+
+.product-visual.image-vialing {
+  background:
+    linear-gradient(135deg, rgba(80, 104, 120, 0.74), rgba(10, 85, 79, 0.62)),
+    url("assets/lab-vials.jpg") center / cover no-repeat;
+}
+
+.product-visual.image-partner {
+  background:
+    linear-gradient(135deg, rgba(96, 96, 80, 0.78), rgba(36, 75, 111, 0.62)),
+    url("assets/lab-vials.jpg") center / cover no-repeat;
 }
 
 .product-visual span {
-  width: 56px;
-  height: 56px;
+  min-width: 58px;
+  max-width: calc(100% - 24px);
+  min-height: 56px;
   display: grid;
   place-items: center;
   border: 2px solid rgba(255, 255, 255, 0.72);
   border-radius: 8px;
+  padding: 0 10px;
+  background: rgba(24, 32, 36, 0.22);
   font-weight: 800;
+  text-align: center;
+  word-break: break-word;
 }
 
 .product-body {
