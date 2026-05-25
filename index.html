@@ -16,7 +16,7 @@
         <div class="utility-inner">
           <span>Currency: USD</span>
           <span>Pharmaceutical and peptide supply</span>
-          <a href="#contact">Account onboarding</a>
+          <a href="#login">Client login</a>
         </div>
       </div>
 
@@ -41,7 +41,7 @@
         <a href="#catalog">Catalog</a>
         <a href="#quality">Quality</a>
         <a href="#shipping">Shipping</a>
-        <a href="#contact">Contact</a>
+        <a href="#login">Login</a>
       </nav>
     </header>
 
@@ -57,7 +57,7 @@
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#catalog">Browse catalog</a>
-            <a class="button secondary" href="#contact">Request quote</a>
+            <a class="button secondary" href="#login">Client login</a>
           </div>
         </div>
       </section>
@@ -93,7 +93,7 @@
           <div class="sidebar-panel">
             <strong>Latest internal source</strong>
             <span>WWB price files through May 21, 2026</span>
-            <p>Price sheets, order terms, and availability are handled through direct sales contact.</p>
+            <p>Price sheets, order terms, and availability are handled through the direct sales desk.</p>
           </div>
 
           <div class="sidebar-panel catalog-stats">
@@ -110,7 +110,7 @@
               <p class="eyebrow">WWB catalog</p>
               <h2 id="catalog-title">Available supply lines</h2>
             </div>
-            <a href="#contact">All inquiries</a>
+            <a href="#login">Client portal</a>
           </div>
 
           <div class="catalog-toolbar">
@@ -127,7 +127,7 @@
           <div class="catalog-alert">
             <strong>Catalog access:</strong>
             select product lines below to build a quote list. WWB provides availability,
-            documentation, shipping review, and order terms through direct sales contact.
+            documentation, shipping review, and order terms through the direct sales desk.
           </div>
 
           <div class="product-grid" id="productGrid" aria-live="polite"></div>
@@ -144,13 +144,13 @@
         <div class="quality-grid">
           <article>
             <span class="number">01</span>
-            <h3>Account setup</h3>
-            <p>Supply requests are matched to clinics, pharmacies, laboratories, distributors, and procurement teams.</p>
+            <h3>Premium grade</h3>
+            <p>WWB positions its catalog around high-grade materials, controlled packaging, and consistent supply handling.</p>
           </article>
           <article>
             <span class="number">02</span>
             <h3>Product paperwork</h3>
-            <p>COA, batch details, packaging configuration, product lists, and account documents can be reviewed.</p>
+            <p>COA, batch details, packaging configuration, product lists, and account documents are organized for buyers.</p>
           </article>
           <article>
             <span class="number">03</span>
@@ -160,39 +160,32 @@
         </div>
       </section>
 
-      <section class="contact-section" id="contact" aria-labelledby="contact-title">
+      <section class="login-section" id="login" aria-labelledby="login-title">
         <div>
-          <p class="eyebrow">Contact</p>
-          <h2 id="contact-title">Request a WWB quote</h2>
-          <p>Send account type, destination country, and requested product lines.</p>
+          <p class="eyebrow">Client portal</p>
+          <h2 id="login-title">Login to prepare an order request</h2>
+          <p>Use the portal panel to collect selected products and prepare the next order request.</p>
         </div>
-        <form class="contact-form">
-          <label>
-            Name
-            <input type="text" name="name" placeholder="Your name" />
-          </label>
+        <form class="login-form">
           <label>
             Email
-            <input type="email" name="email" placeholder="name@company.com" />
+            <input type="email" name="email" placeholder="client@company.com" />
           </label>
           <label>
-            Request
+            Password
+            <input type="password" name="password" placeholder="Password" />
+          </label>
+          <label>
+            Selected products
             <textarea
               id="requestField"
               name="request"
               rows="5"
-              placeholder="Company, country, product lines, shipping lane, notes"
+              placeholder="Choose catalog products to fill this order request list"
             ></textarea>
           </label>
-          <label>
-            Company reference
-            <input type="text" name="license" placeholder="Company ID, distributor reference, or notes" />
-          </label>
-          <label>
-            Document upload
-            <input type="file" name="documents" />
-          </label>
-          <button class="button primary" type="submit">Prepare quote request</button>
+          <button class="button primary" type="submit">Login</button>
+          <button class="button secondary" type="button" id="prepareOrderButton">Prepare order request</button>
           <p class="form-note" id="formNote" role="status"></p>
         </form>
       </section>

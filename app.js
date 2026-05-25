@@ -306,10 +306,11 @@ const searchInput = document.querySelector("#searchInput");
 const quoteCount = document.querySelector("#quoteCount");
 const catalogCount = document.querySelector("#catalogCount");
 const filters = document.querySelectorAll(".category-filter");
-const form = document.querySelector(".contact-form");
+const form = document.querySelector(".login-form");
 const formNote = document.querySelector("#formNote");
 const requestField = document.querySelector("#requestField");
 const sortSelect = document.querySelector("#sortSelect");
+const prepareOrderButton = document.querySelector("#prepareOrderButton");
 
 let activeCategory = "all";
 let quoteItems = new Set();
@@ -411,17 +412,22 @@ productGrid.addEventListener("click", (event) => {
 });
 
 document.querySelector("#quoteButton").addEventListener("click", () => {
-  const target = document.querySelector("#contact");
+  const target = document.querySelector("#login");
   target.scrollIntoView({ behavior: "smooth" });
   formNote.textContent = quoteItems.size
-    ? `${quoteItems.size} supply line(s) selected. Add company and shipping details before sending.`
-    : "Select supply lines, then add your company details.";
+    ? `${quoteItems.size} supply line(s) selected. Log in to continue the order request.`
+    : "Select supply lines, then open the client portal.";
 });
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
-  formNote.textContent =
-    "Quote request prepared locally. Connect this form to email or a secure backend before accepting documents.";
+  formNote.textContent = "Login UI is ready. Connect a secure backend to activate client accounts.";
+});
+
+prepareOrderButton.addEventListener("click", () => {
+  formNote.textContent = quoteItems.size
+    ? "Order request list prepared locally. Connect a secure backend to submit it."
+    : "Add products to the quote list before preparing an order request.";
 });
 
 function updateRequestField() {
@@ -429,7 +435,7 @@ function updateRequestField() {
   const currentValue = requestField.value.trim();
   if (!selected.length || (currentValue && !currentValue.startsWith("Selected supply lines:"))) return;
 
-  requestField.value = `Selected supply lines:\n${selected.map((item) => `- ${item}`).join("\n")}\n\nCompany:\nDestination country:\nBuyer type:\nShipping lane or notes:`;
+  requestField.value = `Selected products:\n${selected.map((item) => `- ${item}`).join("\n")}\n\nCompany:\nDestination country:\nBuyer type:\nShipping lane or notes:`;
 }
 
 renderProducts();
