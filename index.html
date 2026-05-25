@@ -30,10 +30,10 @@
         </a>
         <label class="search-box">
           <span class="sr-only">Search catalog</span>
-          <input id="searchInput" type="search" placeholder="Search research catalog" />
+          <input id="searchInput" type="search" placeholder="Search catalog" />
         </label>
         <button class="quote-button" id="quoteButton" type="button">
-          Verification file <span id="quoteCount">0</span>
+          Quote list <span id="quoteCount">0</span>
         </button>
       </div>
 
@@ -57,7 +57,7 @@
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#catalog">Browse catalog</a>
-            <a class="button secondary" href="#contact">Open account file</a>
+            <a class="button secondary" href="#contact">Request quote</a>
           </div>
         </div>
       </section>
@@ -93,14 +93,14 @@
           <div class="sidebar-panel">
             <strong>Latest internal source</strong>
             <span>WWB price files through May 21, 2026</span>
-            <p>Prices, order terms, and availability are released through direct account onboarding.</p>
+            <p>Price sheets, order terms, and availability are handled through direct sales contact.</p>
           </div>
 
           <div class="sidebar-panel catalog-stats">
             <strong>Catalog scope</strong>
             <span>200+ visible catalog entries from the WWB files</span>
             <span>Pharmaceuticals, peptides, endocrine, metabolic, vialing</span>
-            <span>COA, account paperwork, and shipping review available</span>
+            <span>COA, product paperwork, and shipping review available</span>
           </div>
         </aside>
 
@@ -113,10 +113,21 @@
             <a href="#contact">All inquiries</a>
           </div>
 
+          <div class="catalog-toolbar">
+            <span id="catalogCount">Loading catalog...</span>
+            <label>
+              Sort
+              <select id="sortSelect">
+                <option value="category">Category</option>
+                <option value="name">Name</option>
+              </select>
+            </label>
+          </div>
+
           <div class="catalog-alert">
             <strong>Catalog access:</strong>
-            select product lines below to build an account file. WWB provides availability,
-            documentation, shipping review, and order terms through direct account onboarding.
+            select product lines below to build a quote list. WWB provides availability,
+            documentation, shipping review, and order terms through direct sales contact.
           </div>
 
           <div class="product-grid" id="productGrid" aria-live="polite"></div>
@@ -152,7 +163,7 @@
       <section class="contact-section" id="contact" aria-labelledby="contact-title">
         <div>
           <p class="eyebrow">Contact</p>
-          <h2 id="contact-title">Open a WWB account file</h2>
+          <h2 id="contact-title">Request a WWB quote</h2>
           <p>Send account type, destination country, and requested product lines.</p>
         </div>
         <form class="contact-form">
@@ -170,18 +181,18 @@
               id="requestField"
               name="request"
               rows="5"
-              placeholder="Company, country, product lines, shipping lane, account notes"
+              placeholder="Company, country, product lines, shipping lane, notes"
             ></textarea>
           </label>
           <label>
-            Account reference
-            <input type="text" name="license" placeholder="Company ID, distributor reference, or account notes" />
+            Company reference
+            <input type="text" name="license" placeholder="Company ID, distributor reference, or notes" />
           </label>
           <label>
             Document upload
             <input type="file" name="documents" />
           </label>
-          <button class="button primary" type="submit">Prepare account request</button>
+          <button class="button primary" type="submit">Prepare quote request</button>
           <p class="form-note" id="formNote" role="status"></p>
         </form>
       </section>
@@ -190,7 +201,7 @@
     <footer class="site-footer" id="shipping">
       <div>
         <strong>WWB / Wuhan Wansheng Biotechnology</strong>
-        <p>Pharmaceutical and peptide supply catalog with account-based ordering.</p>
+        <p>Pharmaceutical and peptide supply catalog with direct quote support.</p>
       </div>
       <div>
         <span>Shipping review</span>

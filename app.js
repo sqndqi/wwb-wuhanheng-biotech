@@ -2,7 +2,7 @@ const catalogGroups = [
   {
     category: "metabolic",
     family: "Metabolic peptides",
-    format: "Vial, oral, or account-approved format",
+    format: "Vial, oral, or sales-approved format",
     names: [
       "Tirzepatide",
       "Semaglutide",
@@ -141,7 +141,7 @@ const catalogGroups = [
   {
     category: "pharma",
     family: "Prescription pharmaceuticals",
-    format: "Account-approved access",
+    format: "Direct sales access",
     names: [
       "Sildenafil",
       "Tadalafil",
@@ -256,11 +256,11 @@ const catalogGroups = [
 
 const categoryMeta = {
   metabolic: {
-    tags: ["Verification", "Prescription review", "Cold-chain review"],
+    tags: ["Product paperwork", "Cold-chain review", "Sales desk"],
     image: "image-metabolic",
   },
   peptide: {
-    tags: ["Account setup", "Batch docs", "COA"],
+    tags: ["Product paperwork", "Batch docs", "COA"],
     image: "image-peptide",
   },
   regenerative: {
@@ -272,7 +272,7 @@ const categoryMeta = {
     image: "image-endocrine",
   },
   pharma: {
-    tags: ["Account setup", "Product paperwork", "Supply desk"],
+    tags: ["Product paperwork", "Sales desk", "COA"],
     image: "image-pharma",
   },
   vialing: {
@@ -291,11 +291,11 @@ const products = catalogGroups.flatMap((group) =>
     return {
       name,
       category: group.category,
-      summary: `${group.family} item. Availability, documentation, shipping review, and order terms are handled through direct WWB account onboarding.`,
+      summary: `${group.family} item. Availability, documentation, shipping review, and order terms are handled through the WWB sales desk.`,
       tags: meta.tags,
       code: makeCode(name, group.category, index),
       format: group.format,
-      price: "Account-based terms",
+      price: "Request quote",
       image: meta.image,
     };
   })
@@ -304,10 +304,12 @@ const products = catalogGroups.flatMap((group) =>
 const productGrid = document.querySelector("#productGrid");
 const searchInput = document.querySelector("#searchInput");
 const quoteCount = document.querySelector("#quoteCount");
+const catalogCount = document.querySelector("#catalogCount");
 const filters = document.querySelectorAll(".category-filter");
 const form = document.querySelector(".contact-form");
 const formNote = document.querySelector("#formNote");
 const requestField = document.querySelector("#requestField");
+const sortSelect = document.querySelector("#sortSelect");
 
 let activeCategory = "all";
 let quoteItems = new Set();
@@ -344,8 +346,14 @@ function renderProducts() {
       .includes(query);
     return inCategory && inSearch;
   });
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortSelect.value === "name") return a.name.localeCompare(b.name);
+    return a.category.localeCompare(b.category) || a.name.localeCompare(b.name);
+  });
 
-  productGrid.innerHTML = filtered
+  catalogCount.textContent = `${sorted.length} supply line${sorted.length === 1 ? "" : "s"} shown`;
+
+  productGrid.innerHTML = sorted
     .map(
       (product) => `
         <article class="product-card">
@@ -359,7 +367,7 @@ function renderProducts() {
                 <dd>${product.format}</dd>
               </div>
               <div>
-                <dt>Price</dt>
+                <dt>Terms</dt>
                 <dd>${product.price}</dd>
               </div>
             </dl>
@@ -367,7 +375,7 @@ function renderProducts() {
               ${product.tags.map((tag) => `<span class="pill">${tag}</span>`).join("")}
             </div>
             <button class="button secondary" type="button" data-quote="${product.name}">
-              Add to account file
+              Add to quote list
             </button>
           </div>
         </article>
@@ -375,8 +383,8 @@ function renderProducts() {
     )
     .join("");
 
-  if (!filtered.length) {
-    productGrid.innerHTML = `<p>No matching restricted catalog programs.</p>`;
+  if (!sorted.length) {
+    productGrid.innerHTML = `<p>No matching catalog items.</p>`;
   }
 }
 
@@ -390,6 +398,7 @@ filters.forEach((filter) => {
 });
 
 searchInput.addEventListener("input", renderProducts);
+sortSelect.addEventListener("change", renderProducts);
 
 productGrid.addEventListener("click", (event) => {
   const button = event.target.closest("[data-quote]");
@@ -397,7 +406,7 @@ productGrid.addEventListener("click", (event) => {
 
   quoteItems.add(button.dataset.quote);
   quoteCount.textContent = quoteItems.size;
-  button.textContent = "Added for review";
+  button.textContent = "Added to quote list";
   updateRequestField();
 });
 
@@ -405,14 +414,14 @@ document.querySelector("#quoteButton").addEventListener("click", () => {
   const target = document.querySelector("#contact");
   target.scrollIntoView({ behavior: "smooth" });
   formNote.textContent = quoteItems.size
-    ? `${quoteItems.size} supply line(s) selected. Add account and shipping details before sending.`
-    : "Select supply lines, then add your account details.";
+    ? `${quoteItems.size} supply line(s) selected. Add company and shipping details before sending.`
+    : "Select supply lines, then add your company details.";
 });
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   formNote.textContent =
-    "Account request prepared locally. Connect this form to email or a secure backend before accepting documents.";
+    "Quote request prepared locally. Connect this form to email or a secure backend before accepting documents.";
 });
 
 function updateRequestField() {
@@ -420,7 +429,7 @@ function updateRequestField() {
   const currentValue = requestField.value.trim();
   if (!selected.length || (currentValue && !currentValue.startsWith("Selected supply lines:"))) return;
 
-  requestField.value = `Selected supply lines:\n${selected.map((item) => `- ${item}`).join("\n")}\n\nCompany:\nDestination country:\nAccount type:\nShipping lane or account notes:`;
+  requestField.value = `Selected supply lines:\n${selected.map((item) => `- ${item}`).join("\n")}\n\nCompany:\nDestination country:\nBuyer type:\nShipping lane or notes:`;
 }
 
 renderProducts();
