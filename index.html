@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="WWB / Wuhan Heng Biotech restricted research catalog and compliance portal."
+    />
+    <title>WWB | Wuhan Heng Biotech</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="utility-bar">
+        <div class="utility-inner">
+          <span>Currency: USD</span>
+          <span>Institutional research supply only</span>
+          <a href="#compliance">Compliance</a>
+        </div>
+      </div>
+
+      <div class="brand-row">
+        <a class="brand" href="#top" aria-label="WWB home">
+          <span class="brand-mark">W</span>
+          <span>
+            <strong>WWB</strong>
+            <small>Wuhan Heng Biotech</small>
+          </span>
+        </a>
+        <label class="search-box">
+          <span class="sr-only">Search catalog</span>
+          <input id="searchInput" type="search" placeholder="Search research catalog" />
+        </label>
+        <button class="quote-button" id="quoteButton" type="button">
+          Quote file <span id="quoteCount">0</span>
+        </button>
+      </div>
+
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a href="#catalog">Catalog</a>
+        <a href="#quality">Quality</a>
+        <a href="#partnership">Partnership</a>
+        <a href="#shipping">Shipping</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media" role="img" aria-label="Laboratory vials in an analytical instrument"></div>
+        <div class="hero-content">
+          <p class="eyebrow">China warehouse | Verified research buyers</p>
+          <h1 id="hero-title">Wuhan Heng Biotech research supply desk</h1>
+          <p>
+            A restricted catalog portal for institutional R&amp;D teams, quality groups, and
+            qualified distribution partners.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#catalog">Browse catalog</a>
+            <a class="button secondary" href="#compliance">Request verification</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="catalog-shell" id="catalog" aria-labelledby="catalog-title">
+        <aside class="sidebar" aria-label="Catalog categories">
+          <h2>Shop by category</h2>
+          <button class="category-filter active" type="button" data-category="all">
+            All research lines
+          </button>
+          <button class="category-filter" type="button" data-category="peptide">
+            Peptide research
+          </button>
+          <button class="category-filter" type="button" data-category="standards">
+            Analytical standards
+          </button>
+          <button class="category-filter" type="button" data-category="vialing">
+            Vialing programs
+          </button>
+          <button class="category-filter" type="button" data-category="partner">
+            Partner sourcing
+          </button>
+
+          <div class="sidebar-panel">
+            <strong>Latest internal source</strong>
+            <span>WWB price files through May 21, 2026</span>
+            <p>Public pricing is withheld until buyer verification is complete.</p>
+          </div>
+        </aside>
+
+        <div class="catalog-main">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Restricted catalog</p>
+              <h2 id="catalog-title">Available programs</h2>
+            </div>
+            <a href="#contact">All inquiries</a>
+          </div>
+
+          <div class="product-grid" id="productGrid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="feature-band" id="quality" aria-labelledby="quality-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Quality system</p>
+            <h2 id="quality-title">Documentation before quotation</h2>
+          </div>
+        </div>
+        <div class="quality-grid">
+          <article>
+            <span class="number">01</span>
+            <h3>Identity review</h3>
+            <p>Catalog access is matched to institution type, intended research use, and local rules.</p>
+          </article>
+          <article>
+            <span class="number">02</span>
+            <h3>Batch paperwork</h3>
+            <p>COA, test method, packaging configuration, and stability notes can be requested.</p>
+          </article>
+          <article>
+            <span class="number">03</span>
+            <h3>Export screening</h3>
+            <p>Shipment lanes are reviewed before any commercial discussion proceeds.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="split-section" id="partnership" aria-labelledby="partnership-title">
+        <div>
+          <p class="eyebrow">Partnership desk</p>
+          <h2 id="partnership-title">Distribution and sourcing conversations</h2>
+          <p>
+            For verified labs and distributors, WWB can discuss recurring supply, custom
+            packaging, raw material sourcing, and quality documentation workflows.
+          </p>
+        </div>
+        <div class="notice-card" id="compliance">
+          <h3>Compliance notice</h3>
+          <p>
+            This site does not provide medical advice, consumer sales, checkout, dosing guidance,
+            or unrestricted pricing. Materials are available only where lawful and only to
+            qualified research or business buyers.
+          </p>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-title">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">Request catalog verification</h2>
+          <p>Send institution details, destination country, and requested research category.</p>
+        </div>
+        <form class="contact-form">
+          <label>
+            Name
+            <input type="text" name="name" placeholder="Your name" />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" placeholder="name@company.com" />
+          </label>
+          <label>
+            Request
+            <textarea name="request" rows="4" placeholder="Company, country, intended research category"></textarea>
+          </label>
+          <button class="button primary" type="submit">Prepare inquiry</button>
+          <p class="form-note" id="formNote" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="shipping">
+      <div>
+        <strong>WWB / Wuhan Heng Biotech</strong>
+        <p>Research supply portal. No consumer checkout.</p>
+      </div>
+      <div>
+        <span>Shipping review</span>
+        <span>COA request</span>
+        <span>Partner onboarding</span>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
