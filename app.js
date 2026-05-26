@@ -311,9 +311,20 @@ const formNote = document.querySelector("#formNote");
 const requestField = document.querySelector("#requestField");
 const sortSelect = document.querySelector("#sortSelect");
 const prepareOrderButton = document.querySelector("#prepareOrderButton");
+const productDialog = document.querySelector("#productDialog");
+const dialogClose = document.querySelector("#dialogClose");
+const dialogVisual = document.querySelector("#dialogVisual");
+const dialogCategory = document.querySelector("#dialogCategory");
+const dialogTitle = document.querySelector("#dialogTitle");
+const dialogSummary = document.querySelector("#dialogSummary");
+const dialogFormat = document.querySelector("#dialogFormat");
+const dialogTerms = document.querySelector("#dialogTerms");
+const dialogTags = document.querySelector("#dialogTags");
+const dialogQuoteButton = document.querySelector("#dialogQuoteButton");
 
 let activeCategory = "all";
 let quoteItems = new Set();
+let activeProductName = "";
 
 function makeCode(name, category, index) {
   const prefix = category.slice(0, 2).toUpperCase();
@@ -375,9 +386,14 @@ function renderProducts() {
             <div class="product-meta">
               ${product.tags.map((tag) => `<span class="pill">${tag}</span>`).join("")}
             </div>
-            <button class="button secondary" type="button" data-quote="${product.name}">
-              Add to quote list
-            </button>
+            <div class="product-actions">
+              <button class="button secondary" type="button" data-detail="${product.name}">
+                View details
+              </button>
+              <button class="button primary compact" type="button" data-quote="${product.name}">
+                Add
+              </button>
+            </div>
           </div>
         </article>
       `
@@ -403,12 +419,15 @@ sortSelect.addEventListener("change", renderProducts);
 
 productGrid.addEventListener("click", (event) => {
   const button = event.target.closest("[data-quote]");
+  const detailButton = event.target.closest("[data-detail]");
+  if (detailButton) {
+    openProductDialog(detailButton.dataset.detail);
+    return;
+  }
   if (!button) return;
 
-  quoteItems.add(button.dataset.quote);
-  quoteCount.textContent = quoteItems.size;
-  button.textContent = "Added to quote list";
-  updateRequestField();
+  addProductToQuote(button.dataset.quote);
+  button.textContent = "Added";
 });
 
 document.querySelector("#quoteButton").addEventListener("click", () => {
@@ -429,6 +448,39 @@ prepareOrderButton.addEventListener("click", () => {
     ? "Order request list prepared locally. Connect a secure backend to submit it."
     : "Add products to the quote list before preparing an order request.";
 });
+
+dialogClose.addEventListener("click", () => productDialog.close());
+
+dialogQuoteButton.addEventListener("click", () => {
+  addProductToQuote(activeProductName);
+  dialogQuoteButton.textContent = "Added to quote list";
+});
+
+productDialog.addEventListener("click", (event) => {
+  if (event.target === productDialog) productDialog.close();
+});
+
+function addProductToQuote(productName) {
+  quoteItems.add(productName);
+  quoteCount.textContent = quoteItems.size;
+  updateRequestField();
+}
+
+function openProductDialog(productName) {
+  const product = products.find((item) => item.name === productName);
+  if (!product) return;
+
+  activeProductName = product.name;
+  dialogVisual.className = `dialog-visual ${product.image}`;
+  dialogCategory.textContent = product.category;
+  dialogTitle.textContent = product.name;
+  dialogSummary.textContent = product.summary;
+  dialogFormat.textContent = product.format;
+  dialogTerms.textContent = product.price;
+  dialogTags.innerHTML = product.tags.map((tag) => `<span class="pill">${tag}</span>`).join("");
+  dialogQuoteButton.textContent = quoteItems.has(product.name) ? "Added to quote list" : "Add to quote list";
+  productDialog.showModal();
+}
 
 function updateRequestField() {
   const selected = Array.from(quoteItems);

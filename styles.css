@@ -541,6 +541,22 @@ p {
   margin-top: 14px;
 }
 
+.product-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.product-actions .button {
+  width: 100%;
+  margin-top: 0;
+}
+
+.button.compact {
+  padding: 0 10px;
+}
+
 .feature-band,
 .login-section {
   margin-top: 54px;
@@ -584,6 +600,25 @@ p {
   border: 1px solid var(--line);
 }
 
+.portal-status {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfdfd;
+}
+
+.portal-status strong,
+.portal-status span {
+  display: block;
+}
+
+.portal-status span {
+  margin-top: 6px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 .login-form {
   display: grid;
   gap: 14px;
@@ -612,6 +647,110 @@ p {
   margin: 0;
   color: var(--teal-dark);
   font-weight: 700;
+}
+
+.product-dialog {
+  width: min(860px, calc(100% - 32px));
+  border: 0;
+  border-radius: 8px;
+  padding: 0;
+  color: var(--ink);
+  background: var(--white);
+  box-shadow: 0 30px 80px rgba(24, 32, 36, 0.28);
+}
+
+.product-dialog::backdrop {
+  background: rgba(24, 32, 36, 0.5);
+}
+
+.dialog-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.dialog-visual {
+  min-height: 220px;
+  background:
+    linear-gradient(135deg, rgba(10, 85, 79, 0.72), rgba(36, 75, 111, 0.62)),
+    url("assets/lab-vials.jpg") center / cover no-repeat;
+}
+
+.dialog-visual.image-pharma {
+  background:
+    linear-gradient(135deg, rgba(36, 75, 111, 0.72), rgba(24, 32, 36, 0.58)),
+    url("assets/vials-blue.jpg") center / cover no-repeat;
+}
+
+.dialog-visual.image-peptide,
+.dialog-visual.image-endocrine {
+  background:
+    linear-gradient(135deg, rgba(15, 129, 116, 0.72), rgba(10, 85, 79, 0.58)),
+    url("assets/vials-lab-table.jpg") center / cover no-repeat;
+}
+
+.dialog-visual.image-metabolic,
+.dialog-visual.image-vialing {
+  background:
+    linear-gradient(135deg, rgba(201, 136, 45, 0.68), rgba(15, 129, 116, 0.58)),
+    url("assets/vials-blue.jpg") center / cover no-repeat;
+}
+
+.dialog-visual.image-regenerative {
+  background:
+    linear-gradient(135deg, rgba(15, 129, 116, 0.68), rgba(199, 104, 73, 0.58)),
+    url("assets/vials-pink.jpg") center / cover no-repeat;
+}
+
+.dialog-body {
+  padding: 28px;
+}
+
+.dialog-body h2 {
+  margin-bottom: 10px;
+}
+
+.dialog-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.dialog-specs div {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfdfd;
+}
+
+.dialog-specs dt {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.dialog-specs dd {
+  margin: 0;
+  font-weight: 800;
+}
+
+.dialog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
 }
 
 .site-footer {
@@ -689,6 +828,14 @@ p {
   .site-footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .dialog-specs {
+    grid-template-columns: 1fr;
+  }
+
+  .product-actions {
+    grid-template-columns: 1fr;
   }
 
   .site-footer span {
