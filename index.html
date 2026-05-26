@@ -33,7 +33,7 @@
           <input id="searchInput" type="search" placeholder="Search catalog" />
         </label>
         <button class="quote-button" id="quoteButton" type="button">
-          Quote list <span id="quoteCount">0</span>
+          Order bag <span id="quoteCount">0</span>
         </button>
       </div>
 
@@ -57,7 +57,7 @@
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#catalog">Browse catalog</a>
-            <a class="button secondary" href="#login">Client login</a>
+            <a class="button secondary" href="#login">Start order</a>
           </div>
         </div>
       </section>
@@ -126,7 +126,7 @@
 
           <div class="catalog-alert">
             <strong>Catalog access:</strong>
-            select product lines below to build a quote list. WWB provides availability,
+            select product lines below to build an order bag. WWB provides availability,
             documentation, shipping review, and order terms through the direct sales desk.
           </div>
 
@@ -163,11 +163,11 @@
       <section class="login-section" id="login" aria-labelledby="login-title">
         <div>
           <p class="eyebrow">Client portal</p>
-          <h2 id="login-title">Login to prepare an order request</h2>
-          <p>Use the portal panel to collect selected products and prepare the next order request.</p>
+          <h2 id="login-title">Client login</h2>
+          <p>Sign in to review selected products and prepare the next order request.</p>
           <div class="portal-status">
-            <strong>Backend ready</strong>
-            <span>Connect authentication, private terms, and order submission APIs when hosting moves beyond GitHub Pages.</span>
+            <strong>Order bag</strong>
+            <span>Selected catalog products appear here for client review before the sales desk confirms availability and terms.</span>
           </div>
         </div>
         <form class="login-form">
@@ -185,11 +185,11 @@
               id="requestField"
               name="request"
               rows="5"
-              placeholder="Choose catalog products to fill this order request list"
+              placeholder="Choose catalog products to fill this order bag"
             ></textarea>
           </label>
           <button class="button primary" type="submit">Login</button>
-          <button class="button secondary" type="button" id="prepareOrderButton">Prepare order request</button>
+          <button class="button secondary" type="button" id="prepareOrderButton">Prepare order</button>
           <p class="form-note" id="formNote" role="status"></p>
         </form>
       </section>
@@ -213,7 +213,7 @@
           </div>
         </dl>
         <div class="dialog-tags" id="dialogTags"></div>
-        <button class="button primary" type="button" id="dialogQuoteButton">Add to quote list</button>
+        <button class="button primary" type="button" id="dialogQuoteButton">Add to order bag</button>
       </div>
     </dialog>
 

@@ -295,7 +295,7 @@ const products = catalogGroups.flatMap((group) =>
       tags: meta.tags,
       code: makeCode(name, group.category, index),
       format: group.format,
-      price: "Request quote",
+      price: "Client terms",
       image: meta.image,
     };
   })
@@ -388,7 +388,7 @@ function renderProducts() {
             </div>
             <div class="product-actions">
               <button class="button secondary" type="button" data-detail="${product.name}">
-                View details
+                Details
               </button>
               <button class="button primary compact" type="button" data-quote="${product.name}">
                 Add
@@ -434,26 +434,26 @@ document.querySelector("#quoteButton").addEventListener("click", () => {
   const target = document.querySelector("#login");
   target.scrollIntoView({ behavior: "smooth" });
   formNote.textContent = quoteItems.size
-    ? `${quoteItems.size} supply line(s) selected. Log in to continue the order request.`
-    : "Select supply lines, then open the client portal.";
+    ? `${quoteItems.size} item(s) in the order bag. Log in to continue.`
+    : "Add products to the order bag first.";
 });
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
-  formNote.textContent = "Login UI is ready. Connect a secure backend to activate client accounts.";
+  formNote.textContent = "Client login is ready for account connection.";
 });
 
 prepareOrderButton.addEventListener("click", () => {
   formNote.textContent = quoteItems.size
-    ? "Order request list prepared locally. Connect a secure backend to submit it."
-    : "Add products to the quote list before preparing an order request.";
+    ? "Order bag prepared. Sales desk confirmation is the next step."
+    : "Add products to the order bag before preparing an order.";
 });
 
 dialogClose.addEventListener("click", () => productDialog.close());
 
 dialogQuoteButton.addEventListener("click", () => {
   addProductToQuote(activeProductName);
-  dialogQuoteButton.textContent = "Added to quote list";
+  dialogQuoteButton.textContent = "Added to order bag";
 });
 
 productDialog.addEventListener("click", (event) => {
@@ -478,14 +478,14 @@ function openProductDialog(productName) {
   dialogFormat.textContent = product.format;
   dialogTerms.textContent = product.price;
   dialogTags.innerHTML = product.tags.map((tag) => `<span class="pill">${tag}</span>`).join("");
-  dialogQuoteButton.textContent = quoteItems.has(product.name) ? "Added to quote list" : "Add to quote list";
+  dialogQuoteButton.textContent = quoteItems.has(product.name) ? "Added to order bag" : "Add to order bag";
   productDialog.showModal();
 }
 
 function updateRequestField() {
   const selected = Array.from(quoteItems);
   const currentValue = requestField.value.trim();
-  if (!selected.length || (currentValue && !currentValue.startsWith("Selected supply lines:"))) return;
+  if (!selected.length || (currentValue && !currentValue.startsWith("Selected products:"))) return;
 
   requestField.value = `Selected products:\n${selected.map((item) => `- ${item}`).join("\n")}\n\nCompany:\nDestination country:\nBuyer type:\nShipping lane or notes:`;
 }
