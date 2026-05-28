@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title">
+  <title id="title">WS logo</title>
+  <rect width="240" height="240" fill="#ffffff"/>
+  <g fill="none" stroke="#0b6f72" stroke-width="6" stroke-linecap="round">
+    <path d="M61 166c-31-28-37-75-13-110 14-21 34-35 58-41"/>
+    <path d="M179 166c31-28 37-75 13-110-14-21-34-35-58-41"/>
+    <path d="M70 168c-10 7-18 14-25 24"/>
+    <path d="M170 168c10 7 18 14 25 24"/>
+    <path d="M58 197c36-10 83-10 124 0"/>
+  </g>
+  <g fill="#0b6f72">
+    <path d="M50 71l22-14-16 23z"/>
+    <path d="M45 98l24-7-21 18z"/>
+    <path d="M48 126l25 1-24 11z"/>
+    <path d="M62 151l23 9-26 4z"/>
+    <path d="M190 71l-22-14 16 23z"/>
+    <path d="M195 98l-24-7 21 18z"/>
+    <path d="M192 126l-25 1 24 11z"/>
+    <path d="M178 151l-23 9 26 4z"/>
+  </g>
+  <g transform="translate(120 93) rotate(45)">
+    <rect x="-46" y="-46" width="92" height="92" rx="18" fill="#13aeb3"/>
+    <rect x="-30" y="-30" width="60" height="60" rx="12" fill="#c3d600"/>
+    <rect x="-18" y="-18" width="36" height="36" rx="8" fill="#ffffff"/>
+    <path d="M-46-6h40v52h-40z" fill="#0b8c91"/>
+  </g>
+  <text x="120" y="222" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="700" fill="#0b6f72">WS</text>
+</svg>

@@ -145,11 +145,16 @@ main,
 .quote-form input,
 .quote-form select,
 .quote-form textarea,
+.checkout-form input,
+.checkout-form select,
+.checkout-form textarea,
 .account-form input,
 .account-form select,
 .account-form textarea,
 .quote-item input,
 .quote-item select,
+.cart-item input,
+.cart-item select,
 .product-card input,
 .product-card select,
 .dialog-quote-form input,
@@ -168,6 +173,7 @@ main,
 }
 
 .quote-button,
+.cart-button,
 .button {
   min-height: 44px;
   display: inline-flex;
@@ -186,14 +192,17 @@ main,
   background: #fbfdfe;
 }
 
-.quote-button {
+.quote-button,
+.cart-button {
   color: var(--white);
   background: var(--blue);
   white-space: nowrap;
 }
 
 .quote-button span,
-.mobile-quote span {
+.cart-button span,
+.mobile-quote span,
+.mobile-cart span {
   min-width: 24px;
   height: 24px;
   display: inline-grid;
@@ -204,6 +213,12 @@ main,
   background: var(--white);
   font-size: 0.8rem;
   font-weight: 800;
+}
+
+.brand-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
 }
 
 .main-nav {
@@ -426,6 +441,7 @@ p {
 .filters-panel label,
 .sort-control,
 .quote-form label,
+.checkout-form label,
 .account-form label,
 .dialog-quote-form label,
 .quote-item label {
@@ -739,6 +755,7 @@ dd {
 }
 
 .quote-section,
+.checkout-section,
 .account-section {
   display: grid;
   grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
@@ -746,7 +763,9 @@ dd {
 }
 
 .quote-summary,
+.cart-panel,
 .quote-form,
+.checkout-form,
 .account-section > div,
 .account-form {
   padding: 28px;
@@ -756,7 +775,8 @@ dd {
   box-shadow: 0 12px 28px rgba(20, 33, 43, 0.05);
 }
 
-.quote-list {
+.quote-list,
+.cart-list {
   display: grid;
   gap: 12px;
 }
@@ -855,9 +875,19 @@ dd {
 }
 
 .quote-form,
+.checkout-form,
 .account-form {
   display: grid;
   gap: 16px;
+}
+
+.order-confirmation {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #cfe4e1;
+  border-radius: 8px;
+  background: #eef8f6;
 }
 
 .account-panel {
@@ -1060,7 +1090,8 @@ fieldset input {
   font-weight: 800;
 }
 
-.mobile-quote {
+.mobile-quote,
+.mobile-cart {
   position: fixed;
   right: 16px;
   bottom: 16px;
@@ -1183,6 +1214,7 @@ fieldset input {
   .brand-row,
   .catalog-shell,
   .quote-section,
+  .checkout-section,
   .account-section,
   .info-band,
   .contact-section {
@@ -1221,7 +1253,9 @@ fieldset input {
   .hero-content,
   .info-band,
   .quote-summary,
+  .cart-panel,
   .quote-form,
+  .checkout-form,
   .account-section > div,
   .account-form,
   .process-section,
@@ -1277,7 +1311,8 @@ fieldset input {
     margin: 8px 0 0;
   }
 
-  .mobile-quote {
+  .mobile-quote,
+  .mobile-cart {
     display: inline-flex;
     align-items: center;
   }

@@ -1,66 +1,92 @@
 # WWB / Wuhan Wansheng Biotechnology
 
-Static GitHub Pages build for a B2B biotech/pharmaceutical quote-request portal.
+Static product catalog frontend plus a simple Express order backend.
 
-This site is intentionally not an unrestricted checkout. The catalog supports product discovery, visible source-list pricing, quote bag building, buyer verification intake, documentation requests, and sales-desk review. Regulated or restricted products must be reviewed before any order can proceed.
+The frontend is deployable on GitHub Pages. The backend receives checkout orders, recalculates trusted totals from `data/products.js`, applies the locked `SUMMER` 5% discount, and sends order details to the seller Discord webhook from an environment variable.
 
 ## Structure
 
-- `index.html` - page structure, forms, policy sections, product dialog shell
-- `styles.css` - responsive B2B portal styling
-- `data/products.js` - structured product families, variants, source-list prices, and bulk pricing rules
-- `js/api.js` - mocked backend-ready API functions
-- `js/state.js` - localStorage quote/form persistence
-- `js/validation.js` - quote and account-request validation
-- `app.js` - UI rendering and interactions
-- `tools/export-sellauth-catalog.js` - exports catalog rows to `sellauth-products.csv`
+- `index.html` - catalog, cart, checkout, payment info, policies
+- `styles.css` - responsive storefront styling
+- `app.js` - frontend catalog/cart/checkout behavior
+- `data/products.js` - product families, variants, prices, and bulk tiers
+- `js/state.js` - local cart/form persistence
+- `js/validation.js` - frontend checkout validation
+- `server/server.js` - Express backend with `/health`, `/api/orders`, `/api/contact`
+- `server/.env.example` - backend environment template
 
-## Backend Hooks
+## Run Frontend
 
-Replace the mock functions in `js/api.js` when a real backend exists:
+From the repo root:
 
-- `fetchCatalog()`
-- `submitQuoteRequest()`
-- `requestAccountAccess()`
-- `loginClient()`
+```bash
+python -m http.server 8000
+```
 
-Do not store passwords or secrets in frontend code.
+Open `http://127.0.0.1:8000`.
 
-## Editing Products and Prices
+## Run Backend
 
-Edit product data in `data/products.js`.
+```bash
+cd server
+npm install
+cp .env.example .env
+npm start
+```
 
-Each product family has an `options` array. Edit option fields to update price-list rows:
+Required env:
 
-- `sku` - price-list code, such as `TR5`
-- `label` - dosage/package shown in cards and the quote bag
-- `basePrice` - normal unit price shown as `$35 / kit`
-- `bulkPrice` - discounted unit price used when quantity reaches `bulkMinimum`
-- `bulkMinimum` - default is `10`
-- `bulkQuoteRequired` - use when the PDF has `*` for bulk pricing
+```bash
+DISCORD_WEBHOOK_URL=
+PAYPAL_EMAIL=
+NODE_ENV=production
+```
 
-Price types are computed from the product review path. Restricted products can show source-list prices, but the UI keeps them in sales review and does not create payment checkout.
+Never hardcode webhook URLs or payment secrets in frontend code.
 
-Do not add direct checkout links for regulated, prescription, injectable, hormone, or restricted raw-material products.
+## API URL For GitHub Pages
 
-## Static Quote Flow
+At the top of `app.js`:
 
-The quote bag is stored in `localStorage`. Quote submission is mocked by `js/api.js`, generates a local reference such as `WWB-QR-20260528-1234`, and stores the request in the browser only. The copy button produces an email-ready request summary.
+```js
+window.WWB_API_BASE_URL = window.WWB_API_BASE_URL || "http://localhost:3000";
+```
 
-Current MVP discount code: `SUMMER` for 10% off priced items in the quote estimate.
+For production GitHub Pages, set `window.WWB_API_BASE_URL` to the deployed backend URL before loading `app.js`, or edit the fallback after deploying the backend.
 
-Account access requests generate a local `WWB-ACCT-YYYYMMDD-XXXX` reference. Existing-client sign-in is disabled until a backend is connected.
+## Editing Products And Prices
 
-## Testing Bulk Pricing
+Edit `data/products.js`.
 
-Open the catalog, find `Tirzepatide`, set quantity to `10`, and add `TR5` to the request. The quote bag should use the 10+ bulk price of `$30 / kit`, with an estimated line subtotal of `$300`. If a PDF row uses `*` for the bulk column, the bag shows `Bulk quote required` instead of calculating that bulk line.
+Each product has `options`:
 
-## Still Needs Backend
+- `sku` - product code
+- `label` - dosage/package text
+- `basePrice` - normal unit price
+- `bulkPrice` - 10+ or bulk unit price
+- `bulkMinimum` - default `10`
+- `bulkQuoteRequired` - true when source list uses `*`
 
-- real client authentication
-- email/CRM quote submission
-- admin dashboard
-- payment processing after approved quotes
-- inventory and price management
-- compliance verification workflow
-- database and server-side audit trail
+The backend imports the same file and recalculates totals server-side.
+
+## SUMMER Discount
+
+`SUMMER` is forced in checkout and cannot be removed. It applies exactly 5% off priced items.
+
+## Testing Checklist
+
+- Add product to cart
+- Change quantity to `10` and verify bulk price
+- Confirm `SUMMER` discount is 5%
+- Place order with Crypto
+- Place order with PayPal
+- Backend sends Discord message when `DISCORD_WEBHOOK_URL` is configured
+- Backend rejects bad email, empty cart, missing address, and invalid payment method
+- Backend recalculates totals server-side
+
+## Deployment
+
+- Frontend: GitHub Pages
+- Backend: Render, Railway, Fly.io, or VPS
+
+Backend still needs production hardening such as rate limits, persistent database/order storage, admin dashboard, and operational monitoring.

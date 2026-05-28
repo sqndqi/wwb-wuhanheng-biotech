@@ -3,7 +3,7 @@
   const sourcePartner = "WWB Partnership Pricelist";
   const chinaWarehouse = "China Warehouse";
   const partnershipWarehouse = "Partnership raw powder list";
-  const defaultDocs = ["COA", "Batch details", "Shipping review"];
+  const defaultDocs = [];
 
   const reviewLabels = {
     sales_review: "Sales review required",
@@ -18,15 +18,15 @@
     },
     blends: {
       label: "Peptide blends",
-      description: "Blend kits with priced variants and sales-desk confirmation.",
+      description: "Blend kits with priced variants.",
     },
     metabolic: {
       label: "Metabolic",
-      description: "Metabolic peptide and oral request lines with quote review.",
+      description: "Metabolic peptide and oral product lines.",
     },
     hormones: {
       label: "Hormone / endocrine",
-      description: "Hormone, fertility, and endocrine items requiring restricted review.",
+      description: "Hormone, fertility, and endocrine product lines.",
     },
     orals: {
       label: "Orals",
@@ -34,23 +34,19 @@
     },
     injectables: {
       label: "Injectables",
-      description: "Injectable/oil lines shown only for restricted sales review.",
+      description: "Injectable/oil product lines.",
     },
     raws: {
       label: "Raw powders",
       description: "Partnership raw-powder products priced per gram.",
     },
+    supplies: {
+      label: "Supplies",
+      description: "Accessory and preparation supply items from the product list.",
+    },
   };
 
-  const docsByCategory = {
-    peptides: defaultDocs,
-    blends: defaultDocs,
-    metabolic: defaultDocs,
-    hormones: ["COA", "Batch details", "Shipping review", "Restricted product review"],
-    orals: ["COA", "Batch details", "Invoice", "Shipping review"],
-    injectables: ["COA", "Batch details", "MSDS", "Restricted product review"],
-    raws: ["COA", "MSDS", "Batch details", "Export docs"],
-  };
+  const docsByCategory = {};
 
   function slug(value) {
     return String(value)
@@ -108,8 +104,8 @@
       reviewLabel: reviewLabels[def.reviewLevel || "sales_review"],
       documentation: def.documentation || docsByCategory[def.category] || defaultDocs,
       options: def.options,
-      notes: def.notes || "Availability, documentation, and destination requirements are confirmed by the sales desk.",
-      shippingNotes: def.shippingNotes || "Shipping method and storage requirements confirmed during quote review.",
+      notes: def.notes || "Select a package, add quantity, and place an order request. Final availability and payment instructions are confirmed after submission.",
+      shippingNotes: def.shippingNotes || "Shipping method and route are confirmed after the order request is received.",
       tags: [def.name, def.category, def.productType || "", ...(def.tags || [])].map((entry) => String(entry).toLowerCase()),
       sourcePriority: def.sourcePriority || 1,
       addedAt: def.addedAt || "2026-05-21",
@@ -334,6 +330,16 @@
       ],
     }),
     family({
+      name: "BAC Water",
+      category: "supplies",
+      productType: "Supply kit",
+      reviewLevel: "sales_review",
+      notes: "Accessory supply item from the WWB list. Add quantity and include it with the cart order.",
+      options: [
+        option("BA03", "3ml * 10 vials", 10, "*"),
+      ],
+    }),
+    family({
       name: "Oral metabolic products",
       category: "orals",
       productType: "Oral bottle",
@@ -479,7 +485,7 @@
       ],
       tags: ["raw powder", "partnership pricelist"],
       addedAt: "2026-05-20",
-      notes: "Raw powder request line. Documentation, export review, and buyer credentials are required before quote confirmation.",
+      notes: "Raw powder product line. Select quantity and place an order request for seller confirmation.",
     })
   );
 
@@ -491,8 +497,7 @@
     reviewLabels,
     optionSets: {
       buyerTypes: ["Clinic", "Pharmacy", "Lab", "Distributor", "Reseller", "Other"],
-      documents: ["COA", "Batch docs", "MSDS", "Invoice", "Export docs"],
-      shipping: ["Standard", "Cold-chain review", "Discreet packaging", "Courier quote"],
+      shipping: ["Standard", "Courier"],
       statuses: ["quote_available", "restricted_review"],
       priceTypes: ["fixed", "quote", "restricted"],
       sources: Array.from(new Set(allProducts.map((product) => product.warehouse))).sort(),

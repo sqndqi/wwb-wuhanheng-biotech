@@ -3,26 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="WWB / Wuhan Wansheng Biotechnology B2B pharmaceutical and peptide supply request portal."
-    />
+    <meta name="description" content="WWB / Wuhan Wansheng Biotechnology product ordering website." />
     <title>WWB | Wuhan Wansheng Biotechnology</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <div class="utility-bar">
-        <div class="utility-inner">
-          <span>Business supply requests only</span>
-          <span>Account verification required</span>
-          <a href="#account">Request access</a>
-        </div>
-      </div>
-
       <div class="brand-row">
         <a class="brand" href="#top" aria-label="WWB home">
-          <span class="brand-mark">W</span>
+          <img class="brand-logo" src="assets/ws-logo.svg" alt="WS logo" />
           <span>
             <strong>WWB</strong>
             <small>Wuhan Wansheng Biotechnology</small>
@@ -30,108 +19,68 @@
         </a>
         <label class="search-box">
           <span class="sr-only">Search catalog</span>
-          <input id="searchInput" type="search" placeholder="Search name, code, source, category" autocomplete="off" />
+          <input id="searchInput" type="search" placeholder="Search product or code" autocomplete="off" />
         </label>
-        <button class="quote-button" id="quoteButton" type="button" aria-controls="quote" aria-live="polite">
-          Quote bag <span id="quoteCount">0</span>
+        <button class="cart-button" id="cartButton" type="button" aria-controls="checkout" aria-live="polite">
+          Cart <span id="cartCount">0</span>
         </button>
       </div>
 
       <nav class="main-nav" aria-label="Primary navigation">
         <a href="#catalog">Catalog</a>
-        <a href="#quote">Quote request</a>
-        <a href="#account">Account access</a>
-        <a href="#quality">Quality</a>
-        <a href="#shipping">Shipping</a>
-        <a href="#policies">Policies</a>
+        <a href="#checkout">Checkout</a>
+        <a href="#payment">Payment</a>
+        <a href="#faq">FAQ</a>
+        <a href="#terms">Terms</a>
+        <a href="#contact">Contact</a>
       </nav>
     </header>
 
     <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero atlas-hero" aria-labelledby="hero-title">
         <div class="hero-content">
-          <p class="eyebrow">B2B supply request portal</p>
-          <h1 id="hero-title">Wuhan Wansheng Biotechnology</h1>
+          <p class="eyebrow">WWB product ordering</p>
+          <h1 id="hero-title">Browse products, add to cart, place your order.</h1>
           <p>
-            Browse the May 21 WWB price list, select variants, build an order request, and send it
-            for sales review. Pricing is visible where the source list provides it, while restricted
-            products still require account and destination review before any order can proceed.
+            Select product variants from the WWB price list, apply the automatic SUMMER discount,
+            and submit your order details. Payment instructions are shown after the order is created.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#catalog">Browse price list</a>
-            <a class="button secondary" href="#quote">Build order request</a>
+            <a class="button primary" href="#catalog">Browse products</a>
+            <a class="button secondary" href="#checkout">Checkout</a>
           </div>
         </div>
       </section>
 
-      <section class="trust-strip" aria-label="Portal highlights">
+      <section class="trust-strip" aria-label="Ordering highlights">
         <article>
-          <strong>Quote required</strong>
-          <span>No unrestricted checkout for reviewed products</span>
+          <strong>Visible pricing</strong>
+          <span>Source-list prices and 10+ bulk tiers where available</span>
         </article>
         <article>
-          <strong>Buyer verification</strong>
-          <span>Clinic, pharmacy, lab, distributor, or business review</span>
+          <strong>Simple cart</strong>
+          <span>Variant, quantity, subtotal, discount, final total</span>
         </article>
         <article>
-          <strong>Documentation</strong>
-          <span>COA, batch docs, MSDS, invoice, and export docs by review</span>
+          <strong>Payment methods</strong>
+          <span>Crypto or PayPal instructions after order creation</span>
         </article>
         <article>
-          <strong>Shipping review</strong>
-          <span>Destination, storage, packaging, and lane requirements checked</span>
+          <strong>Seller notification</strong>
+          <span>Backend sends order details to the seller Discord webhook</span>
         </article>
-      </section>
-
-      <section class="info-band" id="about" aria-labelledby="about-title">
-        <div>
-          <p class="eyebrow">About WWB</p>
-          <h2 id="about-title">A sales-desk portal for reviewed supply requests</h2>
-        </div>
-        <p>
-          WWB uses this website to collect structured product inquiries, buyer details,
-          destination requirements, and documentation requests. The public catalog is not a
-          self-service pharmacy or unrestricted checkout. Restricted, prescription, injectable,
-          hormone, and raw-material requests require appropriate business verification and may
-          require licensing, prescription, import approval, or institutional qualification.
-        </p>
       </section>
 
       <section class="catalog-shell" id="catalog" aria-labelledby="catalog-title">
         <aside class="filters-panel" aria-label="Catalog filters">
           <div>
-            <p class="eyebrow">Catalog controls</p>
-            <h2>Filter products</h2>
+            <p class="eyebrow">Catalog</p>
+            <h2>Filters</h2>
           </div>
-
           <label>
             Category
             <select id="categoryFilter">
               <option value="all">All categories</option>
-            </select>
-          </label>
-          <label>
-            Review level
-            <select id="reviewFilter">
-              <option value="all">All review levels</option>
-            </select>
-          </label>
-          <label>
-            Documentation
-            <select id="docFilter">
-              <option value="all">Any documentation</option>
-            </select>
-          </label>
-          <label>
-            Format
-            <select id="formatFilter">
-              <option value="all">Any format</option>
-            </select>
-          </label>
-          <label>
-            Product type
-            <select id="typeFilter">
-              <option value="all">All product types</option>
             </select>
           </label>
           <label>
@@ -147,90 +96,48 @@
             </select>
           </label>
           <label>
-            Status
-            <select id="statusFilter">
-              <option value="all">Any status</option>
+            Sort
+            <select id="sortSelect">
+              <option value="featured">Featured first</option>
+              <option value="name">Name</option>
+              <option value="priceLow">Price low to high</option>
+              <option value="priceHigh">Price high to low</option>
+              <option value="category">Category</option>
             </select>
           </label>
-          <button class="button secondary" type="button" id="resetFilters">Reset filters</button>
-
-          <div class="filters-note">
-            <strong>Catalog access</strong>
-            <span>Displayed prices are estimates from the uploaded list; sales desk confirms final terms.</span>
-          </div>
+          <button class="button secondary" type="button" id="resetFilters">Reset</button>
         </aside>
 
         <div class="catalog-main">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Product catalog</p>
-              <h2 id="catalog-title">Reviewed supply lines</h2>
+              <p class="eyebrow">Products</p>
+              <h2 id="catalog-title">Price list catalog</h2>
             </div>
-            <label class="sort-control">
-              Sort
-              <select id="sortSelect">
-                <option value="recent">Recently added</option>
-                <option value="name">Name</option>
-                <option value="category">Category</option>
-                <option value="priceLow">Price low to high</option>
-                <option value="priceHigh">Price high to low</option>
-                <option value="review">Review level</option>
-              </select>
-            </label>
+            <span id="catalogCount">Loading products...</span>
           </div>
-
           <div class="active-filter-row" id="activeFilters" aria-live="polite"></div>
-          <div class="catalog-count" id="catalogCount">Loading catalog...</div>
           <div class="product-grid loading" id="productGrid" aria-live="polite">
-            <p>Loading catalog...</p>
+            <p>Loading products...</p>
           </div>
         </div>
       </section>
 
-      <section class="category-section" aria-labelledby="category-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Product categories</p>
-            <h2 id="category-title">Browse by review path</h2>
-          </div>
-        </div>
-        <div class="category-grid" id="categoryGrid"></div>
-      </section>
-
-      <section class="featured-section" aria-labelledby="featured-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Featured price-list items</p>
-            <h2 id="featured-title">Common priced request lines</h2>
-          </div>
-          <span>Visible source-list pricing, final quote required</span>
-        </div>
-        <div class="featured-grid" id="featuredGrid"></div>
-      </section>
-
-      <section class="quote-section" id="quote" aria-labelledby="quote-title">
-        <div class="quote-summary">
-          <p class="eyebrow">Request quote</p>
-          <h2 id="quote-title">Sales review intake</h2>
-          <p>
-            Add products, choose package, quantity, documents, and shipping preferences, then submit
-            buyer and destination details for sales review. This mock submission works on static
-            hosting and generates a local quote reference.
-          </p>
-          <div class="quote-bag" id="quoteBag" aria-live="polite"></div>
+      <section class="checkout-section" id="checkout" aria-labelledby="checkout-title">
+        <div class="cart-panel">
+          <p class="eyebrow">Cart</p>
+          <h2 id="checkout-title">Your order</h2>
+          <div class="cart-list" id="cartList" aria-live="polite"></div>
         </div>
 
-        <form class="quote-form" id="quoteForm" novalidate>
+        <form class="checkout-form" id="checkoutForm" novalidate>
+          <p class="eyebrow">Checkout</p>
+          <h2>Customer information</h2>
           <div class="form-grid">
             <label>
-              Company name
-              <input name="company" autocomplete="organization" required />
-              <span class="field-error" data-error-for="company"></span>
-            </label>
-            <label>
-              Contact name
-              <input name="contactName" autocomplete="name" required />
-              <span class="field-error" data-error-for="contactName"></span>
+              Full name
+              <input name="fullName" autocomplete="name" required />
+              <span class="field-error" data-error-for="fullName"></span>
             </label>
             <label>
               Email
@@ -238,275 +145,148 @@
               <span class="field-error" data-error-for="email"></span>
             </label>
             <label>
-              Phone / WhatsApp / Telegram
-              <input name="messaging" autocomplete="tel" placeholder="+1..., @handle, or preferred contact" />
-              <span class="field-error" data-error-for="messaging"></span>
+              Phone / Telegram / WhatsApp
+              <input name="contact" autocomplete="tel" required />
+              <span class="field-error" data-error-for="contact"></span>
             </label>
             <label>
-              Destination country
-              <input name="destination" autocomplete="country-name" required />
-              <span class="field-error" data-error-for="destination"></span>
+              Country
+              <input name="country" autocomplete="country-name" required />
+              <span class="field-error" data-error-for="country"></span>
             </label>
             <label>
-              Buyer type
-              <select name="buyerType" required>
-                <option value="">Select buyer type</option>
-                <option>Clinic</option>
-                <option>Pharmacy</option>
-                <option>Lab</option>
-                <option>Distributor</option>
-                <option>Reseller</option>
-                <option>Other</option>
-              </select>
-              <span class="field-error" data-error-for="buyerType"></span>
+              City
+              <input name="city" autocomplete="address-level2" required />
+              <span class="field-error" data-error-for="city"></span>
             </label>
             <label>
-              Requested shipping method
-              <select name="requestedShipping" required>
-                <option value="">Select shipping method</option>
-                <option>Standard</option>
-                <option>Cold-chain review</option>
-                <option>Discreet packaging</option>
-                <option>Courier quote</option>
-              </select>
-              <span class="field-error" data-error-for="requestedShipping"></span>
-            </label>
-            <label>
-              Discount code
-              <input name="discountCode" placeholder="SUMMER" autocomplete="off" />
-              <span class="field-error" data-error-for="discountCode"></span>
+              Postal / ZIP code
+              <input name="postalCode" autocomplete="postal-code" />
+              <span class="field-error" data-error-for="postalCode"></span>
             </label>
           </div>
-
-          <fieldset>
-            <legend>Documentation needed</legend>
-            <label><input type="checkbox" name="documents" value="COA" /> COA</label>
-            <label><input type="checkbox" name="documents" value="Batch docs" /> Batch docs</label>
-            <label><input type="checkbox" name="documents" value="MSDS" /> MSDS</label>
-            <label><input type="checkbox" name="documents" value="Invoice" /> Invoice</label>
-            <label><input type="checkbox" name="documents" value="Export docs" /> Export docs</label>
-          </fieldset>
-
-          <fieldset>
-            <legend>Shipping requirements</legend>
-            <label><input type="checkbox" name="shipping" value="Cold-chain review" /> Cold-chain review</label>
-            <label><input type="checkbox" name="shipping" value="Discreet packaging" /> Discreet packaging</label>
-            <label><input type="checkbox" name="shipping" value="Standard" /> Standard</label>
-            <label><input type="checkbox" name="shipping" value="Courier quote" /> Courier quote</label>
-          </fieldset>
-
           <label>
-            Notes
-            <textarea name="notes" rows="5" placeholder="Product quantities, destination notes, document preferences, or account context"></textarea>
+            Shipping address
+            <textarea name="address" rows="3" autocomplete="street-address" required></textarea>
+            <span class="field-error" data-error-for="address"></span>
           </label>
-
+          <label>
+            Payment method
+            <select name="paymentMethod" required>
+              <option value="">Select payment method</option>
+              <option value="crypto">Crypto</option>
+              <option value="paypal">PayPal</option>
+            </select>
+            <span class="field-error" data-error-for="paymentMethod"></span>
+          </label>
+          <label>
+            Discount code
+            <input name="discountCode" value="SUMMER" readonly aria-readonly="true" />
+            <span class="field-error" data-error-for="discountCode"></span>
+          </label>
+          <label>
+            Order notes
+            <textarea name="notes" rows="4" placeholder="Optional order notes, preferred contact time, or shipping instructions"></textarea>
+          </label>
           <div class="form-actions">
-            <button class="button primary" type="submit" id="submitQuoteButton">Submit order request</button>
-            <button class="button secondary" type="button" id="copyQuoteButton">Copy request</button>
-            <button class="button ghost" type="button" id="clearQuoteButton">Clear cart</button>
+            <button class="button primary" type="submit" id="placeOrderButton">Place order</button>
+            <button class="button ghost" type="button" id="clearCartButton">Clear cart</button>
           </div>
-          <p class="form-note" id="quoteStatus" role="status" aria-live="polite"></p>
+          <p class="form-note" id="orderStatus" role="status" aria-live="polite"></p>
+          <div class="order-confirmation" id="orderConfirmation" hidden></div>
         </form>
       </section>
 
-      <section class="account-section" id="account" aria-labelledby="account-title">
-        <div>
-          <p class="eyebrow">Client access</p>
-          <h2 id="account-title">Request account or sign in</h2>
-          <p>
-            This static MVP does not include backend authentication. Account requests are saved
-            locally for testing, and the client dashboard sign-in is shown as a backend-ready
-            placeholder only.
-          </p>
-        </div>
-
-        <div class="account-panel">
-          <div class="account-tabs" role="tablist" aria-label="Client access options">
-            <button class="tab-button active" type="button" role="tab" aria-selected="true" aria-controls="accountRequestForm" id="requestAccountTab">Request account access</button>
-            <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="signInForm" id="signInTab">Existing client sign-in</button>
-          </div>
-
-          <form class="account-form account-tab-panel active" id="accountRequestForm" role="tabpanel" aria-labelledby="requestAccountTab" novalidate>
-            <div class="form-grid">
-              <label>
-                Company name
-                <input name="company" autocomplete="organization" required />
-                <span class="field-error" data-error-for="account-company"></span>
-              </label>
-              <label>
-                Contact name
-                <input name="contactName" autocomplete="name" required />
-                <span class="field-error" data-error-for="account-contactName"></span>
-              </label>
-              <label>
-                Email
-                <input name="email" type="email" autocomplete="email" required />
-                <span class="field-error" data-error-for="account-email"></span>
-              </label>
-              <label>
-                Phone / WhatsApp / Telegram
-                <input name="messaging" autocomplete="tel" required />
-                <span class="field-error" data-error-for="account-messaging"></span>
-              </label>
-              <label>
-                Buyer type
-                <select name="buyerType" required>
-                  <option value="">Select buyer type</option>
-                  <option>Clinic</option>
-                  <option>Pharmacy</option>
-                  <option>Lab</option>
-                  <option>Distributor</option>
-                  <option>Reseller</option>
-                  <option>Other</option>
-                </select>
-                <span class="field-error" data-error-for="account-buyerType"></span>
-              </label>
-              <label>
-                Destination country
-                <input name="destination" autocomplete="country-name" required />
-                <span class="field-error" data-error-for="account-destination"></span>
-              </label>
-            </div>
-            <label>
-              Message
-              <textarea name="message" rows="4" placeholder="Product categories, expected volume, documentation needs, or onboarding notes"></textarea>
-            </label>
-            <label class="checkbox-line">
-              <input name="reviewAcknowledgement" type="checkbox" value="yes" required />
-              I understand WWB sales review is required before quote confirmation.
-              <span class="field-error" data-error-for="account-reviewAcknowledgement"></span>
-            </label>
-            <button class="button primary" type="submit" id="submitAccountButton">Submit account request</button>
-            <p class="form-note" id="accountStatus" role="status" aria-live="polite"></p>
-          </form>
-
-          <form class="account-form account-tab-panel" id="signInForm" role="tabpanel" aria-labelledby="signInTab" hidden>
-            <div class="form-grid">
-              <label>
-                Email
-                <input name="email" type="email" autocomplete="email" disabled />
-              </label>
-              <label>
-                Password
-                <input name="password" type="password" autocomplete="current-password" disabled />
-              </label>
-            </div>
-            <button class="button secondary" type="button" disabled>Backend required</button>
-            <p class="form-note">Client dashboard requires backend authentication. This static build does not store passwords or create real sessions.</p>
-          </form>
-        </div>
-      </section>
-
-      <section class="feature-band" id="quality" aria-labelledby="quality-title">
+      <section class="feature-band" id="payment" aria-labelledby="payment-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Quality assurance</p>
-            <h2 id="quality-title">Documentation handled through review</h2>
+            <p class="eyebrow">Payment</p>
+            <h2 id="payment-title">Crypto or PayPal after order creation</h2>
           </div>
         </div>
         <div class="quality-grid">
           <article>
             <span class="number">01</span>
-            <h3>COA and batch records</h3>
-            <p>Documentation can be requested with the quote and confirmed against product class and lot availability.</p>
+            <h3>Place order</h3>
+            <p>Your cart and shipping details are sent to the seller backend.</p>
           </article>
           <article>
             <span class="number">02</span>
-            <h3>Storage review</h3>
-            <p>Cold-chain, controlled ambient, packaging, and courier requirements are reviewed before fulfillment.</p>
+            <h3>Receive reference</h3>
+            <p>The site returns a WWB order ID and payment instructions for Crypto or PayPal.</p>
           </article>
           <article>
             <span class="number">03</span>
-            <h3>Restricted review</h3>
-            <p>Regulated products may require buyer qualification, prescriptions, licenses, import approval, or export review.</p>
+            <h3>Seller confirms</h3>
+            <p>Orders are not final until payment and product availability are confirmed by the seller.</p>
           </article>
         </div>
       </section>
 
-      <section class="process-section" id="shipping" aria-labelledby="shipping-title">
-        <div>
-          <p class="eyebrow">Shipping process</p>
-          <h2 id="shipping-title">From request to reviewed shipment</h2>
-        </div>
-        <ol class="process-list">
-          <li><strong>Submit request.</strong> Add products, quantities, destination, buyer type, and document needs.</li>
-          <li><strong>Sales review.</strong> WWB reviews availability, product class, buyer context, and destination requirements.</li>
-          <li><strong>Documentation.</strong> COA, batch docs, MSDS, invoice, or export docs are confirmed where available.</li>
-          <li><strong>Quote confirmation.</strong> A confirmed quote and next steps are provided outside the public catalog.</li>
-        </ol>
-      </section>
-
-      <section class="faq-section" aria-labelledby="faq-title">
+      <section class="faq-section" id="faq" aria-labelledby="faq-title">
         <div>
           <p class="eyebrow">FAQ</p>
-          <h2 id="faq-title">Common sales-desk questions</h2>
+          <h2 id="faq-title">Ordering questions</h2>
         </div>
         <details>
-          <summary>Can I purchase directly from the catalog?</summary>
-          <p>No. The public catalog is a quote-request intake tool. Sales review is required before any order can proceed.</p>
+          <summary>Is this a card checkout?</summary>
+          <p>No. There is no Stripe and no card processing. This MVP creates an order and shows Crypto or PayPal instructions.</p>
         </details>
         <details>
-          <summary>Why does the cart still require sales review?</summary>
-          <p>Displayed prices come from the uploaded list, but availability, account terms, product configuration, destination rules, and documentation requirements can change the final quote.</p>
+          <summary>How does bulk pricing work?</summary>
+          <p>If quantity reaches the listed bulk minimum, the cart applies the bulk unit price. If the list marks bulk as unavailable, the cart shows bulk quote required.</p>
         </details>
         <details>
-          <summary>Which documents can be requested?</summary>
-          <p>COA, batch records, MSDS, invoice, and export documents can be requested and confirmed during review.</p>
-        </details>
-        <details>
-          <summary>Do restricted products require verification?</summary>
-          <p>Yes. Product class and destination may require licenses, prescriptions, business credentials, import approval, or institutional verification.</p>
+          <summary>What does SUMMER do?</summary>
+          <p>SUMMER is auto-filled and locked for now. It applies exactly 5% off priced cart items.</p>
         </details>
       </section>
 
-      <section class="contact-section" aria-labelledby="contact-title">
+      <section class="contact-section" id="contact" aria-labelledby="contact-title">
         <div>
-          <p class="eyebrow">Contact sales desk</p>
-          <h2 id="contact-title">Placeholder contact channel</h2>
-          <p>
-            Add verified sales email, phone, WhatsApp, Telegram, or business address here when ready.
-            Do not publish fake contact details.
-          </p>
+          <p class="eyebrow">Contact seller</p>
+          <h2 id="contact-title">Need help with an order?</h2>
+          <p>Add verified seller email, Telegram, WhatsApp, or business address here when ready.</p>
         </div>
-        <a class="button secondary" href="#quote">Prepare quote request</a>
+        <a class="button secondary" href="#checkout">Go to checkout</a>
       </section>
 
-      <section class="policy-section" id="policies" aria-labelledby="policy-title">
+      <section class="policy-section" id="terms" aria-labelledby="terms-title">
         <div>
           <p class="eyebrow">Policies</p>
-          <h2 id="policy-title">Compliance, privacy, and quote terms</h2>
+          <h2 id="terms-title">Terms, privacy, shipping, and refunds</h2>
         </div>
         <div class="policy-grid">
           <article>
-            <h3>Compliance notice</h3>
-            <p>Regulated products require proper licensing, prescriptions, import approval, or institutional/business verification where applicable.</p>
+            <h3>Terms of Service</h3>
+            <p>This website is operated by the seller for product ordering inquiries and sales. Buyer is responsible for ensuring products are legal to import, possess, purchase, and use in their jurisdiction. Buyer must provide accurate shipping and contact information. Orders are not final until payment is confirmed by seller. Prices may change before payment confirmation. Seller may cancel or refuse orders for stock, shipping, risk, compliance, or payment reasons. No medical advice, dosing advice, or product-use instructions are provided.</p>
           </article>
           <article>
-            <h3>Restricted products policy</h3>
-            <p>Injectables, hormones, prescription items, raw materials, and export-sensitive products are not available through unrestricted checkout.</p>
+            <h3>Import and customs</h3>
+            <p>Buyer accepts responsibility for customs, import delays, seizures, local restrictions, and destination rules where applicable.</p>
           </article>
           <article>
-            <h3>Privacy policy</h3>
-            <p>This static build stores draft quote data locally in your browser. A production backend must define retention, access control, and deletion processes.</p>
+            <h3>Privacy Policy</h3>
+            <p>Collected data includes name, email, phone/contact, address, order items, payment method, and notes. It is used for order processing, seller contact, risk review, and support. Order details are sent to the seller through a Discord webhook. The site does not collect card data. Data retention and deletion contact details should be added by the seller.</p>
           </article>
           <article>
-            <h3>Terms of use</h3>
-            <p>Catalog content is for B2B inquiry and sales review. It is not medical advice, dosing guidance, or a public pharmacy service.</p>
+            <h3>Shipping Policy</h3>
+            <p>Buyer must enter an accurate address. Shipping cost and timing may be confirmed after order if not included. Seller confirms shipping route before fulfillment. Tracking is provided if available. Lost or damaged package handling is reviewed case-by-case.</p>
           </article>
           <article>
-            <h3>Refund / cancellation / quote policy</h3>
-            <p>Quotes are not orders. Payment, cancellation, replacement, or refund terms must be confirmed by sales desk before fulfillment.</p>
+            <h3>Refund / Replacement Policy</h3>
+            <p>Orders can be cancelled before payment or before shipment at seller discretion. Paid orders are reviewed case-by-case. Crypto payments may be irreversible. Replacement or refund depends on tracking, evidence, and seller review. PayPal terms may apply separately.</p>
           </article>
           <article>
-            <h3>Documentation policy</h3>
-            <p>Documentation availability depends on product class, lot, source paperwork, destination rules, and buyer verification.</p>
+            <h3>Payment Terms</h3>
+            <p>Crypto and PayPal are the supported MVP methods. Do not send payment without the order reference and seller instructions returned after checkout.</p>
           </article>
         </div>
       </section>
     </main>
 
-    <button class="mobile-quote" id="mobileQuoteButton" type="button" aria-controls="quote">
-      Quote bag <span id="mobileQuoteCount">0</span>
+    <button class="mobile-cart" id="mobileCartButton" type="button" aria-controls="checkout">
+      Cart <span id="mobileCartCount">0</span>
     </button>
 
     <dialog class="product-dialog" id="productDialog" aria-labelledby="dialogTitle">
@@ -517,17 +297,16 @@
     <footer class="site-footer">
       <div>
         <strong>WWB / Wuhan Wansheng Biotechnology</strong>
-        <p>B2B quote-request portal for reviewed supply inquiries.</p>
+        <p>Product ordering website with cart and backend order notifications.</p>
       </div>
       <div>
-        <a href="#quote">Quote request</a>
-        <a href="#account">Account access</a>
-        <a href="#policies">Policies</a>
+        <a href="#catalog">Catalog</a>
+        <a href="#checkout">Checkout</a>
+        <a href="#terms">Policies</a>
       </div>
     </footer>
 
     <script src="data/products.js"></script>
-    <script src="js/api.js"></script>
     <script src="js/state.js"></script>
     <script src="js/validation.js"></script>
     <script src="app.js"></script>
