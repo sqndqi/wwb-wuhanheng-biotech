@@ -29,15 +29,15 @@
 
   async function requestAccountAccess(payload) {
     await delay(350);
-    if (!payload?.company || !payload?.email) {
-      throw new Error("Company and email are required for account access requests.");
+    if (payload?.username?.toLowerCase() !== "tom" || payload?.password !== "wtv") {
+      throw new Error("Invalid demo credentials.");
     }
 
     return {
       reference: reference("AC"),
       submittedAt: new Date().toISOString(),
-      status: "Pending account review",
-      payload,
+      status: "Demo account access granted",
+      payload: { username: payload.username },
     };
   }
 

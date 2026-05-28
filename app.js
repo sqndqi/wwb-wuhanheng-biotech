@@ -88,6 +88,17 @@
     return Number(item.unitPrice) * Math.max(1, Number(item.quantity) || 1);
   }
 
+  function discountFor(code, subtotal) {
+    if (String(code || "").trim().toUpperCase() !== "SUMMER" || !subtotal) {
+      return { code: "", amount: 0, label: "" };
+    }
+    return {
+      code: "SUMMER",
+      amount: Math.round(subtotal * 0.1),
+      label: "SUMMER discount applied: 10% off priced items",
+    };
+  }
+
   function initFilters() {
     const categories = Object.entries(window.WWBData.categoryProfiles).map(([value, profile]) => ({
       value,
@@ -261,6 +272,9 @@
   function renderQuoteBag() {
     const items = state.getQuoteItems();
     const estimatedTotal = items.reduce((sum, item) => sum + (itemSubtotal(item) || 0), 0);
+    const savedQuote = state.getForm("quoteForm");
+    const discount = discountFor(savedQuote.discountCode, estimatedTotal);
+    const totalAfterDiscount = Math.max(0, estimatedTotal - discount.amount);
     const hasQuoteItems = items.some((item) => item.quoteRequired);
     els.quoteCount.textContent = items.length;
     els.mobileQuoteCount.textContent = items.length;
@@ -309,6 +323,8 @@
         <div class="quote-total">
           <span>Estimated priced-item subtotal</span>
           <strong>$${estimatedTotal.toLocaleString()}</strong>
+          ${discount.amount ? `<span>${text(discount.label)}</span><strong>-$${discount.amount.toLocaleString()}</strong>` : ""}
+          ${discount.amount ? `<span>Estimated total after discount</span><strong>$${totalAfterDiscount.toLocaleString()}</strong>` : ""}
           ${hasQuoteItems ? `<p>Quote/restricted items need sales confirmation before a final total is issued.</p>` : ""}
         </div>
       </div>
@@ -441,13 +457,12 @@
       "Selected products:",
       ...items.map((item) => `- ${item.name} | Qty: ${item.quantity} | Format: ${item.format} | Price/status: ${itemSubtotal(item) ? `$${itemSubtotal(item)}` : item.priceType} | Review: ${item.reviewLabel}`),
       "",
-      `Company: ${data.company || ""}`,
       `Contact: ${data.contactName || ""}`,
       `Email: ${data.email || ""}`,
       `Phone / WhatsApp / Telegram: ${data.messaging || ""}`,
       `Destination country: ${data.destination || ""}`,
       `Buyer type: ${data.buyerType || ""}`,
-      `Documentation needed: ${(data.documents || []).join(", ") || "Not specified"}`,
+      `Discount code: ${String(data.discountCode || "").trim().toUpperCase() || "None"}`,
       `Shipping requirements: ${(data.shipping || []).join(", ") || "Not specified"}`,
       `Notes: ${data.notes || ""}`,
     ].join("\n");
@@ -535,10 +550,11 @@
     });
 
     els.quoteForm.addEventListener("input", () => state.setForm("quoteForm", formDataForStorage(els.quoteForm)));
-    els.quoteForm.addEventListener("change", () => state.setForm("quoteForm", formDataForStorage(els.quoteForm)));
-    els.accountForm.addEventListener("input", () => state.setForm("accountForm", formDataForStorage(els.accountForm)));
-    els.accountForm.addEventListener("change", () => state.setForm("accountForm", formDataForStorage(els.accountForm)));
-
+    els.quoteForm.addEventListener("input", renderQuoteBag);
+    els.quoteForm.addEventListener("change", () => {
+      state.setForm("quoteForm", formDataForStorage(els.quoteForm));
+      renderQuoteBag();
+    });
     els.copyQuoteButton.addEventListener("click", () => copyText(lastQuoteText || quoteText(), els.quoteStatus));
 
     els.quoteForm.addEventListener("submit", async (event) => {
@@ -587,9 +603,9 @@
       try {
         const result = await api.requestAccountAccess(data);
         state.saveAccessRequest(result);
-        state.setForm("accountForm", {});
         els.accountForm.reset();
-        els.accountStatus.textContent = `Account access request ${result.reference} saved locally.`;
+        sessionStorage.setItem("wwb.demoClient", JSON.stringify({ username: "tom", loggedInAt: new Date().toISOString() }));
+        els.accountStatus.textContent = `Demo account active for tom. This is local MVP access only.`;
       } catch (error) {
         els.accountStatus.textContent = error.message;
       } finally {
@@ -636,7 +652,6 @@
     renderCategoryCards();
     renderFeaturedProducts();
     restoreForm(els.quoteForm, "quoteForm");
-    restoreForm(els.accountForm, "accountForm");
     renderQuoteBag();
     wireEvents();
     currentProducts = await api.fetchCatalog();

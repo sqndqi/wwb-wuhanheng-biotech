@@ -216,11 +216,6 @@
         <form class="quote-form" id="quoteForm" novalidate>
           <div class="form-grid">
             <label>
-              Company name
-              <input name="company" autocomplete="organization" required />
-              <span class="field-error" data-error-for="company"></span>
-            </label>
-            <label>
               Contact name
               <input name="contactName" autocomplete="name" required />
               <span class="field-error" data-error-for="contactName"></span>
@@ -252,16 +247,12 @@
               </select>
               <span class="field-error" data-error-for="buyerType"></span>
             </label>
+            <label>
+              Discount code
+              <input name="discountCode" placeholder="SUMMER" autocomplete="off" />
+              <span class="field-error" data-error-for="discountCode"></span>
+            </label>
           </div>
-
-          <fieldset>
-            <legend>Documentation needed</legend>
-            <label><input type="checkbox" name="documents" value="COA" /> COA</label>
-            <label><input type="checkbox" name="documents" value="Batch docs" /> Batch docs</label>
-            <label><input type="checkbox" name="documents" value="MSDS" /> MSDS</label>
-            <label><input type="checkbox" name="documents" value="Invoice" /> Invoice</label>
-            <label><input type="checkbox" name="documents" value="Export docs" /> Export docs</label>
-          </fieldset>
 
           <fieldset>
             <legend>Shipping requirements</legend>
@@ -286,66 +277,28 @@
 
       <section class="account-section" id="account" aria-labelledby="account-title">
         <div>
-          <p class="eyebrow">Account onboarding</p>
-          <h2 id="account-title">Request account access</h2>
+          <p class="eyebrow">Client access</p>
+          <h2 id="account-title">MVP demo account</h2>
           <p>
-            Authentication is not active on this static GitHub Pages build. This form collects an
-            access request only; it does not create a session, store a password, or pretend the
-            client is logged in.
+            Backend authentication is not connected yet. For this static MVP, use the local demo
+            account username <strong>tom</strong> and password <strong>wtv</strong>. This does not
+            create a real protected session.
           </p>
         </div>
         <form class="account-form" id="accountForm" novalidate>
           <div class="form-grid">
             <label>
-              Company
-              <input name="company" required />
-              <span class="field-error" data-error-for="account-company"></span>
+              Username
+              <input name="username" autocomplete="username" required />
+              <span class="field-error" data-error-for="account-username"></span>
             </label>
             <label>
-              Contact name
-              <input name="contactName" required />
-              <span class="field-error" data-error-for="account-contactName"></span>
-            </label>
-            <label>
-              Email
-              <input name="email" type="email" required />
-              <span class="field-error" data-error-for="account-email"></span>
-            </label>
-            <label>
-              Country / region
-              <input name="country" required />
-              <span class="field-error" data-error-for="account-country"></span>
-            </label>
-            <label>
-              Buyer type
-              <select name="buyerType" required>
-                <option value="">Select buyer type</option>
-                <option>Clinic</option>
-                <option>Pharmacy</option>
-                <option>Lab</option>
-                <option>Distributor</option>
-                <option>Other business</option>
-              </select>
-              <span class="field-error" data-error-for="account-buyerType"></span>
-            </label>
-            <label>
-              Verification documents available
-              <select name="verificationDocs" required>
-                <option value="">Select one</option>
-                <option>Business registration</option>
-                <option>Pharmacy or clinic license</option>
-                <option>Lab or institutional credential</option>
-                <option>Distributor documentation</option>
-                <option>Not ready yet</option>
-              </select>
-              <span class="field-error" data-error-for="account-verificationDocs"></span>
+              Password
+              <input name="password" type="password" autocomplete="current-password" required />
+              <span class="field-error" data-error-for="account-password"></span>
             </label>
           </div>
-          <label>
-            Access request notes
-            <textarea name="notes" rows="4" placeholder="Tell the sales desk what product classes you need reviewed"></textarea>
-          </label>
-          <button class="button primary" type="submit" id="submitAccountButton">Submit account access request</button>
+          <button class="button primary" type="submit" id="submitAccountButton">Access demo portal</button>
           <p class="form-note" id="accountStatus" role="status" aria-live="polite"></p>
         </form>
       </section>

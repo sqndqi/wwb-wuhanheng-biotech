@@ -43,6 +43,10 @@ Do not add direct checkout links for regulated, prescription, injectable, hormon
 
 The quote bag is stored in `localStorage`. Quote submission is mocked by `js/api.js`, generates a local reference such as `WWB-QR-20260528-1234`, and stores the request in the browser only. The copy button produces an email-ready request summary.
 
+Current MVP discount code: `SUMMER` for 10% off priced items in the quote estimate.
+
+Current MVP demo account: username `tom`, password `wtv`. This only creates a temporary browser session message and is not real authentication.
+
 ## Still Needs Backend
 
 - real client authentication
