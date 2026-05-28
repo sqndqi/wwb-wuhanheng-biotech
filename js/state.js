@@ -39,7 +39,7 @@
       productId: product.id,
       code: variant.sku,
       name: product.name,
-      category: product.categoryLabel,
+      category: product.category,
       variant,
       quantity: 1,
     };

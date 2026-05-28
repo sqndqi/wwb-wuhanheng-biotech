@@ -379,6 +379,13 @@ p {
   background: var(--white);
 }
 
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
 .category-grid,
 .featured-grid {
   display: grid;
@@ -414,6 +421,18 @@ p {
   display: inline-flex;
   width: fit-content;
   min-height: 32px;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0 12px;
+  color: var(--blue-dark);
+  background: #e7f1f8;
+  font-weight: 900;
+}
+
+.family-price {
+  width: fit-content;
+  min-height: 34px;
+  display: inline-flex;
   align-items: center;
   border-radius: 999px;
   padding: 0 12px;
@@ -853,6 +872,23 @@ dd {
   font-size: 0.9rem;
 }
 
+.promo-card,
+.support-note {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #cfe4e1;
+  border-radius: 8px;
+  color: var(--blue-dark);
+  background: #f7fcfb;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.support-note a {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
 .quote-item strong,
 .quote-item span {
   display: block;
@@ -1143,6 +1179,35 @@ fieldset input {
 
 .dialog-header {
   padding-right: 46px;
+}
+
+.variant-table-wrap {
+  max-height: 300px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.variant-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  background: var(--white);
+}
+
+.variant-table th,
+.variant-table td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.variant-table th {
+  color: var(--muted);
+  background: #f7fbfd;
+  font-size: 0.78rem;
+  text-transform: uppercase;
 }
 
 .restricted-warning {

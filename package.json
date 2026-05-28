@@ -1,0 +1,13 @@
+{
+  "name": "wwb-wuhanheng-biotech",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "import:prices": "node scripts/import-pricelist.js",
+    "export:sellauth": "node scripts/export-sellauth-csv.js",
+    "build:catalog": "npm run import:prices && npm run export:sellauth",
+    "sellauth:dry-run": "node scripts/sellauth-sync.js --dry-run",
+    "sellauth:sync": "node scripts/sellauth-sync.js --sync"
+  }
+}

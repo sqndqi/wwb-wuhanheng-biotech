@@ -1,0 +1,2226 @@
+[
+  {
+    "id": "tirzepatide",
+    "name": "Tirzepatide",
+    "category": "Metabolic",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "TR5",
+        "label": "5mg * 10 vials",
+        "dosage": "5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 30
+      },
+      {
+        "sku": "TR10",
+        "label": "10mg * 10 vials",
+        "dosage": "10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 50,
+        "bulkMin": 10,
+        "bulkPrice": 45
+      },
+      {
+        "sku": "TR15",
+        "label": "15mg * 10 vials",
+        "dosage": "15mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 60,
+        "bulkMin": 10,
+        "bulkPrice": 55
+      },
+      {
+        "sku": "TR20",
+        "label": "20mg * 10 vials",
+        "dosage": "20mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 70,
+        "bulkMin": 10,
+        "bulkPrice": 65
+      },
+      {
+        "sku": "TR30",
+        "label": "30mg * 10 vials",
+        "dosage": "30mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 90,
+        "bulkMin": 10,
+        "bulkPrice": 85
+      },
+      {
+        "sku": "TR40",
+        "label": "40mg * 10 vials",
+        "dosage": "40mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 110,
+        "bulkMin": 10,
+        "bulkPrice": 105
+      },
+      {
+        "sku": "TR50",
+        "label": "50mg * 10 vials",
+        "dosage": "50mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 130,
+        "bulkMin": 10,
+        "bulkPrice": 125
+      },
+      {
+        "sku": "TR60",
+        "label": "60mg * 10 vials",
+        "dosage": "60mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 150,
+        "bulkMin": 10,
+        "bulkPrice": 145
+      },
+      {
+        "sku": "TR100",
+        "label": "100mg * 10 vials",
+        "dosage": "100mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 230,
+        "bulkMin": 10,
+        "bulkPrice": 220
+      }
+    ]
+  },
+  {
+    "id": "semaglutide",
+    "name": "Semaglutide",
+    "category": "Metabolic",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "SM2",
+        "label": "2mg * 10 vials",
+        "dosage": "2mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 25,
+        "bulkMin": 10,
+        "bulkPrice": 20
+      },
+      {
+        "sku": "SM5",
+        "label": "5mg * 10 vials",
+        "dosage": "5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 30
+      },
+      {
+        "sku": "SM10",
+        "label": "10mg * 10 vials",
+        "dosage": "10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 50,
+        "bulkMin": 10,
+        "bulkPrice": 45
+      },
+      {
+        "sku": "SM15",
+        "label": "15mg * 10 vials",
+        "dosage": "15mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 60,
+        "bulkMin": 10,
+        "bulkPrice": 55
+      },
+      {
+        "sku": "SM20",
+        "label": "20mg * 10 vials",
+        "dosage": "20mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 70,
+        "bulkMin": 10,
+        "bulkPrice": 65
+      },
+      {
+        "sku": "SM30",
+        "label": "30mg * 10 vials",
+        "dosage": "30mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 90,
+        "bulkMin": 10,
+        "bulkPrice": 85
+      }
+    ]
+  },
+  {
+    "id": "retatrutide",
+    "name": "Retatrutide",
+    "category": "Metabolic",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "RT5",
+        "label": "5mg * 10 vials",
+        "dosage": "5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 55,
+        "bulkMin": 10,
+        "bulkPrice": 50
+      },
+      {
+        "sku": "RT10",
+        "label": "10mg * 10 vials",
+        "dosage": "10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 80,
+        "bulkMin": 10,
+        "bulkPrice": 75
+      },
+      {
+        "sku": "RT15",
+        "label": "15mg * 10 vials",
+        "dosage": "15mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 100,
+        "bulkMin": 10,
+        "bulkPrice": 95
+      },
+      {
+        "sku": "RT20",
+        "label": "20mg * 10 vials",
+        "dosage": "20mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 120,
+        "bulkMin": 10,
+        "bulkPrice": 115
+      },
+      {
+        "sku": "RT30",
+        "label": "30mg * 10 vials",
+        "dosage": "30mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 160,
+        "bulkMin": 10,
+        "bulkPrice": 155
+      },
+      {
+        "sku": "RT40",
+        "label": "40mg * 10 vials",
+        "dosage": "40mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 200,
+        "bulkMin": 10,
+        "bulkPrice": 190
+      },
+      {
+        "sku": "RT50",
+        "label": "50mg * 10 vials",
+        "dosage": "50mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 240,
+        "bulkMin": 10,
+        "bulkPrice": 230
+      },
+      {
+        "sku": "RT60",
+        "label": "60mg * 10 vials",
+        "dosage": "60mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 280,
+        "bulkMin": 10,
+        "bulkPrice": 270
+      }
+    ]
+  },
+  {
+    "id": "tb-500",
+    "name": "TB-500",
+    "category": "Peptides",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "BT5",
+        "label": "5mg * 10 vials",
+        "dosage": "5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 65,
+        "bulkMin": 10,
+        "bulkPrice": 60
+      },
+      {
+        "sku": "B10F",
+        "label": "TB-500 Frag 10mg * 10 vials",
+        "dosage": "TB-500 Frag 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 85,
+        "bulkMin": 10,
+        "bulkPrice": 80
+      },
+      {
+        "sku": "BT10",
+        "label": "10mg * 10 vials",
+        "dosage": "10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 120,
+        "bulkMin": 10,
+        "bulkPrice": 115
+      },
+      {
+        "sku": "BT20",
+        "label": "20mg * 10 vials",
+        "dosage": "20mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 200,
+        "bulkMin": 10,
+        "bulkPrice": 190
+      }
+    ]
+  },
+  {
+    "id": "bpc-157",
+    "name": "BPC 157",
+    "category": "Peptides",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "BC5",
+        "label": "5mg * 10 vials",
+        "dosage": "5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 30
+      },
+      {
+        "sku": "BC10",
+        "label": "10mg * 10 vials",
+        "dosage": "10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 55,
+        "bulkMin": 10,
+        "bulkPrice": 50
+      },
+      {
+        "sku": "BC20",
+        "label": "20mg * 10 vials",
+        "dosage": "20mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 95,
+        "bulkMin": 10,
+        "bulkPrice": 90
+      }
+    ]
+  },
+  {
+    "id": "bpc-tb-kpv-blends",
+    "name": "BPC / TB / KPV blends",
+    "category": "Peptide blends",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "BB10",
+        "label": "BPC157 5mg + TB500 5mg blend, 10mg * 10 vials",
+        "dosage": "BPC157 5mg + TB500 5mg blend, 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 85,
+        "bulkMin": 10,
+        "bulkPrice": 80
+      },
+      {
+        "sku": "BB20",
+        "label": "BPC157 10mg + TB500 10mg blend, 20mg * 10 vials",
+        "dosage": "BPC157 10mg + TB500 10mg blend, 20mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 150,
+        "bulkMin": 10,
+        "bulkPrice": 140
+      },
+      {
+        "sku": "BBK30",
+        "label": "BPC157 10mg + TB500 10mg + KPV 10mg blend, 30mg * 10 vials",
+        "dosage": "BPC157 10mg + TB500 10mg + KPV 10mg blend, 30mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 180,
+        "bulkMin": 10,
+        "bulkPrice": 170
+      }
+    ]
+  },
+  {
+    "id": "glow-klow-blends",
+    "name": "GLOW / KLOW blends",
+    "category": "Peptide blends",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "BBG50",
+        "label": "GLOW GHK-CU 35mg + TB500 10mg + BPC157 5mg, 50mg * 10 vials",
+        "dosage": "GLOW GHK-CU 35mg + TB500 10mg + BPC157 5mg, 50mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 150,
+        "bulkMin": 10,
+        "bulkPrice": 140
+      },
+      {
+        "sku": "BBG70",
+        "label": "GLOW GHK-CU 50mg + TB500 10mg + BPC157 10mg, 70mg * 10 vials",
+        "dosage": "GLOW GHK-CU 50mg + TB500 10mg + BPC157 10mg, 70mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 170,
+        "bulkMin": 10,
+        "bulkPrice": 160
+      },
+      {
+        "sku": "KL80",
+        "label": "KLOW GHK-CU 50mg + TB500 10mg + BPC157 10mg + KPV 10mg, 80mg * 10 vials",
+        "dosage": "KLOW GHK-CU 50mg + TB500 10mg + BPC157 10mg + KPV 10mg, 80mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 190,
+        "bulkMin": 10,
+        "bulkPrice": 180
+      }
+    ]
+  },
+  {
+    "id": "cjc-1295-ipamorelin",
+    "name": "CJC-1295 / Ipamorelin",
+    "category": "Peptides",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "IP2",
+        "label": "Ipamorelin 2mg * 10 vials",
+        "dosage": "Ipamorelin 2mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 30,
+        "bulkMin": 10,
+        "bulkPrice": 25
+      },
+      {
+        "sku": "IP5",
+        "label": "Ipamorelin 5mg * 10 vials",
+        "dosage": "Ipamorelin 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 30
+      },
+      {
+        "sku": "IP10",
+        "label": "Ipamorelin 10mg * 10 vials",
+        "dosage": "Ipamorelin 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 60,
+        "bulkMin": 10,
+        "bulkPrice": 55
+      },
+      {
+        "sku": "CD2",
+        "label": "CJC-1295 with DAC 2mg * 10 vials",
+        "dosage": "CJC-1295 with DAC 2mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 70,
+        "bulkMin": 10,
+        "bulkPrice": 65
+      },
+      {
+        "sku": "CND5",
+        "label": "CJC-1295 without DAC 5mg * 10 vials",
+        "dosage": "CJC-1295 without DAC 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 70,
+        "bulkMin": 10,
+        "bulkPrice": 65
+      },
+      {
+        "sku": "CP10",
+        "label": "CJC-1295 without DAC 5mg + IPA 5mg blend, 10mg * 10 vials",
+        "dosage": "CJC-1295 without DAC 5mg + IPA 5mg blend, 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 90,
+        "bulkMin": 10,
+        "bulkPrice": 85
+      },
+      {
+        "sku": "CND10",
+        "label": "CJC-1295 without DAC 10mg * 10 vials",
+        "dosage": "CJC-1295 without DAC 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 115,
+        "bulkMin": 10,
+        "bulkPrice": 110
+      },
+      {
+        "sku": "CD5",
+        "label": "CJC-1295 with DAC 5mg * 10 vials",
+        "dosage": "CJC-1295 with DAC 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 130,
+        "bulkMin": 10,
+        "bulkPrice": 120
+      },
+      {
+        "sku": "CP20",
+        "label": "CJC-1295 without DAC 10mg + IPA 10mg blend, 20mg * 10 vials",
+        "dosage": "CJC-1295 without DAC 10mg + IPA 10mg blend, 20mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 160,
+        "bulkMin": 10,
+        "bulkPrice": 150
+      },
+      {
+        "sku": "CD10",
+        "label": "CJC-1295 with DAC 10mg * 10 vials",
+        "dosage": "CJC-1295 with DAC 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 240,
+        "bulkMin": 10,
+        "bulkPrice": 230
+      }
+    ]
+  },
+  {
+    "id": "ghk-ghk-cu-ahk-cu",
+    "name": "GHK / GHK-CU / AHK-CU",
+    "category": "Peptides",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "CU50",
+        "label": "GHK-CU 50mg * 10 vials",
+        "dosage": "GHK-CU 50mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 30,
+        "bulkMin": 10,
+        "bulkPrice": 25
+      },
+      {
+        "sku": "GH50",
+        "label": "GHK Basic 50mg * 10 vials",
+        "dosage": "GHK Basic 50mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 30
+      },
+      {
+        "sku": "CU100",
+        "label": "GHK-CU 100mg * 10 vials",
+        "dosage": "GHK-CU 100mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 45,
+        "bulkMin": 10,
+        "bulkPrice": 40
+      },
+      {
+        "sku": "AU100",
+        "label": "AHK-CU 100mg * 10 vials",
+        "dosage": "AHK-CU 100mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 65,
+        "bulkMin": 10,
+        "bulkPrice": 60
+      }
+    ]
+  },
+  {
+    "id": "nad",
+    "name": "NAD+",
+    "category": "Peptides",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "NJ100",
+        "label": "NAD+ 100mg 10ML vial * NAD+ 100mg 10ML vial",
+        "dosage": "NAD+ 100mg 10ML vial",
+        "packageSize": "NAD+ 100mg 10ML vial",
+        "unitLabel": "vial",
+        "price": 15,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "NJ3100",
+        "label": "NAD+ 100mg * 10 vials",
+        "dosage": "NAD+ 100mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 30
+      },
+      {
+        "sku": "NJ250",
+        "label": "NAD+ 250mg * 10 vials",
+        "dosage": "NAD+ 250mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 50,
+        "bulkMin": 10,
+        "bulkPrice": 45
+      },
+      {
+        "sku": "NJ500",
+        "label": "NAD+ 500mg * 10 vials",
+        "dosage": "NAD+ 500mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 70,
+        "bulkMin": 10,
+        "bulkPrice": 65
+      },
+      {
+        "sku": "NJ1000",
+        "label": "NAD+ 1000mg * 10 vials",
+        "dosage": "NAD+ 1000mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 120,
+        "bulkMin": 10,
+        "bulkPrice": 110
+      }
+    ]
+  },
+  {
+    "id": "hgh-191aa-somatropin",
+    "name": "HGH 191AA Somatropin",
+    "category": "Hormone / endocrine",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "H06",
+        "label": "6iu * 10 vials",
+        "dosage": "6iu",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 40,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "H10",
+        "label": "10iu * 10 vials",
+        "dosage": "10iu",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 50,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "H12",
+        "label": "12iu * 10 vials",
+        "dosage": "12iu",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 60,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "H15",
+        "label": "15iu * 10 vials",
+        "dosage": "15iu",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 70,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "H24",
+        "label": "24iu * 10 vials",
+        "dosage": "24iu",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 100,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "H36",
+        "label": "36iu * 10 vials",
+        "dosage": "36iu",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 140,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "H50",
+        "label": "50iu * 10 vials",
+        "dosage": "50iu",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 190,
+        "bulkMin": 10,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "hcg-hmg",
+    "name": "HCG / HMG",
+    "category": "Hormone / endocrine",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "G2K",
+        "label": "HCG 2000IU * 10 vials",
+        "dosage": "HCG 2000IU",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 45,
+        "bulkMin": 10,
+        "bulkPrice": 40
+      },
+      {
+        "sku": "G75",
+        "label": "HMG 75IU * 10 vials",
+        "dosage": "HMG 75IU",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 60,
+        "bulkMin": 10,
+        "bulkPrice": 55
+      },
+      {
+        "sku": "G5K",
+        "label": "HCG 5000IU * 10 vials",
+        "dosage": "HCG 5000IU",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 70,
+        "bulkMin": 10,
+        "bulkPrice": 65
+      },
+      {
+        "sku": "G10K",
+        "label": "HCG 10000IU * 10 vials",
+        "dosage": "HCG 10000IU",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 130,
+        "bulkMin": 10,
+        "bulkPrice": 125
+      }
+    ]
+  },
+  {
+    "id": "tesamorelin-sermorelin",
+    "name": "Tesamorelin / Sermorelin",
+    "category": "Peptides",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "TSM2",
+        "label": "Tesamorelin 2mg * 10 vials",
+        "dosage": "Tesamorelin 2mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 50,
+        "bulkMin": 10,
+        "bulkPrice": 45
+      },
+      {
+        "sku": "SMO5",
+        "label": "Sermorelin Acetate 5mg * 10 vials",
+        "dosage": "Sermorelin Acetate 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 65,
+        "bulkMin": 10,
+        "bulkPrice": 60
+      },
+      {
+        "sku": "TSM5",
+        "label": "Tesamorelin 5mg * 10 vials",
+        "dosage": "Tesamorelin 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 75,
+        "bulkMin": 10,
+        "bulkPrice": 70
+      },
+      {
+        "sku": "SMO10",
+        "label": "Sermorelin Acetate 10mg * 10 vials",
+        "dosage": "Sermorelin Acetate 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 110,
+        "bulkMin": 10,
+        "bulkPrice": 105
+      },
+      {
+        "sku": "TSM10",
+        "label": "Tesamorelin 10mg * 10 vials",
+        "dosage": "Tesamorelin 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 130,
+        "bulkMin": 10,
+        "bulkPrice": 125
+      },
+      {
+        "sku": "SMO15",
+        "label": "Sermorelin Acetate 15mg * 10 vials",
+        "dosage": "Sermorelin Acetate 15mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 175,
+        "bulkMin": 10,
+        "bulkPrice": 165
+      },
+      {
+        "sku": "TSM20",
+        "label": "Tesamorelin 20mg * 10 vials",
+        "dosage": "Tesamorelin 20mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 250,
+        "bulkMin": 10,
+        "bulkPrice": 240
+      }
+    ]
+  },
+  {
+    "id": "selank-semax",
+    "name": "Selank / Semax",
+    "category": "Peptides",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "SK5",
+        "label": "Selank 5mg * 10 vials",
+        "dosage": "Selank 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 30
+      },
+      {
+        "sku": "XA5",
+        "label": "Semax 5mg * 10 vials",
+        "dosage": "Semax 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 30
+      },
+      {
+        "sku": "SK10",
+        "label": "Selank 10mg * 10 vials",
+        "dosage": "Selank 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 55,
+        "bulkMin": 10,
+        "bulkPrice": 50
+      },
+      {
+        "sku": "XA10",
+        "label": "Semax 10mg * 10 vials",
+        "dosage": "Semax 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 55,
+        "bulkMin": 10,
+        "bulkPrice": 50
+      },
+      {
+        "sku": "SK30",
+        "label": "Selank 30mg * 10 vials",
+        "dosage": "Selank 30mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 120,
+        "bulkMin": 10,
+        "bulkPrice": 110
+      },
+      {
+        "sku": "XA30",
+        "label": "Semax 30mg * 10 vials",
+        "dosage": "Semax 30mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 120,
+        "bulkMin": 10,
+        "bulkPrice": 110
+      },
+      {
+        "sku": "NSK30",
+        "label": "NA Selank amidate 30mg * 10 vials",
+        "dosage": "NA Selank amidate 30mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 130,
+        "bulkMin": 10,
+        "bulkPrice": 120
+      },
+      {
+        "sku": "NXA30",
+        "label": "NA Semax amidate 30mg * 10 vials",
+        "dosage": "NA Semax amidate 30mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 130,
+        "bulkMin": 10,
+        "bulkPrice": 120
+      }
+    ]
+  },
+  {
+    "id": "other-peptide-kits",
+    "name": "Other peptide kits",
+    "category": "Peptides",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "AOD2",
+        "label": "AOD9604 2mg * 10 vials",
+        "dosage": "AOD9604 2mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 45,
+        "bulkMin": 10,
+        "bulkPrice": 40
+      },
+      {
+        "sku": "MS10",
+        "label": "MOTS-C 10mg * 10 vials",
+        "dosage": "MOTS-C 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 55,
+        "bulkMin": 10,
+        "bulkPrice": 50
+      },
+      {
+        "sku": "CGL5",
+        "label": "Cagrilintide 5mg * 10 vials",
+        "dosage": "Cagrilintide 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 70,
+        "bulkMin": 10,
+        "bulkPrice": 65
+      },
+      {
+        "sku": "TA5",
+        "label": "Thymosin Alpha-1 5mg * 10 vials",
+        "dosage": "Thymosin Alpha-1 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 75,
+        "bulkMin": 10,
+        "bulkPrice": 70
+      },
+      {
+        "sku": "AOD5",
+        "label": "AOD9604 5mg * 10 vials",
+        "dosage": "AOD9604 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 85,
+        "bulkMin": 10,
+        "bulkPrice": 80
+      },
+      {
+        "sku": "GTT",
+        "label": "Glutathione 1500mg * 10 vials",
+        "dosage": "Glutathione 1500mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 85,
+        "bulkMin": 10,
+        "bulkPrice": 80
+      },
+      {
+        "sku": "CGL10",
+        "label": "Cagrilintide 10mg * 10 vials",
+        "dosage": "Cagrilintide 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 120,
+        "bulkMin": 10,
+        "bulkPrice": 115
+      },
+      {
+        "sku": "TA10",
+        "label": "Thymosin Alpha-1 10mg * 10 vials",
+        "dosage": "Thymosin Alpha-1 10mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 130,
+        "bulkMin": 10,
+        "bulkPrice": 125
+      },
+      {
+        "sku": "MS40",
+        "label": "MOTS-C 40mg * 10 vials",
+        "dosage": "MOTS-C 40mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 170,
+        "bulkMin": 10,
+        "bulkPrice": 160
+      },
+      {
+        "sku": "PTD5",
+        "label": "PTD-DBM 5mg * 10 vials",
+        "dosage": "PTD-DBM 5mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 195,
+        "bulkMin": 10,
+        "bulkPrice": 185
+      }
+    ]
+  },
+  {
+    "id": "bac-water",
+    "name": "BAC Water",
+    "category": "Supplies",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "BA03",
+        "label": "3ml * 10 vials",
+        "dosage": "3ml",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 10,
+        "bulkMin": 10,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "oral-metabolic-products",
+    "name": "Oral metabolic products",
+    "category": "Orals",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "SM500",
+        "label": "Semaglutide 500mcg x 25 tablets * Semaglutide 500mcg x 25 tablets",
+        "dosage": "Semaglutide 500mcg x 25 tablets",
+        "packageSize": "Semaglutide 500mcg x 25 tablets",
+        "unitLabel": "bottle",
+        "price": 20,
+        "bulkMin": 10,
+        "bulkPrice": 18
+      },
+      {
+        "sku": "TR500",
+        "label": "Tirzepatide 500mcg x 25 tablets * Tirzepatide 500mcg x 25 tablets",
+        "dosage": "Tirzepatide 500mcg x 25 tablets",
+        "packageSize": "Tirzepatide 500mcg x 25 tablets",
+        "unitLabel": "bottle",
+        "price": 20,
+        "bulkMin": 10,
+        "bulkPrice": 18
+      },
+      {
+        "sku": "AMQ50",
+        "label": "5-amino-1mq 50mg x 25 tablets * 5-amino-1mq 50mg x 25 tablets",
+        "dosage": "5-amino-1mq 50mg x 25 tablets",
+        "packageSize": "5-amino-1mq 50mg x 25 tablets",
+        "unitLabel": "bottle",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 33
+      },
+      {
+        "sku": "BC500",
+        "label": "BPC-157 500mcg x 60 capsules * BPC-157 500mcg x 60 capsules",
+        "dosage": "BPC-157 500mcg x 60 capsules",
+        "packageSize": "BPC-157 500mcg x 60 capsules",
+        "unitLabel": "bottle",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 33
+      },
+      {
+        "sku": "T500",
+        "label": "Tesofensine 500mcg x 100 tablets * Tesofensine 500mcg x 100 tablets",
+        "dosage": "Tesofensine 500mcg x 100 tablets",
+        "packageSize": "Tesofensine 500mcg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 33
+      },
+      {
+        "sku": "B157",
+        "label": "BPC-157 Arg 500mcg x 100 tablets * BPC-157 Arg 500mcg x 100 tablets",
+        "dosage": "BPC-157 Arg 500mcg x 100 tablets",
+        "packageSize": "BPC-157 Arg 500mcg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 45,
+        "bulkMin": 10,
+        "bulkPrice": 43
+      },
+      {
+        "sku": "SMM3",
+        "label": "Semaglutide 3mg x 25 tablets * Semaglutide 3mg x 25 tablets",
+        "dosage": "Semaglutide 3mg x 25 tablets",
+        "packageSize": "Semaglutide 3mg x 25 tablets",
+        "unitLabel": "bottle",
+        "price": 55,
+        "bulkMin": 10,
+        "bulkPrice": 53
+      },
+      {
+        "sku": "BAM50",
+        "label": "BAM15 50mg x 60 capsules * BAM15 50mg x 60 capsules",
+        "dosage": "BAM15 50mg x 60 capsules",
+        "packageSize": "BAM15 50mg x 60 capsules",
+        "unitLabel": "bottle",
+        "price": 80,
+        "bulkMin": 10,
+        "bulkPrice": 75
+      },
+      {
+        "sku": "SMM7",
+        "label": "Semaglutide 7mg x 25 tablets * Semaglutide 7mg x 25 tablets",
+        "dosage": "Semaglutide 7mg x 25 tablets",
+        "packageSize": "Semaglutide 7mg x 25 tablets",
+        "unitLabel": "bottle",
+        "price": 85,
+        "bulkMin": 10,
+        "bulkPrice": 83
+      },
+      {
+        "sku": "ORF6",
+        "label": "Orforglipron 6mg x 100 tablets * Orforglipron 6mg x 100 tablets",
+        "dosage": "Orforglipron 6mg x 100 tablets",
+        "packageSize": "Orforglipron 6mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 115,
+        "bulkMin": 10,
+        "bulkPrice": 110
+      },
+      {
+        "sku": "ORF12",
+        "label": "Orforglipron 12mg x 100 tablets * Orforglipron 12mg x 100 tablets",
+        "dosage": "Orforglipron 12mg x 100 tablets",
+        "packageSize": "Orforglipron 12mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 195,
+        "bulkMin": 10,
+        "bulkPrice": 190
+      }
+    ]
+  },
+  {
+    "id": "slu-pp-332-oral-series",
+    "name": "SLU-PP-332 oral series",
+    "category": "Orals",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "SLU250",
+        "label": "250mcg x 100 tablets * 250mcg x 100 tablets",
+        "dosage": "250mcg x 100 tablets",
+        "packageSize": "250mcg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 18,
+        "bulkMin": 10,
+        "bulkPrice": 16
+      },
+      {
+        "sku": "SLU500",
+        "label": "500mcg x 100 tablets * 500mcg x 100 tablets",
+        "dosage": "500mcg x 100 tablets",
+        "packageSize": "500mcg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 20,
+        "bulkMin": 10,
+        "bulkPrice": 18
+      },
+      {
+        "sku": "SLU1000",
+        "label": "1mg x 100 tablets * 1mg x 100 tablets",
+        "dosage": "1mg x 100 tablets",
+        "packageSize": "1mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 23,
+        "bulkMin": 10,
+        "bulkPrice": 21
+      },
+      {
+        "sku": "SLU5",
+        "label": "5mg x 100 tablets * 5mg x 100 tablets",
+        "dosage": "5mg x 100 tablets",
+        "packageSize": "5mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 38,
+        "bulkMin": 10,
+        "bulkPrice": 36
+      },
+      {
+        "sku": "SLU20",
+        "label": "20mg x 100 tablets * 20mg x 100 tablets",
+        "dosage": "20mg x 100 tablets",
+        "packageSize": "20mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 68,
+        "bulkMin": 10,
+        "bulkPrice": 63
+      },
+      {
+        "sku": "SL50",
+        "label": "50mg x 100 tablets * 50mg x 100 tablets",
+        "dosage": "50mg x 100 tablets",
+        "packageSize": "50mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 110,
+        "bulkMin": 10,
+        "bulkPrice": 105
+      },
+      {
+        "sku": "SL100",
+        "label": "100mg x 60 capsules * 100mg x 60 capsules",
+        "dosage": "100mg x 60 capsules",
+        "packageSize": "100mg x 60 capsules",
+        "unitLabel": "bottle",
+        "price": 145,
+        "bulkMin": 10,
+        "bulkPrice": 140
+      }
+    ]
+  },
+  {
+    "id": "prescription-oral-review-lines",
+    "name": "Prescription oral review lines",
+    "category": "Orals",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "DT20",
+        "label": "Tadalafil 20mg x 100 tablets * Tadalafil 20mg x 100 tablets",
+        "dosage": "Tadalafil 20mg x 100 tablets",
+        "packageSize": "Tadalafil 20mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 15,
+        "bulkMin": 10,
+        "bulkPrice": 13
+      },
+      {
+        "sku": "MD5",
+        "label": "Minoxidil 5mg x 100 tablets * Minoxidil 5mg x 100 tablets",
+        "dosage": "Minoxidil 5mg x 100 tablets",
+        "packageSize": "Minoxidil 5mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 15,
+        "bulkMin": 10,
+        "bulkPrice": 13
+      },
+      {
+        "sku": "SD100",
+        "label": "Sildenafil 100mg x 100 tablets * Sildenafil 100mg x 100 tablets",
+        "dosage": "Sildenafil 100mg x 100 tablets",
+        "packageSize": "Sildenafil 100mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 15,
+        "bulkMin": 10,
+        "bulkPrice": 13
+      },
+      {
+        "sku": "ISO10",
+        "label": "Isotretinoin 10mg x 100 tablets * Isotretinoin 10mg x 100 tablets",
+        "dosage": "Isotretinoin 10mg x 100 tablets",
+        "packageSize": "Isotretinoin 10mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 18,
+        "bulkMin": 10,
+        "bulkPrice": 16
+      },
+      {
+        "sku": "MB20",
+        "label": "Methylene Blue 20mg x 100 tablets * Methylene Blue 20mg x 100 tablets",
+        "dosage": "Methylene Blue 20mg x 100 tablets",
+        "packageSize": "Methylene Blue 20mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 18,
+        "bulkMin": 10,
+        "bulkPrice": 16
+      },
+      {
+        "sku": "LV5",
+        "label": "Ivermectin 5mg x 100 tablets * Ivermectin 5mg x 100 tablets",
+        "dosage": "Ivermectin 5mg x 100 tablets",
+        "packageSize": "Ivermectin 5mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 20,
+        "bulkMin": 10,
+        "bulkPrice": 18
+      },
+      {
+        "sku": "TM40",
+        "label": "Telmisartan 40mg x 100 tablets * Telmisartan 40mg x 100 tablets",
+        "dosage": "Telmisartan 40mg x 100 tablets",
+        "packageSize": "Telmisartan 40mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 20,
+        "bulkMin": 10,
+        "bulkPrice": 18
+      },
+      {
+        "sku": "DAP30",
+        "label": "Dapoxetine 30mg x 100 tablets * Dapoxetine 30mg x 100 tablets",
+        "dosage": "Dapoxetine 30mg x 100 tablets",
+        "packageSize": "Dapoxetine 30mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 30,
+        "bulkMin": 10,
+        "bulkPrice": 28
+      }
+    ]
+  },
+  {
+    "id": "restricted-endocrine-orals",
+    "name": "Restricted endocrine orals",
+    "category": "Orals",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "CB40",
+        "label": "CLENBUTEROL 40mcg x 100 tablets * CLENBUTEROL 40mcg x 100 tablets",
+        "dosage": "CLENBUTEROL 40mcg x 100 tablets",
+        "packageSize": "CLENBUTEROL 40mcg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 15,
+        "bulkMin": 10,
+        "bulkPrice": 13
+      },
+      {
+        "sku": "CD50",
+        "label": "Clomid 50mg x 100 tablets * Clomid 50mg x 100 tablets",
+        "dosage": "Clomid 50mg x 100 tablets",
+        "packageSize": "Clomid 50mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 20,
+        "bulkMin": 10,
+        "bulkPrice": 18
+      },
+      {
+        "sku": "D10",
+        "label": "DIANABOL 10mg x 100 tablets * DIANABOL 10mg x 100 tablets",
+        "dosage": "DIANABOL 10mg x 100 tablets",
+        "packageSize": "DIANABOL 10mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 20,
+        "bulkMin": 10,
+        "bulkPrice": 18
+      },
+      {
+        "sku": "LZ25",
+        "label": "Letrozole 2.5mg x 100 tablets * Letrozole 2.5mg x 100 tablets",
+        "dosage": "Letrozole 2.5mg x 100 tablets",
+        "packageSize": "Letrozole 2.5mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 20,
+        "bulkMin": 10,
+        "bulkPrice": 18
+      },
+      {
+        "sku": "D20",
+        "label": "DIANABOL 20mg x 100 tablets * DIANABOL 20mg x 100 tablets",
+        "dosage": "DIANABOL 20mg x 100 tablets",
+        "packageSize": "DIANABOL 20mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 25,
+        "bulkMin": 10,
+        "bulkPrice": 23
+      },
+      {
+        "sku": "OXP50",
+        "label": "ANADROL 50mg x 100 tablets * ANADROL 50mg x 100 tablets",
+        "dosage": "ANADROL 50mg x 100 tablets",
+        "packageSize": "ANADROL 50mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 35,
+        "bulkMin": 10,
+        "bulkPrice": 33
+      },
+      {
+        "sku": "D50",
+        "label": "DIANABOL 50mg x 100 tablets * DIANABOL 50mg x 100 tablets",
+        "dosage": "DIANABOL 50mg x 100 tablets",
+        "packageSize": "DIANABOL 50mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 40,
+        "bulkMin": 10,
+        "bulkPrice": 38
+      },
+      {
+        "sku": "X10",
+        "label": "ANAVAR 10mg x 100 tablets * ANAVAR 10mg x 100 tablets",
+        "dosage": "ANAVAR 10mg x 100 tablets",
+        "packageSize": "ANAVAR 10mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 40,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "X25",
+        "label": "ANAVAR 25mg x 100 tablets * ANAVAR 25mg x 100 tablets",
+        "dosage": "ANAVAR 25mg x 100 tablets",
+        "packageSize": "ANAVAR 25mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 55,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "CG25",
+        "label": "Cabergoline 0.25mg x 100 tablets * Cabergoline 0.25mg x 100 tablets",
+        "dosage": "Cabergoline 0.25mg x 100 tablets",
+        "packageSize": "Cabergoline 0.25mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 75,
+        "bulkMin": 10,
+        "bulkPrice": 70
+      },
+      {
+        "sku": "X50",
+        "label": "ANAVAR 50mg x 100 tablets * ANAVAR 50mg x 100 tablets",
+        "dosage": "ANAVAR 50mg x 100 tablets",
+        "packageSize": "ANAVAR 50mg x 100 tablets",
+        "unitLabel": "bottle",
+        "price": 80,
+        "bulkMin": 10,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "injectable-review-lines",
+    "name": "Injectable review lines",
+    "category": "Injectables",
+    "sourceList": "WWB Pricelist 21-5-2026",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "P100",
+        "label": "Test P 100mg * 10ML vial",
+        "dosage": "Test P 100mg",
+        "packageSize": "10ML vial",
+        "unitLabel": "vial",
+        "price": 10,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "C250",
+        "label": "Test Cypionate 250mg * 10ML vial",
+        "dosage": "Test Cypionate 250mg",
+        "packageSize": "10ML vial",
+        "unitLabel": "vial",
+        "price": 15,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "E250",
+        "label": "Test Enanthate 250mg * 10ML vial",
+        "dosage": "Test Enanthate 250mg",
+        "packageSize": "10ML vial",
+        "unitLabel": "vial",
+        "price": 15,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "N200",
+        "label": "DECA 200mg * 10ML vial",
+        "dosage": "DECA 200mg",
+        "packageSize": "10ML vial",
+        "unitLabel": "vial",
+        "price": 16,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "R100",
+        "label": "Tren A 100mg * 10ML vial",
+        "dosage": "Tren A 100mg",
+        "packageSize": "10ML vial",
+        "unitLabel": "vial",
+        "price": 20,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "M100",
+        "label": "Primobolan E 100mg * 10ML vial",
+        "dosage": "Primobolan E 100mg",
+        "packageSize": "10ML vial",
+        "unitLabel": "vial",
+        "price": 45,
+        "bulkMin": 10,
+        "bulkPrice": null
+      },
+      {
+        "sku": "LC120",
+        "label": "Lipo-C 120mg blend * 10ML vial",
+        "dosage": "Lipo-C 120mg blend",
+        "packageSize": "10ML vial",
+        "unitLabel": "vial",
+        "price": null,
+        "bulkMin": 10,
+        "bulkPrice": 55
+      },
+      {
+        "sku": "LC500",
+        "label": "L-Carnitine 500mg * 10ML vial",
+        "dosage": "L-Carnitine 500mg",
+        "packageSize": "10ML vial",
+        "unitLabel": "vial",
+        "price": null,
+        "bulkMin": 10,
+        "bulkPrice": 60
+      }
+    ]
+  },
+  {
+    "id": "teriparatide",
+    "name": "Teriparatide",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "TE10",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 205,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "abaloparatide",
+    "name": "Abaloparatide",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "AB10",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 288,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "testagen",
+    "name": "Testagen",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "TT20",
+        "label": "20mg * 10 vials",
+        "dosage": "20mg",
+        "packageSize": "10 vials",
+        "unitLabel": "kit",
+        "price": 175,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "ky19382",
+    "name": "KY19382",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "KY19",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 102,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "infigratinib-bgj-398",
+    "name": "Infigratinib (BGJ-398)",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "BG39",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 126,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "erdafitinib",
+    "name": "Erdafitinib",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "ED01",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 156,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "tyra-300-dabogratinib",
+    "name": "TYRA-300 (Dabogratinib)",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "TYR3",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 612,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "asp5878",
+    "name": "ASP5878",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "AS58",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 186,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "debio-1347",
+    "name": "Debio 1347",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "DE13",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 192,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "azd4547",
+    "name": "AZD4547",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "AZ45",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 126,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "pemigatinib",
+    "name": "Pemigatinib",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "PE01",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 204,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "futibatinib",
+    "name": "Futibatinib",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "FU01",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 234,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "rogaratinib",
+    "name": "Rogaratinib",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "RO01",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 216,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "vosoritide",
+    "name": "Vosoritide",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "VO11",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 714,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "navepegritide",
+    "name": "Navepegritide",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "NV22",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 672,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "kartogenin",
+    "name": "Kartogenin",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "KG10",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 57,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "lorecivivint",
+    "name": "Lorecivivint",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "LV90",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 288,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "sprifermin",
+    "name": "Sprifermin",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "SF18",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 960,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "tpx-100",
+    "name": "TPX-100",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "TX10",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 312,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "lna043",
+    "name": "LNA043",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "LN43",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 540,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "bmp-2",
+    "name": "BMP-2",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "BM02",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 1680,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "bmp-7",
+    "name": "BMP-7",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "BM07",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 1860,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "romosozumab",
+    "name": "Romosozumab",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "RM85",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 1320,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "way-316606",
+    "name": "WAY-316606",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "WY66",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 114,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "recifercept",
+    "name": "Recifercept",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "RC77",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 588,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "chir99021",
+    "name": "CHIR99021",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "CH21",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 51,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "sb431542",
+    "name": "SB431542",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "SB42",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 39,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "purmorphamine",
+    "name": "Purmorphamine",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "PM55",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 72,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "bio-6-bio",
+    "name": "BIO (6-BIO)",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "BI06",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 87,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "cbl0137",
+    "name": "CBL0137",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "CB37",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 186,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "dynasore",
+    "name": "Dynasore",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "DY34",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 105,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "pitstop-2",
+    "name": "Pitstop 2",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "PT02",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 168,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "dynole-34-2",
+    "name": "Dynole 34-2",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "DN42",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 192,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "chlorpromazine",
+    "name": "Chlorpromazine",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "CP25",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 21,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  },
+  {
+    "id": "meclozine",
+    "name": "Meclozine",
+    "category": "Raw powders",
+    "sourceList": "WWB Partnership Pricelist",
+    "description": "Available variants listed below. Availability and fulfillment are confirmed when the order is reviewed.",
+    "variants": [
+      {
+        "sku": "MZ10",
+        "label": "1g raw powder * 1g raw powder",
+        "dosage": "1g raw powder",
+        "packageSize": "1g raw powder",
+        "unitLabel": "g",
+        "price": 20,
+        "bulkMin": null,
+        "bulkPrice": null
+      }
+    ]
+  }
+]

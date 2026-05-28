@@ -1,8 +1,7 @@
 (function () {
   window.WWB_API_BASE_URL = window.WWB_API_BASE_URL || "http://localhost:3000";
 
-  const products = window.WWBData.products;
-  const optionSets = window.WWBData.optionSets;
+  let products = [];
   const state = window.WWBState;
   const validation = window.WWBValidation;
 
@@ -47,45 +46,68 @@
     return `$${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
   }
 
+  function numeric(value) {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
   function productById(id) {
     return products.find((product) => product.id === id);
   }
 
+  function variants(product) {
+    return product?.variants || [];
+  }
+
   function variantBySku(product, sku) {
-    return product?.options.find((variant) => variant.sku === sku) || product?.options[0];
+    return variants(product).find((variant) => variant.sku === sku) || variants(product)[0];
   }
 
   function minPrice(product) {
-    const prices = product.options.map((variant) => variant.basePrice).filter(Number);
+    const prices = variants(product).flatMap((variant) => [numeric(variant.price), numeric(variant.bulkPrice)]).filter((value) => value !== null);
     return prices.length ? Math.min(...prices) : Number.MAX_SAFE_INTEGER;
   }
 
+  function productPriceType(product) {
+    const hasBase = variants(product).some((variant) => numeric(variant.price) !== null);
+    const hasBulk = variants(product).some((variant) => numeric(variant.bulkPrice) !== null);
+    if (hasBase) return "fixed";
+    if (hasBulk) return "from";
+    return "quote";
+  }
+
+  function productPriceLabel(product) {
+    const price = minPrice(product);
+    if (price === Number.MAX_SAFE_INTEGER) return "Quote required";
+    return `From ${money(price)}`;
+  }
+
   function priceLine(variant) {
-    if (Number(variant.basePrice)) return `${money(variant.basePrice)} / ${variant.unitLabel || "unit"}`;
-    if (Number(variant.bulkPrice)) return `Bulk from ${money(variant.bulkPrice)}`;
-    return "Price on request";
+    if (numeric(variant.price) !== null) return `${money(variant.price)} / ${variant.unitLabel || "unit"}`;
+    if (numeric(variant.bulkPrice) !== null) return `From ${money(variant.bulkPrice)} / ${variant.unitLabel || "unit"}`;
+    return "Quote required";
   }
 
   function bulkLine(variant) {
-    if (!variant.bulkMinimum) return "Bulk price by order";
-    if (Number(variant.bulkPrice)) return `${variant.bulkMinimum}+ ${variant.unitLabel || "units"}: ${money(variant.bulkPrice)} each`;
-    return `${variant.bulkMinimum}+ ${variant.unitLabel || "units"}: bulk quote`;
+    if (!variant.bulkMin) return "Bulk price by order";
+    if (numeric(variant.bulkPrice) !== null) return `${variant.bulkMin}+ ${variant.unitLabel || "units"}: ${money(variant.bulkPrice)} each`;
+    return `${variant.bulkMin}+ ${variant.unitLabel || "units"}: bulk quote`;
   }
 
   function lineTotals(item) {
     const quantity = Math.max(1, Number(item.quantity) || 1);
-    const variant = item.variant;
-    let unitPrice = Number(variant.basePrice) || null;
+    const variant = item.variant || {};
+    let unitPrice = numeric(variant.price);
     let bulkApplied = false;
-    let needsPrice = !unitPrice;
+    let needsPrice = unitPrice === null;
 
-    if (variant.bulkMinimum && quantity >= variant.bulkMinimum) {
-      if (Number(variant.bulkPrice)) {
-        unitPrice = Number(variant.bulkPrice);
+    if (variant.bulkMin && quantity >= Number(variant.bulkMin)) {
+      const bulk = numeric(variant.bulkPrice);
+      if (bulk !== null) {
+        unitPrice = bulk;
         bulkApplied = true;
         needsPrice = false;
-      } else if (variant.bulkQuoteRequired) {
-        unitPrice = null;
+      } else if (unitPrice === null) {
         needsPrice = true;
       }
     }
@@ -95,12 +117,12 @@
       unitPrice,
       bulkApplied,
       needsPrice,
-      subtotal: unitPrice ? unitPrice * quantity : null,
+      subtotal: unitPrice !== null ? Math.round(unitPrice * quantity * 100) / 100 : null,
     };
   }
 
   function cartTotals(items = state.getCartItems()) {
-    const subtotal = items.reduce((sum, item) => sum + (lineTotals(item).subtotal || 0), 0);
+    const subtotal = Math.round(items.reduce((sum, item) => sum + (lineTotals(item).subtotal || 0), 0) * 100) / 100;
     const discount = Math.round(subtotal * 0.05 * 100) / 100;
     const afterDiscount = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
     const shipping = subtotal >= 150 || subtotal === 0 ? 0 : 25;
@@ -118,46 +140,53 @@
   }
 
   function initFilters() {
-    const categories = Object.entries(window.WWBData.categoryProfiles);
-    populate(els.category, categories.map(([key]) => key), (key) => window.WWBData.categoryProfiles[key].label);
-    populate(els.priceType, optionSets.priceTypes, (value) => (value === "fixed" ? "Priced" : value === "restricted" ? "Restricted" : "Price on request"));
-    populate(els.source, optionSets.sources);
+    const categories = Array.from(new Set(products.map((product) => product.category))).sort();
+    const sources = Array.from(new Set(products.map((product) => product.sourceList))).sort();
+    populate(els.category, categories);
+    populate(els.priceType, ["fixed", "from", "quote"], (value) => {
+      if (value === "fixed") return "Priced";
+      if (value === "from") return "From / bulk priced";
+      return "Quote required";
+    });
+    populate(els.source, sources);
   }
 
   function visibleProducts() {
     const query = filters.search.trim().toLowerCase();
     return products
       .filter((product) => {
-        const haystack = [product.name, product.code, product.categoryLabel, product.productType, product.warehouse, ...product.options.flatMap((variant) => [variant.sku, variant.label])]
+        const haystack = [product.name, product.category, product.sourceList, ...variants(product).flatMap((variant) => [variant.sku, variant.label, variant.dosage, variant.packageSize])]
           .join(" ")
           .toLowerCase();
         return (
           (!query || haystack.includes(query)) &&
           (filters.category === "all" || product.category === filters.category) &&
-          (filters.priceType === "all" || product.priceType === filters.priceType) &&
-          (filters.source === "all" || product.warehouse === filters.source)
+          (filters.priceType === "all" || productPriceType(product) === filters.priceType) &&
+          (filters.source === "all" || product.sourceList === filters.source)
         );
       })
       .sort((a, b) => {
         if (filters.sort === "name") return a.name.localeCompare(b.name);
         if (filters.sort === "priceLow") return minPrice(a) - minPrice(b) || a.name.localeCompare(b.name);
         if (filters.sort === "priceHigh") return minPrice(b) - minPrice(a) || a.name.localeCompare(b.name);
-        if (filters.sort === "category") return a.categoryLabel.localeCompare(b.categoryLabel) || a.name.localeCompare(b.name);
-        return a.sourcePriority - b.sourcePriority || minPrice(a) - minPrice(b) || a.name.localeCompare(b.name);
+        if (filters.sort === "category") return a.category.localeCompare(b.category) || a.name.localeCompare(b.name);
+        return 0;
       });
   }
 
   function renderActiveFilters() {
     const active = [];
     if (filters.search) active.push(`Search: ${filters.search}`);
-    if (filters.category !== "all") active.push(`Category: ${window.WWBData.categoryProfiles[filters.category].label}`);
+    if (filters.category !== "all") active.push(`Category: ${filters.category}`);
     if (filters.priceType !== "all") active.push(`Price: ${filters.priceType}`);
     if (filters.source !== "all") active.push(`Source: ${filters.source}`);
     els.activeFilters.innerHTML = active.length ? active.map((entry) => `<span>${esc(entry)}</span>`).join("") : "<span>All products</span>";
   }
 
-  function optionMarkup(product, selectedSku = product.options[0].sku) {
-    return product.options.map((variant) => `<option value="${esc(variant.sku)}" ${variant.sku === selectedSku ? "selected" : ""}>${esc(variant.sku)} - ${esc(variant.label)}</option>`).join("");
+  function optionMarkup(product, selectedSku = variants(product)[0]?.sku) {
+    return variants(product)
+      .map((variant) => `<option value="${esc(variant.sku)}" ${variant.sku === selectedSku ? "selected" : ""}>${esc(variant.sku)} - ${esc(variant.label)}</option>`)
+      .join("");
   }
 
   function updateCard(productId) {
@@ -174,7 +203,7 @@
   function renderProducts() {
     const list = visibleProducts();
     renderActiveFilters();
-    els.catalogCount.textContent = `${list.length} product families / ${products.reduce((count, product) => count + product.options.length, 0)} variants`;
+    els.catalogCount.textContent = `${list.length} product families / ${products.reduce((count, product) => count + variants(product).length, 0)} variants`;
 
     if (!list.length) {
       els.productGrid.classList.remove("loading");
@@ -185,19 +214,20 @@
     els.productGrid.classList.remove("loading");
     els.productGrid.innerHTML = list
       .map((product) => {
-        const variant = product.options[0];
+        const variant = variants(product)[0];
         return `
           <article class="product-card" data-product-card="${esc(product.id)}">
             <div class="product-topline">
               <span class="product-code" data-card-code>${esc(variant.sku)}</span>
-              <span class="source-chip">${esc(product.warehouse)}</span>
+              <span class="source-chip">${esc(product.category)}</span>
             </div>
             <h3>${esc(product.name)}</h3>
-            <p>${esc(product.notes)}</p>
+            <p>${esc(product.description)}</p>
             <div class="meta-row">
-              <span>${esc(product.categoryLabel)}</span>
-              <span>${esc(product.productType)}</span>
+              <span>${esc(product.sourceList)}</span>
+              <span>${variants(product).length} option${variants(product).length === 1 ? "" : "s"}</span>
             </div>
+            <div class="family-price">${esc(productPriceLabel(product))}</div>
             <label class="compact-field">
               Variant / package
               <select data-card-variant="${esc(product.id)}">${optionMarkup(product)}</select>
@@ -218,8 +248,16 @@
       .join("");
   }
 
+  function currentCartItems() {
+    return state.getCartItems().map((item) => {
+      const product = productById(item.productId);
+      const variant = variantBySku(product, item.variant?.sku || item.sku || item.code);
+      return product && variant ? { ...item, productId: product.id, name: product.name, category: product.category, code: variant.sku, variant } : item;
+    });
+  }
+
   function renderCart() {
-    const items = state.getCartItems();
+    const items = currentCartItems();
     const totals = cartTotals(items);
     els.cartCount.textContent = items.length;
     els.mobileCartCount.textContent = items.length;
@@ -234,8 +272,8 @@
         ${items
           .map((item) => {
             const product = productById(item.productId);
-            const totals = lineTotals(item);
-            const unit = totals.unitPrice ? `${money(totals.unitPrice)} / ${item.variant.unitLabel || "unit"}` : "Price pending";
+            const line = lineTotals(item);
+            const unit = line.unitPrice !== null ? `${money(line.unitPrice)} / ${item.variant.unitLabel || "unit"}` : "Price pending";
             return `
               <article class="quote-item cart-item" data-line-id="${esc(item.lineId)}">
                 <div class="quote-item-head">
@@ -249,8 +287,8 @@
                 <div class="quote-line-grid">
                   <label>Quantity <input type="number" min="1" value="${esc(item.quantity)}" data-cart-qty="${esc(item.lineId)}" inputmode="numeric" /></label>
                   <div class="quote-money">
-                    <span>${esc(unit)}${totals.bulkApplied ? " (bulk applied)" : ""}</span>
-                    <strong>${totals.subtotal ? money(totals.subtotal) : "TBD"}</strong>
+                    <span>${esc(unit)}${line.bulkApplied ? " (bulk applied)" : ""}</span>
+                    <strong>${line.subtotal !== null ? money(line.subtotal) : "TBD"}</strong>
                   </div>
                 </div>
                 <small>${esc(bulkLine(item.variant))}</small>
@@ -265,6 +303,7 @@
           <span>Shipping ${totals.shipping ? "" : "(free over $150)"}</span><strong>${totals.shipping ? money(totals.shipping) : "Free"}</strong>
           <span>Final total</span><strong>${money(totals.total)}</strong>
         </div>
+        <div class="promo-card">SUMMER applied: 5% off products. Shipping is $25 and free above $150 product subtotal.</div>
       </div>
     `;
   }
@@ -275,14 +314,35 @@
     els.orderStatus.textContent = `${variant.sku} added to cart.`;
   }
 
+  function variantRows(product) {
+    return variants(product)
+      .map(
+        (variant) => `
+          <tr>
+            <td>${esc(variant.sku)}</td>
+            <td>${esc(variant.label)}</td>
+            <td>${esc(priceLine(variant))}</td>
+            <td>${esc(bulkLine(variant))}</td>
+          </tr>
+        `
+      )
+      .join("");
+  }
+
   function openProductDialog(product) {
-    const variant = product.options[0];
+    const variant = variants(product)[0];
     els.dialogContent.innerHTML = `
       <div class="dialog-header">
-        <span class="product-code">${esc(product.code)}</span>
-        <p class="eyebrow">${esc(product.categoryLabel)} | ${esc(product.warehouse)}</p>
+        <span class="product-code">${esc(variant.sku)}</span>
+        <p class="eyebrow">${esc(product.category)} | ${esc(product.sourceList)}</p>
         <h2 id="dialogTitle">${esc(product.name)}</h2>
-        <p>${esc(product.notes)}</p>
+        <p>${esc(product.description)}</p>
+      </div>
+      <div class="variant-table-wrap">
+        <table class="variant-table">
+          <thead><tr><th>SKU</th><th>Package</th><th>Price</th><th>Bulk</th></tr></thead>
+          <tbody>${variantRows(product)}</tbody>
+        </table>
       </div>
       <form class="dialog-quote-form" id="dialogCartForm" data-product-id="${esc(product.id)}">
         <label>Variant / package <select name="variant">${optionMarkup(product)}</select></label>
@@ -290,7 +350,7 @@
         <div class="dialog-estimate" id="dialogEstimate">
           <span>${esc(priceLine(variant))}</span>
           <span>${esc(bulkLine(variant))}</span>
-          <strong>Subtotal ${money(variant.basePrice || 0)}</strong>
+          <strong>Subtotal ${numeric(variant.price) !== null ? money(variant.price) : "TBD"}</strong>
         </div>
         <button class="button primary" type="submit">Add to cart</button>
       </form>
@@ -309,16 +369,12 @@
     node.innerHTML = `
       <span>${esc(priceLine(variant))}</span>
       <span>${esc(bulkLine(variant))}</span>
-      <strong>${line.subtotal ? `Subtotal ${money(line.subtotal)}` : "Subtotal TBD"}</strong>
+      <strong>${line.subtotal !== null ? `Subtotal ${money(line.subtotal)}` : "Subtotal TBD"}</strong>
     `;
   }
 
   function closeDialog() {
     if (els.dialog.open) els.dialog.close();
-  }
-
-  function formDataForStorage(form) {
-    return validation.formObject(form);
   }
 
   function restoreForm(form, key) {
@@ -359,7 +415,7 @@
         postalCode: data.postalCode || "",
       },
       notes: data.notes || "",
-      items: state.getCartItems().map((item) => ({
+      items: currentCartItems().map((item) => ({
         productId: item.productId,
         sku: item.variant.sku,
         quantity: Number(item.quantity) || 1,
@@ -380,19 +436,21 @@
 
   function renderConfirmation(result) {
     const instructions = result.paymentInstructions || {};
+    const totals = result.totals || result;
     els.orderConfirmation.hidden = false;
     els.orderConfirmation.innerHTML = `
       <h3>Order created: ${esc(result.orderId)}</h3>
-      <p>${esc(instructions.summary || "Seller will confirm payment instructions.")}</p>
+      <p>Payment is not complete yet. Seller will confirm Crypto or PayPal payment instructions using this order reference.</p>
       <div class="quote-total">
-        <span>Subtotal</span><strong>${money(result.totals.subtotal)}</strong>
-        <span>SUMMER discount</span><strong>-${money(result.totals.discount)}</strong>
-        <span>Shipping</span><strong>${Number(result.totals.shipping) ? money(result.totals.shipping) : "Free"}</strong>
-        <span>Final total</span><strong>${money(result.totals.total)}</strong>
+        <span>Subtotal</span><strong>${money(totals.subtotal)}</strong>
+        <span>SUMMER discount</span><strong>-${money(totals.discount || totals.discountAmount)}</strong>
+        <span>Shipping</span><strong>${Number(totals.shipping) ? money(totals.shipping) : "Free"}</strong>
+        <span>Final total</span><strong>${money(totals.total)}</strong>
       </div>
-      <p><strong>Payment method:</strong> ${esc(instructions.method || "")}</p>
+      <p><strong>Payment method:</strong> ${esc(instructions.method || result.paymentMethod || "")}</p>
       <p>${esc(instructions.details || "")}</p>
       ${instructions.paypalEmail ? `<p><strong>PayPal:</strong> ${esc(instructions.paypalEmail)}</p>` : ""}
+      <p class="support-note">Need help with your order? <a href="https://discord.gg/47pTnCJVXv" target="_blank" rel="noopener">Join the Discord support server</a>.</p>
     `;
   }
 
@@ -448,7 +506,7 @@
     els.cartList.addEventListener("change", (event) => {
       const id = event.target.dataset.cartVariant;
       if (!id) return;
-      const item = state.getCartItems().find((entry) => entry.lineId === id);
+      const item = currentCartItems().find((entry) => entry.lineId === id);
       const product = productById(item.productId);
       const variant = variantBySku(product, event.target.value);
       state.removeCartItem(id);
@@ -469,11 +527,11 @@
 
     els.checkoutForm.addEventListener("input", () => {
       els.checkoutForm.elements.discountCode.value = "SUMMER";
-      state.setForm("checkoutForm", formDataForStorage(els.checkoutForm));
+      state.setForm("checkoutForm", validation.formObject(els.checkoutForm));
     });
     els.checkoutForm.addEventListener("change", () => {
       els.checkoutForm.elements.discountCode.value = "SUMMER";
-      state.setForm("checkoutForm", formDataForStorage(els.checkoutForm));
+      state.setForm("checkoutForm", validation.formObject(els.checkoutForm));
     });
     els.clearCartButton.addEventListener("click", () => {
       state.clearCart();
@@ -482,7 +540,7 @@
     });
     els.checkoutForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      const items = state.getCartItems();
+      const items = currentCartItems();
       const data = validation.formObject(els.checkoutForm);
       data.discountCode = "SUMMER";
       const errors = validation.validateCheckout(data, items);
@@ -528,12 +586,24 @@
     });
   }
 
-  function init() {
-    initFilters();
-    restoreForm(els.checkoutForm, "checkoutForm");
-    renderCart();
-    renderProducts();
-    wireEvents();
+  async function loadProducts() {
+    const response = await fetch("data/products.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("Could not load product catalog.");
+    products = await response.json();
+  }
+
+  async function init() {
+    try {
+      await loadProducts();
+      initFilters();
+      restoreForm(els.checkoutForm, "checkoutForm");
+      renderCart();
+      renderProducts();
+      wireEvents();
+    } catch (error) {
+      els.productGrid.classList.remove("loading");
+      els.productGrid.innerHTML = `<div class="empty-state"><h3>Catalog failed to load</h3><p>${esc(error.message)}</p></div>`;
+    }
   }
 
   init();

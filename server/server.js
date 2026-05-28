@@ -3,7 +3,6 @@ const dotenv = require("dotenv");
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const vm = require("vm");
 
 dotenv.config();
 
@@ -18,12 +17,8 @@ app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 
 function loadCatalog() {
-  const dataPath = path.resolve(__dirname, "..", "data", "products.js");
-  const source = fs.readFileSync(dataPath, "utf8");
-  const context = { window: {} };
-  vm.createContext(context);
-  vm.runInContext(source, context, { filename: "products.js" });
-  return context.window.WWBData.products;
+  const dataPath = path.resolve(__dirname, "..", "data", "products.json");
+  return JSON.parse(fs.readFileSync(dataPath, "utf8"));
 }
 
 const products = loadCatalog();
@@ -43,26 +38,31 @@ function money(value) {
   return `$${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 }
 
+function numeric(value) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
 function findProduct(productId) {
   return products.find((product) => product.id === productId);
 }
 
 function findVariant(product, sku) {
-  return product?.options.find((variant) => variant.sku === sku);
+  return product?.variants.find((variant) => variant.sku === sku);
 }
 
 function lineTotal(variant, quantity) {
-  let unitPrice = Number(variant.basePrice) || null;
+  let unitPrice = numeric(variant.price);
   let bulkApplied = false;
-  let pricePending = !unitPrice;
+  let pricePending = unitPrice === null;
 
-  if (variant.bulkMinimum && quantity >= variant.bulkMinimum) {
-    if (Number(variant.bulkPrice)) {
-      unitPrice = Number(variant.bulkPrice);
+  if (variant.bulkMin && quantity >= Number(variant.bulkMin)) {
+    const bulk = numeric(variant.bulkPrice);
+    if (bulk !== null) {
+      unitPrice = bulk;
       bulkApplied = true;
       pricePending = false;
-    } else if (variant.bulkQuoteRequired) {
-      unitPrice = null;
+    } else if (unitPrice === null) {
       pricePending = true;
     }
   }
@@ -71,7 +71,7 @@ function lineTotal(variant, quantity) {
     unitPrice,
     bulkApplied,
     pricePending,
-    subtotal: unitPrice ? Math.round(unitPrice * quantity * 100) / 100 : null,
+    subtotal: unitPrice !== null ? Math.round(unitPrice * quantity * 100) / 100 : null,
   };
 }
 
@@ -88,14 +88,14 @@ function calculateOrder(items) {
       productId: product.id,
       code: variant.sku,
       name: product.name,
-      category: product.categoryLabel,
+      category: product.category,
       variant: variant.label,
       quantity,
       unitLabel: variant.unitLabel,
       unitPrice: totals.unitPrice,
-      basePrice: variant.basePrice,
+      basePrice: variant.price,
       bulkPrice: variant.bulkPrice,
-      bulkMinimum: variant.bulkMinimum,
+      bulkMinimum: variant.bulkMin,
       bulkApplied: totals.bulkApplied,
       pricePending: totals.pricePending,
       subtotal: totals.subtotal,
@@ -112,11 +112,13 @@ function calculateOrder(items) {
     totals: {
       subtotal,
       discount,
+      discountAmount: discount,
       afterDiscount,
       shipping,
       total,
       discountCode: DISCOUNT_CODE,
       discountRate: DISCOUNT_RATE,
+      shippingFee: SHIPPING_FEE,
       freeShippingMinimum: FREE_SHIPPING_MINIMUM,
     },
   };
@@ -140,19 +142,20 @@ function validateOrder(body) {
 }
 
 function paymentInstructions(method, id, totals) {
+  const summary = `Order ${id} created. Payment is not complete yet. Seller will confirm Crypto or PayPal payment instructions using this order reference.`;
   if (method === "paypal") {
     const paypalEmail = process.env.PAYPAL_EMAIL || "";
     return {
       method: "PayPal",
-      summary: `Order ${id} created. Send PayPal payment only after confirming the order reference.`,
+      summary,
       details: `Use order reference ${id}. Final total: ${money(totals.total)}.`,
       paypalEmail,
     };
   }
   return {
     method: "Crypto",
-    summary: `Order ${id} created. Seller will provide crypto wallet/network instructions with this order reference.`,
-    details: `Use order reference ${id}. Final total: ${money(totals.total)}. Do not send funds without matching the order reference.`,
+    summary,
+    details: `Use order reference ${id}. Final total: ${money(totals.total)}. Wait for the matching wallet/network instructions from the seller.`,
   };
 }
 
@@ -163,13 +166,13 @@ function field(name, value, inline = false) {
 async function sendDiscordOrder(order) {
   const webhook = process.env.DISCORD_WEBHOOK_URL;
   if (!webhook) {
-    return { sent: false, reason: "DISCORD_WEBHOOK_URL not configured" };
+    return { sent: false, warning: "Discord webhook not configured." };
   }
 
   const itemText = order.lines
     .map((line) => {
-      const price = line.unitPrice ? `${money(line.unitPrice)}${line.bulkApplied ? " bulk" : ""}` : "TBD";
-      const subtotal = line.subtotal ? money(line.subtotal) : "TBD";
+      const price = line.unitPrice !== null ? `${money(line.unitPrice)}${line.bulkApplied ? " bulk" : ""}` : "TBD";
+      const subtotal = line.subtotal !== null ? money(line.subtotal) : "TBD";
       return `${line.code} | ${line.name} | ${line.variant} | Qty ${line.quantity} | ${price} | ${subtotal}`;
     })
     .join("\n")
@@ -219,6 +222,15 @@ app.get("/health", (_req, res) => {
   res.json({ ok: true });
 });
 
+app.get("/api/status", (_req, res) => {
+  res.json({
+    ok: true,
+    payments: ["crypto", "paypal"],
+    mode: "manual",
+    sellauthConfigured: Boolean(process.env.SELLAUTH_API_KEY && process.env.SELLAUTH_SHOP_ID && process.env.SELLAUTH_SHOP_SLUG),
+  });
+});
+
 app.post("/api/orders", async (req, res) => {
   try {
     const errors = validateOrder(req.body || {});
@@ -240,9 +252,17 @@ app.post("/api/orders", async (req, res) => {
     res.json({
       ok: true,
       orderId: id,
+      subtotal: priced.totals.subtotal,
+      discountCode: DISCOUNT_CODE,
+      discountAmount: priced.totals.discount,
+      shipping: priced.totals.shipping,
+      total: priced.totals.total,
+      paymentMethod: req.body.paymentMethod,
       totals: priced.totals,
+      lines: priced.lines,
       paymentInstructions: paymentInstructions(req.body.paymentMethod, id, priced.totals),
       notification,
+      warning: notification.warning,
     });
   } catch (error) {
     res.status(400).json({ ok: false, error: error.message || "Could not create order." });
