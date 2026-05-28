@@ -11,6 +11,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DISCOUNT_CODE = "SUMMER";
 const DISCOUNT_RATE = 0.05;
+const SHIPPING_FEE = 25;
+const FREE_SHIPPING_MINIMUM = 150;
 
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
@@ -102,8 +104,22 @@ function calculateOrder(items) {
 
   const subtotal = Math.round(lines.reduce((sum, line) => sum + (line.subtotal || 0), 0) * 100) / 100;
   const discount = Math.round(subtotal * DISCOUNT_RATE * 100) / 100;
-  const total = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
-  return { lines, totals: { subtotal, discount, total, discountCode: DISCOUNT_CODE, discountRate: DISCOUNT_RATE } };
+  const afterDiscount = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
+  const shipping = afterDiscount >= FREE_SHIPPING_MINIMUM || afterDiscount === 0 ? 0 : SHIPPING_FEE;
+  const total = Math.max(0, Math.round((afterDiscount + shipping) * 100) / 100);
+  return {
+    lines,
+    totals: {
+      subtotal,
+      discount,
+      afterDiscount,
+      shipping,
+      total,
+      discountCode: DISCOUNT_CODE,
+      discountRate: DISCOUNT_RATE,
+      freeShippingMinimum: FREE_SHIPPING_MINIMUM,
+    },
+  };
 }
 
 function validateOrder(body) {
@@ -177,6 +193,7 @@ async function sendDiscordOrder(order) {
           field("Items", itemText || "No items"),
           field("Subtotal", money(order.totals.subtotal), true),
           field("SUMMER discount", `-${money(order.totals.discount)}`, true),
+          field("Shipping", order.totals.shipping ? money(order.totals.shipping) : "Free", true),
           field("Final total", money(order.totals.total), true),
           field("Notes", order.notes || "None"),
         ],

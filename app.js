@@ -102,8 +102,10 @@
   function cartTotals(items = state.getCartItems()) {
     const subtotal = items.reduce((sum, item) => sum + (lineTotals(item).subtotal || 0), 0);
     const discount = Math.round(subtotal * 0.05 * 100) / 100;
-    const total = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
-    return { subtotal, discount, total };
+    const afterDiscount = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
+    const shipping = afterDiscount >= 150 || afterDiscount === 0 ? 0 : 25;
+    const total = Math.max(0, Math.round((afterDiscount + shipping) * 100) / 100);
+    return { subtotal, discount, afterDiscount, shipping, total };
   }
 
   function populate(select, values, format = (value) => value) {
@@ -260,6 +262,7 @@
         <div class="quote-total cart-total">
           <span>Subtotal</span><strong>${money(totals.subtotal)}</strong>
           <span>SUMMER discount 5%</span><strong>-${money(totals.discount)}</strong>
+          <span>Shipping ${totals.shipping ? "" : "(free over $150)"}</span><strong>${totals.shipping ? money(totals.shipping) : "Free"}</strong>
           <span>Final total</span><strong>${money(totals.total)}</strong>
         </div>
       </div>
@@ -384,6 +387,7 @@
       <div class="quote-total">
         <span>Subtotal</span><strong>${money(result.totals.subtotal)}</strong>
         <span>SUMMER discount</span><strong>-${money(result.totals.discount)}</strong>
+        <span>Shipping</span><strong>${Number(result.totals.shipping) ? money(result.totals.shipping) : "Free"}</strong>
         <span>Final total</span><strong>${money(result.totals.total)}</strong>
       </div>
       <p><strong>Payment method:</strong> ${esc(instructions.method || "")}</p>

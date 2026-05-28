@@ -73,11 +73,17 @@ The backend imports the same file and recalculates totals server-side.
 
 `SUMMER` is forced in checkout and cannot be removed. It applies exactly 5% off priced items.
 
+## Shipping
+
+Shipping is `$25`. Orders above `$150` after the SUMMER discount receive free shipping. The backend recalculates shipping server-side.
+
 ## Testing Checklist
 
 - Add product to cart
 - Change quantity to `10` and verify bulk price
 - Confirm `SUMMER` discount is 5%
+- Confirm orders under `$150` add `$25` shipping
+- Confirm orders above `$150` show free shipping
 - Place order with Crypto
 - Place order with PayPal
 - Backend sends Discord message when `DISCORD_WEBHOOK_URL` is configured
