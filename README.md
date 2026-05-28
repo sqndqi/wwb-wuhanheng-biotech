@@ -75,7 +75,7 @@ The backend imports the same file and recalculates totals server-side.
 
 ## Shipping
 
-Shipping is `$25`. Orders above `$150` after the SUMMER discount receive free shipping. The backend recalculates shipping server-side.
+Shipping is `$25`. Orders above `$150` subtotal receive free shipping. The backend recalculates shipping server-side.
 
 ## Testing Checklist
 

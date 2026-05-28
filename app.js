@@ -103,7 +103,7 @@
     const subtotal = items.reduce((sum, item) => sum + (lineTotals(item).subtotal || 0), 0);
     const discount = Math.round(subtotal * 0.05 * 100) / 100;
     const afterDiscount = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
-    const shipping = afterDiscount >= 150 || afterDiscount === 0 ? 0 : 25;
+    const shipping = subtotal >= 150 || subtotal === 0 ? 0 : 25;
     const total = Math.max(0, Math.round((afterDiscount + shipping) * 100) / 100);
     return { subtotal, discount, afterDiscount, shipping, total };
   }

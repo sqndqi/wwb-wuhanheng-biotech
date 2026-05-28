@@ -105,7 +105,7 @@ function calculateOrder(items) {
   const subtotal = Math.round(lines.reduce((sum, line) => sum + (line.subtotal || 0), 0) * 100) / 100;
   const discount = Math.round(subtotal * DISCOUNT_RATE * 100) / 100;
   const afterDiscount = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
-  const shipping = afterDiscount >= FREE_SHIPPING_MINIMUM || afterDiscount === 0 ? 0 : SHIPPING_FEE;
+  const shipping = subtotal >= FREE_SHIPPING_MINIMUM || subtotal === 0 ? 0 : SHIPPING_FEE;
   const total = Math.max(0, Math.round((afterDiscount + shipping) * 100) / 100);
   return {
     lines,
