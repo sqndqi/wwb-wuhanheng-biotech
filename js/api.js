@@ -29,21 +29,21 @@
 
   async function requestAccountAccess(payload) {
     await delay(350);
-    if (payload?.username?.toLowerCase() !== "tom" || payload?.password !== "wtv") {
-      throw new Error("Invalid demo credentials.");
+    if (!payload?.company || !payload?.email) {
+      throw new Error("Company and email are required for account access requests.");
     }
 
     return {
-      reference: reference("AC"),
+      reference: reference("ACCT"),
       submittedAt: new Date().toISOString(),
-      status: "Demo account access granted",
-      payload: { username: payload.username },
+      status: "Pending account review",
+      payload,
     };
   }
 
   async function loginClient() {
     await delay(250);
-    throw new Error("Client authentication is not connected on this static build.");
+    throw new Error("Client dashboard requires backend authentication.");
   }
 
   window.WWBApi = {

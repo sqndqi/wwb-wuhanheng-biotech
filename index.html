@@ -30,7 +30,7 @@
         </a>
         <label class="search-box">
           <span class="sr-only">Search catalog</span>
-          <input id="searchInput" type="search" placeholder="Search products, formats, documents" autocomplete="off" />
+          <input id="searchInput" type="search" placeholder="Search name, code, source, category" autocomplete="off" />
         </label>
         <button class="quote-button" id="quoteButton" type="button" aria-controls="quote" aria-live="polite">
           Quote bag <span id="quoteCount">0</span>
@@ -53,13 +53,13 @@
           <p class="eyebrow">B2B supply request portal</p>
           <h1 id="hero-title">Wuhan Wansheng Biotechnology</h1>
           <p>
-            A structured catalog and quote-intake workflow for pharmaceutical, peptide, injectable,
-            oral, raw material, and biotech supply requests. Availability, account approval, and
-            documentation are reviewed by the sales desk before any order can proceed.
+            Browse the May 21 WWB price list, select variants, build an order request, and send it
+            for sales review. Pricing is visible where the source list provides it, while restricted
+            products still require account and destination review before any order can proceed.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#catalog">Browse catalog</a>
-            <a class="button secondary" href="#quote">Start quote request</a>
+            <a class="button primary" href="#catalog">Browse price list</a>
+            <a class="button secondary" href="#quote">Build order request</a>
           </div>
         </div>
       </section>
@@ -141,6 +141,12 @@
             </select>
           </label>
           <label>
+            Warehouse / source
+            <select id="sourceFilter">
+              <option value="all">All sources</option>
+            </select>
+          </label>
+          <label>
             Status
             <select id="statusFilter">
               <option value="all">Any status</option>
@@ -150,7 +156,7 @@
 
           <div class="filters-note">
             <strong>Catalog access</strong>
-            <span>Prices are quote-only unless WWB confirms account terms and availability.</span>
+            <span>Displayed prices are estimates from the uploaded list; sales desk confirms final terms.</span>
           </div>
         </aside>
 
@@ -166,7 +172,8 @@
                 <option value="recent">Recently added</option>
                 <option value="name">Name</option>
                 <option value="category">Category</option>
-                <option value="price">Price</option>
+                <option value="priceLow">Price low to high</option>
+                <option value="priceHigh">Price high to low</option>
                 <option value="review">Review level</option>
               </select>
             </label>
@@ -193,10 +200,10 @@
       <section class="featured-section" aria-labelledby="featured-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Featured MVP pricing</p>
-            <h2 id="featured-title">Sample-priced request items</h2>
+            <p class="eyebrow">Featured price-list items</p>
+            <h2 id="featured-title">Common priced request lines</h2>
           </div>
-          <span>Sample MVP pricing, final quote required</span>
+          <span>Visible source-list pricing, final quote required</span>
         </div>
         <div class="featured-grid" id="featuredGrid"></div>
       </section>
@@ -206,15 +213,20 @@
           <p class="eyebrow">Request quote</p>
           <h2 id="quote-title">Sales review intake</h2>
           <p>
-            Add products, choose quantity and configuration, then submit the buyer and destination
-            details needed for sales review. This mock submission works on static hosting and
-            generates a local quote reference.
+            Add products, choose package, quantity, documents, and shipping preferences, then submit
+            buyer and destination details for sales review. This mock submission works on static
+            hosting and generates a local quote reference.
           </p>
           <div class="quote-bag" id="quoteBag" aria-live="polite"></div>
         </div>
 
         <form class="quote-form" id="quoteForm" novalidate>
           <div class="form-grid">
+            <label>
+              Company name
+              <input name="company" autocomplete="organization" required />
+              <span class="field-error" data-error-for="company"></span>
+            </label>
             <label>
               Contact name
               <input name="contactName" autocomplete="name" required />
@@ -243,9 +255,21 @@
                 <option>Pharmacy</option>
                 <option>Lab</option>
                 <option>Distributor</option>
-                <option>Other business</option>
+                <option>Reseller</option>
+                <option>Other</option>
               </select>
               <span class="field-error" data-error-for="buyerType"></span>
+            </label>
+            <label>
+              Requested shipping method
+              <select name="requestedShipping" required>
+                <option value="">Select shipping method</option>
+                <option>Standard</option>
+                <option>Cold-chain review</option>
+                <option>Discreet packaging</option>
+                <option>Courier quote</option>
+              </select>
+              <span class="field-error" data-error-for="requestedShipping"></span>
             </label>
             <label>
               Discount code
@@ -255,11 +279,20 @@
           </div>
 
           <fieldset>
+            <legend>Documentation needed</legend>
+            <label><input type="checkbox" name="documents" value="COA" /> COA</label>
+            <label><input type="checkbox" name="documents" value="Batch docs" /> Batch docs</label>
+            <label><input type="checkbox" name="documents" value="MSDS" /> MSDS</label>
+            <label><input type="checkbox" name="documents" value="Invoice" /> Invoice</label>
+            <label><input type="checkbox" name="documents" value="Export docs" /> Export docs</label>
+          </fieldset>
+
+          <fieldset>
             <legend>Shipping requirements</legend>
-            <label><input type="checkbox" name="shipping" value="Cold chain" /> Cold chain</label>
+            <label><input type="checkbox" name="shipping" value="Cold-chain review" /> Cold-chain review</label>
             <label><input type="checkbox" name="shipping" value="Discreet packaging" /> Discreet packaging</label>
-            <label><input type="checkbox" name="shipping" value="Standard freight" /> Standard freight</label>
-            <label><input type="checkbox" name="shipping" value="Courier" /> Courier</label>
+            <label><input type="checkbox" name="shipping" value="Standard" /> Standard</label>
+            <label><input type="checkbox" name="shipping" value="Courier quote" /> Courier quote</label>
           </fieldset>
 
           <label>
@@ -268,8 +301,9 @@
           </label>
 
           <div class="form-actions">
-            <button class="button primary" type="submit" id="submitQuoteButton">Submit quote request</button>
-            <button class="button secondary" type="button" id="copyQuoteButton">Copy quote request</button>
+            <button class="button primary" type="submit" id="submitQuoteButton">Submit order request</button>
+            <button class="button secondary" type="button" id="copyQuoteButton">Copy request</button>
+            <button class="button ghost" type="button" id="clearQuoteButton">Clear cart</button>
           </div>
           <p class="form-note" id="quoteStatus" role="status" aria-live="polite"></p>
         </form>
@@ -278,29 +312,89 @@
       <section class="account-section" id="account" aria-labelledby="account-title">
         <div>
           <p class="eyebrow">Client access</p>
-          <h2 id="account-title">MVP demo account</h2>
+          <h2 id="account-title">Request account or sign in</h2>
           <p>
-            Backend authentication is not connected yet. For this static MVP, use the local demo
-            account username <strong>tom</strong> and password <strong>wtv</strong>. This does not
-            create a real protected session.
+            This static MVP does not include backend authentication. Account requests are saved
+            locally for testing, and the client dashboard sign-in is shown as a backend-ready
+            placeholder only.
           </p>
         </div>
-        <form class="account-form" id="accountForm" novalidate>
-          <div class="form-grid">
-            <label>
-              Username
-              <input name="username" autocomplete="username" required />
-              <span class="field-error" data-error-for="account-username"></span>
-            </label>
-            <label>
-              Password
-              <input name="password" type="password" autocomplete="current-password" required />
-              <span class="field-error" data-error-for="account-password"></span>
-            </label>
+
+        <div class="account-panel">
+          <div class="account-tabs" role="tablist" aria-label="Client access options">
+            <button class="tab-button active" type="button" role="tab" aria-selected="true" aria-controls="accountRequestForm" id="requestAccountTab">Request account access</button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="signInForm" id="signInTab">Existing client sign-in</button>
           </div>
-          <button class="button primary" type="submit" id="submitAccountButton">Access demo portal</button>
-          <p class="form-note" id="accountStatus" role="status" aria-live="polite"></p>
-        </form>
+
+          <form class="account-form account-tab-panel active" id="accountRequestForm" role="tabpanel" aria-labelledby="requestAccountTab" novalidate>
+            <div class="form-grid">
+              <label>
+                Company name
+                <input name="company" autocomplete="organization" required />
+                <span class="field-error" data-error-for="account-company"></span>
+              </label>
+              <label>
+                Contact name
+                <input name="contactName" autocomplete="name" required />
+                <span class="field-error" data-error-for="account-contactName"></span>
+              </label>
+              <label>
+                Email
+                <input name="email" type="email" autocomplete="email" required />
+                <span class="field-error" data-error-for="account-email"></span>
+              </label>
+              <label>
+                Phone / WhatsApp / Telegram
+                <input name="messaging" autocomplete="tel" required />
+                <span class="field-error" data-error-for="account-messaging"></span>
+              </label>
+              <label>
+                Buyer type
+                <select name="buyerType" required>
+                  <option value="">Select buyer type</option>
+                  <option>Clinic</option>
+                  <option>Pharmacy</option>
+                  <option>Lab</option>
+                  <option>Distributor</option>
+                  <option>Reseller</option>
+                  <option>Other</option>
+                </select>
+                <span class="field-error" data-error-for="account-buyerType"></span>
+              </label>
+              <label>
+                Destination country
+                <input name="destination" autocomplete="country-name" required />
+                <span class="field-error" data-error-for="account-destination"></span>
+              </label>
+            </div>
+            <label>
+              Message
+              <textarea name="message" rows="4" placeholder="Product categories, expected volume, documentation needs, or onboarding notes"></textarea>
+            </label>
+            <label class="checkbox-line">
+              <input name="reviewAcknowledgement" type="checkbox" value="yes" required />
+              I understand WWB sales review is required before quote confirmation.
+              <span class="field-error" data-error-for="account-reviewAcknowledgement"></span>
+            </label>
+            <button class="button primary" type="submit" id="submitAccountButton">Submit account request</button>
+            <p class="form-note" id="accountStatus" role="status" aria-live="polite"></p>
+          </form>
+
+          <form class="account-form account-tab-panel" id="signInForm" role="tabpanel" aria-labelledby="signInTab" hidden>
+            <div class="form-grid">
+              <label>
+                Email
+                <input name="email" type="email" autocomplete="email" disabled />
+              </label>
+              <label>
+                Password
+                <input name="password" type="password" autocomplete="current-password" disabled />
+              </label>
+            </div>
+            <button class="button secondary" type="button" disabled>Backend required</button>
+            <p class="form-note">Client dashboard requires backend authentication. This static build does not store passwords or create real sessions.</p>
+          </form>
+        </div>
       </section>
 
       <section class="feature-band" id="quality" aria-labelledby="quality-title">
@@ -352,8 +446,8 @@
           <p>No. The public catalog is a quote-request intake tool. Sales review is required before any order can proceed.</p>
         </details>
         <details>
-          <summary>Why are prices not public?</summary>
-          <p>Availability, account terms, product configuration, destination rules, and documentation requirements can affect quote terms.</p>
+          <summary>Why does the cart still require sales review?</summary>
+          <p>Displayed prices come from the uploaded list, but availability, account terms, product configuration, destination rules, and documentation requirements can change the final quote.</p>
         </details>
         <details>
           <summary>Which documents can be requested?</summary>

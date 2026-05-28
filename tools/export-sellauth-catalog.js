@@ -20,45 +20,42 @@ function csv(value) {
   return `"${String(value ?? "").replace(/"/g, '""')}"`;
 }
 
-function sku(name, category, index) {
-  const initials = name
-    .replace(/raw$/i, "")
-    .split(/[\s+/()-]+/)
-    .filter(Boolean)
-    .slice(0, 3)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
-
-  return `${category.slice(0, 2).toUpperCase()}-${String(index + 1).padStart(3, "0")}-${initials || "ITEM"}`;
-}
-
 const rows = [
   [
     "name",
     "sku",
     "category",
     "grouped_product",
-    "checkout_phase",
+    "review_level",
+    "warehouse",
+    "package",
     "price_usd",
+    "bulk_price_usd",
+    "bulk_minimum",
     "description",
     "sellauth_product_id",
     "sellauth_variant_id",
   ],
 ];
 
-for (const [index, product] of products.entries()) {
-  rows.push([
-    product.name,
-    sku(product.name, product.category, index),
-    product.category,
-    product.family,
-    product.priceType,
-    product.unitPrice || "",
-    product.description,
-    "",
-    "",
-  ]);
+for (const product of products) {
+  for (const option of product.options) {
+    rows.push([
+      product.name,
+      option.sku,
+      product.categoryLabel,
+      product.productType,
+      product.reviewLabel,
+      option.warehouse || product.warehouse,
+      option.label,
+      option.basePrice || "",
+      option.bulkPrice || "",
+      option.bulkMinimum || "",
+      product.notes,
+      "",
+      "",
+    ]);
+  }
 }
 
 fs.writeFileSync(outPath, rows.map((row) => row.map(csv).join(",")).join("\n"));

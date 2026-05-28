@@ -1,10 +1,9 @@
 (function () {
   const keys = {
-    quoteItems: "wwb.quoteItems.v2",
-    quoteForm: "wwb.quoteForm.v2",
-    accountForm: "wwb.accountForm.v2",
-    pendingQuotes: "wwb.pendingQuotes.v2",
-    accessRequests: "wwb.accessRequests.v2",
+    quoteItems: "wwb.quoteItems.v3",
+    quoteForm: "wwb.quoteForm.v3",
+    pendingQuotes: "wwb.pendingQuotes.v3",
+    accessRequests: "wwb.accessRequests.v3",
   };
 
   function read(key, fallback) {
@@ -20,6 +19,10 @@
     localStorage.setItem(key, JSON.stringify(value));
   }
 
+  function lineId(product, selectedOption) {
+    return `${product.id}__${selectedOption.sku}`;
+  }
+
   function getQuoteItems() {
     return read(keys.quoteItems, []);
   }
@@ -28,47 +31,64 @@
     write(keys.quoteItems, items);
   }
 
-  function upsertQuoteItem(product, patch = {}) {
-    const current = getQuoteItems();
-    const existing = current.find((item) => item.productId === product.id);
-    const base = {
+  function makeQuoteItem(product, selectedOption, patch = {}) {
+    return {
+      lineId: lineId(product, selectedOption),
       productId: product.id,
+      code: selectedOption.sku,
       name: product.name,
       category: product.categoryLabel,
+      sourceList: selectedOption.sourceList || product.sourceList,
+      warehouse: selectedOption.warehouse || product.warehouse,
+      selectedOption,
+      quantity: 1,
+      unitPrice: selectedOption.basePrice,
+      bulkPrice: selectedOption.bulkPrice,
+      bulkMinimum: selectedOption.bulkMinimum,
+      unitLabel: selectedOption.unitLabel,
+      quoteRequired: !Number(selectedOption.basePrice),
       reviewLevel: product.reviewLevel,
       reviewLabel: product.reviewLabel,
-      quantity: 1,
-      format: product.availableFormats[0],
-      packageSize: product.packageSize,
-      priceType: product.priceType,
-      unitPrice: product.unitPrice,
-      unit: product.unit,
-      currency: product.currency,
-      quoteRequired: !["fixed", "from"].includes(product.priceType),
+      documentationNeeded: [],
+      shippingPreference: "Standard",
       notes: "",
-      moq: product.moq,
+      ...patch,
     };
+  }
 
+  function upsertQuoteItem(product, selectedOption, patch = {}) {
+    const current = getQuoteItems();
+    const id = lineId(product, selectedOption);
+    const existing = current.find((item) => item.lineId === id);
     const next = existing
       ? current.map((item) =>
-          item.productId === product.id
-            ? { ...item, quantity: Number(item.quantity || 1) + Number(patch.quantity || 1), ...patch }
+          item.lineId === id
+            ? {
+                ...item,
+                selectedOption,
+                unitPrice: selectedOption.basePrice,
+                bulkPrice: selectedOption.bulkPrice,
+                bulkMinimum: selectedOption.bulkMinimum,
+                unitLabel: selectedOption.unitLabel,
+                quantity: Number(item.quantity || 1) + Number(patch.quantity || 1),
+                ...patch,
+              }
             : item
         )
-      : [...current, { ...base, ...patch }];
+      : [...current, makeQuoteItem(product, selectedOption, patch)];
 
     setQuoteItems(next);
     return next;
   }
 
-  function updateQuoteItem(productId, patch) {
-    const next = getQuoteItems().map((item) => (item.productId === productId ? { ...item, ...patch } : item));
+  function updateQuoteItem(lineIdValue, patch) {
+    const next = getQuoteItems().map((item) => (item.lineId === lineIdValue ? { ...item, ...patch } : item));
     setQuoteItems(next);
     return next;
   }
 
-  function removeQuoteItem(productId) {
-    const next = getQuoteItems().filter((item) => item.productId !== productId);
+  function removeQuoteItem(lineIdValue) {
+    const next = getQuoteItems().filter((item) => item.lineId !== lineIdValue);
     setQuoteItems(next);
     return next;
   }
@@ -87,12 +107,12 @@
 
   function savePendingQuote(result) {
     const current = read(keys.pendingQuotes, []);
-    write(keys.pendingQuotes, [result, ...current].slice(0, 20));
+    write(keys.pendingQuotes, [result, ...current].slice(0, 30));
   }
 
   function saveAccessRequest(result) {
     const current = read(keys.accessRequests, []);
-    write(keys.accessRequests, [result, ...current].slice(0, 20));
+    write(keys.accessRequests, [result, ...current].slice(0, 30));
   }
 
   window.WWBState = {
