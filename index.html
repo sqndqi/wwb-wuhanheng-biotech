@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="WWB / Wuhan Wansheng Biotechnology pharmaceutical and peptide supply catalog."
+      content="WWB / Wuhan Wansheng Biotechnology B2B pharmaceutical and peptide supply request portal."
     />
     <title>WWB | Wuhan Wansheng Biotechnology</title>
     <link rel="stylesheet" href="styles.css" />
@@ -14,9 +14,9 @@
     <header class="site-header">
       <div class="utility-bar">
         <div class="utility-inner">
-          <span>Currency: USD</span>
-          <span>Pharmaceutical and peptide supply</span>
-          <a href="#login">Client login</a>
+          <span>Business supply requests only</span>
+          <span>Account verification required</span>
+          <a href="#account">Request access</a>
         </div>
       </div>
 
@@ -30,205 +30,459 @@
         </a>
         <label class="search-box">
           <span class="sr-only">Search catalog</span>
-          <input id="searchInput" type="search" placeholder="Search catalog" />
+          <input id="searchInput" type="search" placeholder="Search products, formats, documents" autocomplete="off" />
         </label>
-        <button class="quote-button" id="quoteButton" type="button">
-          Order bag <span id="quoteCount">0</span>
+        <button class="quote-button" id="quoteButton" type="button" aria-controls="quote" aria-live="polite">
+          Quote bag <span id="quoteCount">0</span>
         </button>
       </div>
 
       <nav class="main-nav" aria-label="Primary navigation">
         <a href="#catalog">Catalog</a>
+        <a href="#quote">Quote request</a>
+        <a href="#account">Account access</a>
         <a href="#quality">Quality</a>
         <a href="#shipping">Shipping</a>
-        <a href="#login">Login</a>
+        <a href="#policies">Policies</a>
       </nav>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-media" role="img" aria-label="Laboratory vials in an analytical instrument"></div>
         <div class="hero-content">
-          <p class="eyebrow">China warehouse | WWB supply desk</p>
+          <p class="eyebrow">B2B supply request portal</p>
           <h1 id="hero-title">Wuhan Wansheng Biotechnology</h1>
           <p>
-            Pharmaceutical, peptide, injectable, oral, raw material, and biotech supply catalog
-            for clinics, pharmacies, laboratories, and distribution partners.
+            A structured catalog and quote-intake workflow for pharmaceutical, peptide, injectable,
+            oral, raw material, and biotech supply requests. Availability, account approval, and
+            documentation are reviewed by the sales desk before any order can proceed.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#catalog">Browse catalog</a>
-            <a class="button secondary" href="#login">Start order</a>
+            <a class="button secondary" href="#quote">Start quote request</a>
           </div>
         </div>
       </section>
 
-      <section class="catalog-shell" id="catalog" aria-labelledby="catalog-title">
-        <aside class="sidebar" aria-label="Catalog categories">
-          <h2>Shop by category</h2>
-          <button class="category-filter active" type="button" data-category="all">
-            All supply lines
-          </button>
-          <button class="category-filter" type="button" data-category="pharma">
-            Pharmaceuticals
-          </button>
-          <button class="category-filter" type="button" data-category="peptide">
-            Peptides
-          </button>
-          <button class="category-filter" type="button" data-category="metabolic">
-            Metabolic care
-          </button>
-          <button class="category-filter" type="button" data-category="regenerative">
-            Regenerative
-          </button>
-          <button class="category-filter" type="button" data-category="endocrine">
-            Endocrine
-          </button>
-          <button class="category-filter" type="button" data-category="vialing">
-            Vialing
-          </button>
-          <button class="category-filter" type="button" data-category="partner">
-            Wholesale
-          </button>
+      <section class="trust-strip" aria-label="Portal highlights">
+        <article>
+          <strong>Quote required</strong>
+          <span>No unrestricted checkout for reviewed products</span>
+        </article>
+        <article>
+          <strong>Buyer verification</strong>
+          <span>Clinic, pharmacy, lab, distributor, or business review</span>
+        </article>
+        <article>
+          <strong>Documentation</strong>
+          <span>COA, batch docs, MSDS, invoice, and export docs by review</span>
+        </article>
+        <article>
+          <strong>Shipping review</strong>
+          <span>Destination, storage, packaging, and lane requirements checked</span>
+        </article>
+      </section>
 
-          <div class="sidebar-panel">
-            <strong>Latest internal source</strong>
-            <span>WWB price files through May 21, 2026</span>
-            <p>Price sheets, order terms, and availability are handled through the direct sales desk.</p>
+      <section class="info-band" id="about" aria-labelledby="about-title">
+        <div>
+          <p class="eyebrow">About WWB</p>
+          <h2 id="about-title">A sales-desk portal for reviewed supply requests</h2>
+        </div>
+        <p>
+          WWB uses this website to collect structured product inquiries, buyer details,
+          destination requirements, and documentation requests. The public catalog is not a
+          self-service pharmacy or unrestricted checkout. Restricted, prescription, injectable,
+          hormone, and raw-material requests require appropriate business verification and may
+          require licensing, prescription, import approval, or institutional qualification.
+        </p>
+      </section>
+
+      <section class="catalog-shell" id="catalog" aria-labelledby="catalog-title">
+        <aside class="filters-panel" aria-label="Catalog filters">
+          <div>
+            <p class="eyebrow">Catalog controls</p>
+            <h2>Filter products</h2>
           </div>
 
-          <div class="sidebar-panel catalog-stats">
-            <strong>Catalog scope</strong>
-            <span>200+ visible catalog entries from the WWB files</span>
-            <span>Pharmaceuticals, peptides, endocrine, metabolic, vialing</span>
-            <span>COA, product paperwork, and shipping review available</span>
+          <label>
+            Category
+            <select id="categoryFilter">
+              <option value="all">All categories</option>
+            </select>
+          </label>
+          <label>
+            Review level
+            <select id="reviewFilter">
+              <option value="all">All review levels</option>
+            </select>
+          </label>
+          <label>
+            Documentation
+            <select id="docFilter">
+              <option value="all">Any documentation</option>
+            </select>
+          </label>
+          <label>
+            Format
+            <select id="formatFilter">
+              <option value="all">Any format</option>
+            </select>
+          </label>
+          <label>
+            Product type
+            <select id="typeFilter">
+              <option value="all">All product types</option>
+            </select>
+          </label>
+          <label>
+            Price type
+            <select id="priceTypeFilter">
+              <option value="all">All price types</option>
+            </select>
+          </label>
+          <label>
+            Status
+            <select id="statusFilter">
+              <option value="all">Any status</option>
+            </select>
+          </label>
+          <button class="button secondary" type="button" id="resetFilters">Reset filters</button>
+
+          <div class="filters-note">
+            <strong>Catalog access</strong>
+            <span>Prices are quote-only unless WWB confirms account terms and availability.</span>
           </div>
         </aside>
 
         <div class="catalog-main">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">WWB catalog</p>
-              <h2 id="catalog-title">Available supply lines</h2>
+              <p class="eyebrow">Product catalog</p>
+              <h2 id="catalog-title">Reviewed supply lines</h2>
             </div>
-            <a href="#login">Client portal</a>
-          </div>
-
-          <div class="catalog-toolbar">
-            <span id="catalogCount">Loading catalog...</span>
-            <label>
+            <label class="sort-control">
               Sort
               <select id="sortSelect">
-                <option value="category">Category</option>
+                <option value="recent">Recently added</option>
                 <option value="name">Name</option>
+                <option value="category">Category</option>
+                <option value="price">Price</option>
+                <option value="review">Review level</option>
               </select>
             </label>
           </div>
 
-          <div class="catalog-alert">
-            <strong>Catalog access:</strong>
-            select product lines below to build an order bag. WWB provides availability,
-            documentation, shipping review, and order terms through the direct sales desk.
+          <div class="active-filter-row" id="activeFilters" aria-live="polite"></div>
+          <div class="catalog-count" id="catalogCount">Loading catalog...</div>
+          <div class="product-grid loading" id="productGrid" aria-live="polite">
+            <p>Loading catalog...</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="category-section" aria-labelledby="category-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Product categories</p>
+            <h2 id="category-title">Browse by review path</h2>
+          </div>
+        </div>
+        <div class="category-grid" id="categoryGrid"></div>
+      </section>
+
+      <section class="featured-section" aria-labelledby="featured-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Featured MVP pricing</p>
+            <h2 id="featured-title">Sample-priced request items</h2>
+          </div>
+          <span>Sample MVP pricing, final quote required</span>
+        </div>
+        <div class="featured-grid" id="featuredGrid"></div>
+      </section>
+
+      <section class="quote-section" id="quote" aria-labelledby="quote-title">
+        <div class="quote-summary">
+          <p class="eyebrow">Request quote</p>
+          <h2 id="quote-title">Sales review intake</h2>
+          <p>
+            Add products, choose quantity and configuration, then submit the buyer and destination
+            details needed for sales review. This mock submission works on static hosting and
+            generates a local quote reference.
+          </p>
+          <div class="quote-bag" id="quoteBag" aria-live="polite"></div>
+        </div>
+
+        <form class="quote-form" id="quoteForm" novalidate>
+          <div class="form-grid">
+            <label>
+              Company name
+              <input name="company" autocomplete="organization" required />
+              <span class="field-error" data-error-for="company"></span>
+            </label>
+            <label>
+              Contact name
+              <input name="contactName" autocomplete="name" required />
+              <span class="field-error" data-error-for="contactName"></span>
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" autocomplete="email" required />
+              <span class="field-error" data-error-for="email"></span>
+            </label>
+            <label>
+              Phone / WhatsApp / Telegram
+              <input name="messaging" autocomplete="tel" placeholder="+1..., @handle, or preferred contact" />
+              <span class="field-error" data-error-for="messaging"></span>
+            </label>
+            <label>
+              Destination country
+              <input name="destination" autocomplete="country-name" required />
+              <span class="field-error" data-error-for="destination"></span>
+            </label>
+            <label>
+              Buyer type
+              <select name="buyerType" required>
+                <option value="">Select buyer type</option>
+                <option>Clinic</option>
+                <option>Pharmacy</option>
+                <option>Lab</option>
+                <option>Distributor</option>
+                <option>Other business</option>
+              </select>
+              <span class="field-error" data-error-for="buyerType"></span>
+            </label>
           </div>
 
-          <div class="product-grid" id="productGrid" aria-live="polite"></div>
+          <fieldset>
+            <legend>Documentation needed</legend>
+            <label><input type="checkbox" name="documents" value="COA" /> COA</label>
+            <label><input type="checkbox" name="documents" value="Batch docs" /> Batch docs</label>
+            <label><input type="checkbox" name="documents" value="MSDS" /> MSDS</label>
+            <label><input type="checkbox" name="documents" value="Invoice" /> Invoice</label>
+            <label><input type="checkbox" name="documents" value="Export docs" /> Export docs</label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Shipping requirements</legend>
+            <label><input type="checkbox" name="shipping" value="Cold chain" /> Cold chain</label>
+            <label><input type="checkbox" name="shipping" value="Discreet packaging" /> Discreet packaging</label>
+            <label><input type="checkbox" name="shipping" value="Standard freight" /> Standard freight</label>
+            <label><input type="checkbox" name="shipping" value="Courier" /> Courier</label>
+          </fieldset>
+
+          <label>
+            Notes
+            <textarea name="notes" rows="5" placeholder="Product quantities, destination notes, document preferences, or account context"></textarea>
+          </label>
+
+          <div class="form-actions">
+            <button class="button primary" type="submit" id="submitQuoteButton">Submit quote request</button>
+            <button class="button secondary" type="button" id="copyQuoteButton">Copy quote request</button>
+          </div>
+          <p class="form-note" id="quoteStatus" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="account-section" id="account" aria-labelledby="account-title">
+        <div>
+          <p class="eyebrow">Account onboarding</p>
+          <h2 id="account-title">Request account access</h2>
+          <p>
+            Authentication is not active on this static GitHub Pages build. This form collects an
+            access request only; it does not create a session, store a password, or pretend the
+            client is logged in.
+          </p>
         </div>
+        <form class="account-form" id="accountForm" novalidate>
+          <div class="form-grid">
+            <label>
+              Company
+              <input name="company" required />
+              <span class="field-error" data-error-for="account-company"></span>
+            </label>
+            <label>
+              Contact name
+              <input name="contactName" required />
+              <span class="field-error" data-error-for="account-contactName"></span>
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" required />
+              <span class="field-error" data-error-for="account-email"></span>
+            </label>
+            <label>
+              Country / region
+              <input name="country" required />
+              <span class="field-error" data-error-for="account-country"></span>
+            </label>
+            <label>
+              Buyer type
+              <select name="buyerType" required>
+                <option value="">Select buyer type</option>
+                <option>Clinic</option>
+                <option>Pharmacy</option>
+                <option>Lab</option>
+                <option>Distributor</option>
+                <option>Other business</option>
+              </select>
+              <span class="field-error" data-error-for="account-buyerType"></span>
+            </label>
+            <label>
+              Verification documents available
+              <select name="verificationDocs" required>
+                <option value="">Select one</option>
+                <option>Business registration</option>
+                <option>Pharmacy or clinic license</option>
+                <option>Lab or institutional credential</option>
+                <option>Distributor documentation</option>
+                <option>Not ready yet</option>
+              </select>
+              <span class="field-error" data-error-for="account-verificationDocs"></span>
+            </label>
+          </div>
+          <label>
+            Access request notes
+            <textarea name="notes" rows="4" placeholder="Tell the sales desk what product classes you need reviewed"></textarea>
+          </label>
+          <button class="button primary" type="submit" id="submitAccountButton">Submit account access request</button>
+          <p class="form-note" id="accountStatus" role="status" aria-live="polite"></p>
+        </form>
       </section>
 
       <section class="feature-band" id="quality" aria-labelledby="quality-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Quality system</p>
-            <h2 id="quality-title">Documentation and supply support</h2>
+            <p class="eyebrow">Quality assurance</p>
+            <h2 id="quality-title">Documentation handled through review</h2>
           </div>
         </div>
         <div class="quality-grid">
           <article>
             <span class="number">01</span>
-            <h3>Premium grade</h3>
-            <p>WWB positions its catalog around high-grade materials, controlled packaging, and consistent supply handling.</p>
+            <h3>COA and batch records</h3>
+            <p>Documentation can be requested with the quote and confirmed against product class and lot availability.</p>
           </article>
           <article>
             <span class="number">02</span>
-            <h3>Product paperwork</h3>
-            <p>COA, batch details, packaging configuration, product lists, and account documents are organized for buyers.</p>
+            <h3>Storage review</h3>
+            <p>Cold-chain, controlled ambient, packaging, and courier requirements are reviewed before fulfillment.</p>
           </article>
           <article>
             <span class="number">03</span>
-            <h3>Shipping support</h3>
-            <p>Destination lanes, packaging, cold-chain needs, and documentation requirements are reviewed.</p>
+            <h3>Restricted review</h3>
+            <p>Regulated products may require buyer qualification, prescriptions, licenses, import approval, or export review.</p>
           </article>
         </div>
       </section>
 
-      <section class="login-section" id="login" aria-labelledby="login-title">
+      <section class="process-section" id="shipping" aria-labelledby="shipping-title">
         <div>
-          <p class="eyebrow">Client portal</p>
-          <h2 id="login-title">Client login</h2>
-          <p>Sign in to review selected products and prepare the next order request.</p>
-          <div class="portal-status">
-            <strong>Order bag</strong>
-            <span>Selected catalog products appear here for client review before the sales desk confirms availability and terms.</span>
-          </div>
+          <p class="eyebrow">Shipping process</p>
+          <h2 id="shipping-title">From request to reviewed shipment</h2>
         </div>
-        <form class="login-form">
-          <label>
-            Email
-            <input type="email" name="email" placeholder="client@company.com" />
-          </label>
-          <label>
-            Password
-            <input type="password" name="password" placeholder="Password" />
-          </label>
-          <label>
-            Selected products
-            <textarea
-              id="requestField"
-              name="request"
-              rows="5"
-              placeholder="Choose catalog products to fill this order bag"
-            ></textarea>
-          </label>
-          <button class="button primary" type="submit">Login</button>
-          <button class="button secondary" type="button" id="prepareOrderButton">Prepare order</button>
-          <p class="form-note" id="formNote" role="status"></p>
-        </form>
+        <ol class="process-list">
+          <li><strong>Submit request.</strong> Add products, quantities, destination, buyer type, and document needs.</li>
+          <li><strong>Sales review.</strong> WWB reviews availability, product class, buyer context, and destination requirements.</li>
+          <li><strong>Documentation.</strong> COA, batch docs, MSDS, invoice, or export docs are confirmed where available.</li>
+          <li><strong>Quote confirmation.</strong> A confirmed quote and next steps are provided outside the public catalog.</li>
+        </ol>
+      </section>
+
+      <section class="faq-section" aria-labelledby="faq-title">
+        <div>
+          <p class="eyebrow">FAQ</p>
+          <h2 id="faq-title">Common sales-desk questions</h2>
+        </div>
+        <details>
+          <summary>Can I purchase directly from the catalog?</summary>
+          <p>No. The public catalog is a quote-request intake tool. Sales review is required before any order can proceed.</p>
+        </details>
+        <details>
+          <summary>Why are prices not public?</summary>
+          <p>Availability, account terms, product configuration, destination rules, and documentation requirements can affect quote terms.</p>
+        </details>
+        <details>
+          <summary>Which documents can be requested?</summary>
+          <p>COA, batch records, MSDS, invoice, and export documents can be requested and confirmed during review.</p>
+        </details>
+        <details>
+          <summary>Do restricted products require verification?</summary>
+          <p>Yes. Product class and destination may require licenses, prescriptions, business credentials, import approval, or institutional verification.</p>
+        </details>
+      </section>
+
+      <section class="contact-section" aria-labelledby="contact-title">
+        <div>
+          <p class="eyebrow">Contact sales desk</p>
+          <h2 id="contact-title">Placeholder contact channel</h2>
+          <p>
+            Add verified sales email, phone, WhatsApp, Telegram, or business address here when ready.
+            Do not publish fake contact details.
+          </p>
+        </div>
+        <a class="button secondary" href="#quote">Prepare quote request</a>
+      </section>
+
+      <section class="policy-section" id="policies" aria-labelledby="policy-title">
+        <div>
+          <p class="eyebrow">Policies</p>
+          <h2 id="policy-title">Compliance, privacy, and quote terms</h2>
+        </div>
+        <div class="policy-grid">
+          <article>
+            <h3>Compliance notice</h3>
+            <p>Regulated products require proper licensing, prescriptions, import approval, or institutional/business verification where applicable.</p>
+          </article>
+          <article>
+            <h3>Restricted products policy</h3>
+            <p>Injectables, hormones, prescription items, raw materials, and export-sensitive products are not available through unrestricted checkout.</p>
+          </article>
+          <article>
+            <h3>Privacy policy</h3>
+            <p>This static build stores draft quote data locally in your browser. A production backend must define retention, access control, and deletion processes.</p>
+          </article>
+          <article>
+            <h3>Terms of use</h3>
+            <p>Catalog content is for B2B inquiry and sales review. It is not medical advice, dosing guidance, or a public pharmacy service.</p>
+          </article>
+          <article>
+            <h3>Refund / cancellation / quote policy</h3>
+            <p>Quotes are not orders. Payment, cancellation, replacement, or refund terms must be confirmed by sales desk before fulfillment.</p>
+          </article>
+          <article>
+            <h3>Documentation policy</h3>
+            <p>Documentation availability depends on product class, lot, source paperwork, destination rules, and buyer verification.</p>
+          </article>
+        </div>
       </section>
     </main>
 
+    <button class="mobile-quote" id="mobileQuoteButton" type="button" aria-controls="quote">
+      Quote bag <span id="mobileQuoteCount">0</span>
+    </button>
+
     <dialog class="product-dialog" id="productDialog" aria-labelledby="dialogTitle">
       <button class="dialog-close" id="dialogClose" type="button" aria-label="Close product details">x</button>
-      <div class="dialog-visual" id="dialogVisual"></div>
-      <div class="dialog-body">
-        <p class="eyebrow" id="dialogCategory">Catalog item</p>
-        <h2 id="dialogTitle">Product details</h2>
-        <p id="dialogSummary"></p>
-        <dl class="dialog-specs">
-          <div>
-            <dt>Format</dt>
-            <dd id="dialogFormat"></dd>
-          </div>
-          <div>
-            <dt>Terms</dt>
-            <dd id="dialogTerms"></dd>
-          </div>
-        </dl>
-        <div class="dialog-tags" id="dialogTags"></div>
-        <button class="button primary" type="button" id="dialogQuoteButton">Add to order bag</button>
-      </div>
+      <div class="dialog-content" id="dialogContent"></div>
     </dialog>
 
-    <footer class="site-footer" id="shipping">
+    <footer class="site-footer">
       <div>
         <strong>WWB / Wuhan Wansheng Biotechnology</strong>
-        <p>Pharmaceutical and peptide supply catalog with direct quote support.</p>
+        <p>B2B quote-request portal for reviewed supply inquiries.</p>
       </div>
       <div>
-        <span>Shipping review</span>
-        <span>COA request</span>
-        <span>Account onboarding</span>
+        <a href="#quote">Quote request</a>
+        <a href="#account">Account access</a>
+        <a href="#policies">Policies</a>
       </div>
     </footer>
 
+    <script src="data/products.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/validation.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

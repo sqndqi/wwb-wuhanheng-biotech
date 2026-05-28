@@ -1,493 +1,647 @@
-const catalogGroups = [
-  {
-    category: "metabolic",
-    family: "Metabolic peptides",
-    format: "Vial, oral, or sales-approved format",
-    names: [
-      "Tirzepatide",
-      "Semaglutide",
-      "Retatrutide",
-      "Cagrilintide",
-      "Liraglutide",
-      "Mazdutide",
-      "Survodutide",
-      "Orforglipron",
-      "AOD9604",
-      "Tesofensine",
-      "BAM15",
-      "SLU-PP-332",
-      "5-amino-1mq",
-      "Mots-C",
-      "NAD+",
-      "AICAR",
-    ],
-  },
-  {
-    category: "peptide",
-    family: "Peptide vials",
-    format: "Lyophilized vial configurations",
-    names: [
-      "TB-500",
-      "TB-500 Fragment",
-      "BPC-157",
-      "BPC-157 Arg",
-      "CJC-1295 without DAC",
-      "CJC-1295 with DAC",
-      "Ipamorelin",
-      "Tesamorelin",
-      "Sermorelin Acetate",
-      "GHRP-2 Acetate",
-      "GHRP-6 Acetate",
-      "Hexarelin",
-      "HGH Fragment 176-191",
-      "IGF-1 LR3",
-      "KissPeptin-10",
-      "KPV",
-      "LL37",
-      "MGF",
-      "PEG MGF",
-      "PT-141",
-      "P21",
-      "P21-adamantane",
-      "PE 22-28",
-      "PNC 27",
-      "SS-31",
-      "Selank",
-      "Semax",
-      "NA Selank amidate",
-      "NA Semax amidate",
-      "Thymalin",
-      "Thymosin Alpha-1",
-      "VIP",
-      "Adamax",
-      "Adipotide",
-      "ARA-290",
-      "ACE-031",
-      "Teriparatide",
-      "Abaloparatide",
-      "Vosoritide",
-      "Navepegritide",
-      "TPX-100",
-      "LNA043",
-    ],
-  },
-  {
-    category: "regenerative",
-    family: "Regenerative and aesthetic",
-    format: "Vial, blend, or aesthetic program",
-    names: [
-      "GHK Basic",
-      "GHK-CU",
-      "AHK-CU",
-      "GLOW blend",
-      "KLOW blend",
-      "BPC157 + TB500 blend",
-      "BPC157 + TB500 + KPV blend",
-      "Tesamorelin + Ipamorelin blend",
-      "Cagrilintide + Semaglutide blend",
-      "Retatrutide + Cagrilintide blend",
-      "Selank + Semax blend",
-      "NAD+ + Mots-C + 5-amino-1mq blend",
-      "CJC-1295 + Ipamorelin blend",
-      "SNAP-8",
-      "Matrixyl",
-      "Hyaluronic acid",
-      "Glutathione",
-      "Lipo-C",
-      "Lipo-B",
-      "Lipo-C Focus",
-      "Lipo-C Fat Blaster",
-      "Super Shred",
-      "Healthy Hair Skin Nails blend",
-      "Lipo Mino Mix",
-      "Lemon Bottle",
-      "Botulinum toxin",
-    ],
-  },
-  {
-    category: "endocrine",
-    family: "Endocrine and hormone",
-    format: "Strictly gated vial, oral, or injectable format",
-    names: [
-      "HGH 191AA Somatropin",
-      "HMG",
-      "HCG",
-      "Oxytocin Acetate",
-      "Gonadorelin",
-      "EPO",
-      "ANAVAR",
-      "ANADROL",
-      "DIANABOL",
-      "Winstrol",
-      "Turinabol",
-      "Clenbuterol",
-      "Clomid",
-      "Letrozole",
-      "Fluoxymesterone",
-      "Proviron",
-      "Methenolone Acetate",
-      "Superdrol",
-      "T3",
-      "T4",
-      "Tamoxifen",
-      "Aromasin",
-      "Arimidex",
-      "Cabergoline",
-      "Prednisone",
-      "Dutasteride",
-      "Finasteride",
-    ],
-  },
-  {
-    category: "pharma",
-    family: "Prescription pharmaceuticals",
-    format: "Direct sales access",
-    names: [
-      "Sildenafil",
-      "Tadalafil",
-      "Dapoxetine",
-      "Isotretinoin",
-      "Ivermectin",
-      "Minoxidil",
-      "Telmisartan",
-      "Flibanserin",
-      "Methylene Blue",
-      "Salbutamol",
-      "Alprostadil",
-      "DNP",
-      "Enclomiphene",
-      "Chlorpromazine",
-      "Meclozine",
-      "Infigratinib",
-      "Erdafitinib",
-      "TYRA-300",
-      "ASP5878",
-      "Debio 1347",
-      "AZD4547",
-      "Pemigatinib",
-      "Futibatinib",
-      "Rogaratinib",
-      "Romosozumab",
-      "Recifercept",
-    ],
-  },
-  {
-    category: "vialing",
-    family: "Injectables and vial programs",
-    format: "Oil, water, or compounded vial program",
-    names: [
-      "Test Cypionate",
-      "Test Enanthate",
-      "Test Propionate",
-      "Test Undecanoate",
-      "Test Base",
-      "Sustanon",
-      "Supertest",
-      "Tren A",
-      "Tren E",
-      "Tren Base",
-      "Tren Hex",
-      "Trenmix",
-      "TriTren",
-      "Primobolan E",
-      "DECA",
-      "NPP",
-      "Nandromix",
-      "Equipoise",
-      "Boldenone Cypionate",
-      "Mast P",
-      "Mast E",
-      "RIPEX blend",
-      "MENT",
-      "DHT",
-      "Metribolone",
-      "Estradiol Cypionate",
-      "L-Carnitine",
-      "B12",
-      "D320 vitamins",
-    ],
-  },
-  {
-    category: "partner",
-    family: "Raw powders and wholesale",
-    format: "Raw material, bulk, or distributor review",
-    names: [
-      "Oxandrolone raw",
-      "Mesterolone raw",
-      "Trenbolone Acetate raw",
-      "Trenbolone Enanthate raw",
-      "Turinabol raw",
-      "Testosterone Propionate raw",
-      "Testosterone Enanthate raw",
-      "Testosterone Cypionate raw",
-      "Testosterone Decanoate raw",
-      "Stanozolol raw",
-      "Oxymetholone raw",
-      "Methandrostenolone raw",
-      "Boldenone Undecylenate raw",
-      "Drostanolone Enanthate raw",
-      "Drostanolone Propionate raw",
-      "Nandrolone Decanoate raw",
-      "Nandrolone Phenylpropionate raw",
-      "Fluoxymesterone raw",
-      "Methasteron raw",
-      "1-Testosterone Cypionate raw",
-      "Trestolone Acetate raw",
-      "Trestolone Enanthate raw",
-      "Sildenafil raw",
-      "Tadalafil raw",
-      "Kartogenin",
-      "Lorecivivint",
-      "Sprifermin",
-      "BMP-2",
-      "BMP-7",
-      "WAY-316606",
-      "CHIR99021",
-      "SB431542",
-      "Purmorphamine",
-      "BIO 6-BIO",
-      "CBL0137",
-      "Dynasore",
-      "Pitstop 2",
-      "Dynole 34-2",
-    ],
-  },
-];
+(function () {
+  const products = window.WWBData.products;
+  const optionSets = window.WWBData.optionSets;
+  const api = window.WWBApi;
+  const state = window.WWBState;
+  const validation = window.WWBValidation;
 
-const categoryMeta = {
-  metabolic: {
-    tags: ["Product paperwork", "Cold-chain review", "Sales desk"],
-    image: "image-metabolic",
-  },
-  peptide: {
-    tags: ["Product paperwork", "Batch docs", "COA"],
-    image: "image-peptide",
-  },
-  regenerative: {
-    tags: ["Credential review", "Lot docs", "QC"],
-    image: "image-regenerative",
-  },
-  endocrine: {
-    tags: ["Extra review", "Prescription required", "Export screen"],
-    image: "image-endocrine",
-  },
-  pharma: {
-    tags: ["Product paperwork", "Sales desk", "COA"],
-    image: "image-pharma",
-  },
-  vialing: {
-    tags: ["Custom", "Batch", "Labeling"],
-    image: "image-vialing",
-  },
-  partner: {
-    tags: ["B2B", "Screened", "Raw material"],
-    image: "image-partner",
-  },
-};
+  const els = {
+    search: document.querySelector("#searchInput"),
+    category: document.querySelector("#categoryFilter"),
+    review: document.querySelector("#reviewFilter"),
+    doc: document.querySelector("#docFilter"),
+    format: document.querySelector("#formatFilter"),
+    type: document.querySelector("#typeFilter"),
+    priceType: document.querySelector("#priceTypeFilter"),
+    status: document.querySelector("#statusFilter"),
+    resetFilters: document.querySelector("#resetFilters"),
+    sort: document.querySelector("#sortSelect"),
+    activeFilters: document.querySelector("#activeFilters"),
+    catalogCount: document.querySelector("#catalogCount"),
+    productGrid: document.querySelector("#productGrid"),
+    categoryGrid: document.querySelector("#categoryGrid"),
+    featuredGrid: document.querySelector("#featuredGrid"),
+    quoteBag: document.querySelector("#quoteBag"),
+    quoteCount: document.querySelector("#quoteCount"),
+    mobileQuoteCount: document.querySelector("#mobileQuoteCount"),
+    quoteButton: document.querySelector("#quoteButton"),
+    mobileQuoteButton: document.querySelector("#mobileQuoteButton"),
+    quoteForm: document.querySelector("#quoteForm"),
+    accountForm: document.querySelector("#accountForm"),
+    quoteStatus: document.querySelector("#quoteStatus"),
+    accountStatus: document.querySelector("#accountStatus"),
+    copyQuoteButton: document.querySelector("#copyQuoteButton"),
+    submitQuoteButton: document.querySelector("#submitQuoteButton"),
+    submitAccountButton: document.querySelector("#submitAccountButton"),
+    dialog: document.querySelector("#productDialog"),
+    dialogClose: document.querySelector("#dialogClose"),
+    dialogContent: document.querySelector("#dialogContent"),
+  };
 
-const products = catalogGroups.flatMap((group) =>
-  group.names.map((name, index) => {
-    const meta = categoryMeta[group.category];
-    return {
-      name,
-      category: group.category,
-      summary: `${group.family} item. Availability, documentation, shipping review, and order terms are handled through the WWB sales desk.`,
-      tags: meta.tags,
-      code: makeCode(name, group.category, index),
-      format: group.format,
-      price: "Client terms",
-      image: meta.image,
-    };
-  })
-);
+  const filterState = {
+    category: "all",
+    review: "all",
+    doc: "all",
+    format: "all",
+    type: "all",
+    priceType: "all",
+    status: "all",
+    search: "",
+    sort: "recent",
+  };
 
-const productGrid = document.querySelector("#productGrid");
-const searchInput = document.querySelector("#searchInput");
-const quoteCount = document.querySelector("#quoteCount");
-const catalogCount = document.querySelector("#catalogCount");
-const filters = document.querySelectorAll(".category-filter");
-const form = document.querySelector(".login-form");
-const formNote = document.querySelector("#formNote");
-const requestField = document.querySelector("#requestField");
-const sortSelect = document.querySelector("#sortSelect");
-const prepareOrderButton = document.querySelector("#prepareOrderButton");
-const productDialog = document.querySelector("#productDialog");
-const dialogClose = document.querySelector("#dialogClose");
-const dialogVisual = document.querySelector("#dialogVisual");
-const dialogCategory = document.querySelector("#dialogCategory");
-const dialogTitle = document.querySelector("#dialogTitle");
-const dialogSummary = document.querySelector("#dialogSummary");
-const dialogFormat = document.querySelector("#dialogFormat");
-const dialogTerms = document.querySelector("#dialogTerms");
-const dialogTags = document.querySelector("#dialogTags");
-const dialogQuoteButton = document.querySelector("#dialogQuoteButton");
+  let currentProducts = [];
+  let lastQuoteText = "";
+  let lastFocusedElement = null;
 
-let activeCategory = "all";
-let quoteItems = new Set();
-let activeProductName = "";
-
-function makeCode(name, category, index) {
-  const prefix = category.slice(0, 2).toUpperCase();
-  const initials = name
-    .replace(/raw$/i, "")
-    .split(/[\s+/()-]+/)
-    .filter(Boolean)
-    .slice(0, 3)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
-
-  return `${prefix}${initials || index + 1}`;
-}
-
-function renderProducts() {
-  const query = searchInput.value.trim().toLowerCase();
-  const filtered = products.filter((product) => {
-    const inCategory = activeCategory === "all" || product.category === activeCategory;
-    const inSearch = [
-      product.name,
-      product.summary,
-      product.category,
-      product.code,
-      product.format,
-      product.price,
-      ...product.tags,
-    ]
-      .join(" ")
-      .toLowerCase()
-      .includes(query);
-    return inCategory && inSearch;
-  });
-  const sorted = [...filtered].sort((a, b) => {
-    if (sortSelect.value === "name") return a.name.localeCompare(b.name);
-    return a.category.localeCompare(b.category) || a.name.localeCompare(b.name);
-  });
-
-  catalogCount.textContent = `${sorted.length} supply line${sorted.length === 1 ? "" : "s"} shown`;
-
-  productGrid.innerHTML = sorted
-    .map(
-      (product) => `
-        <article class="product-card">
-          <div class="product-visual ${product.image}"><span>${product.code}</span></div>
-          <div class="product-body">
-            <h3>${product.name}</h3>
-            <p>${product.summary}</p>
-            <dl class="product-specs">
-              <div>
-                <dt>Format</dt>
-                <dd>${product.format}</dd>
-              </div>
-              <div>
-                <dt>Terms</dt>
-                <dd>${product.price}</dd>
-              </div>
-            </dl>
-            <div class="product-meta">
-              ${product.tags.map((tag) => `<span class="pill">${tag}</span>`).join("")}
-            </div>
-            <div class="product-actions">
-              <button class="button secondary" type="button" data-detail="${product.name}">
-                Details
-              </button>
-              <button class="button primary compact" type="button" data-quote="${product.name}">
-                Add
-              </button>
-            </div>
-          </div>
-        </article>
-      `
-    )
-    .join("");
-
-  if (!sorted.length) {
-    productGrid.innerHTML = `<p>No matching catalog items.</p>`;
+  function text(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (char) => {
+      const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
+      return map[char];
+    });
   }
-}
 
-filters.forEach((filter) => {
-  filter.addEventListener("click", () => {
-    filters.forEach((item) => item.classList.remove("active"));
-    filter.classList.add("active");
-    activeCategory = filter.dataset.category;
+  function label(value) {
+    return String(value || "")
+      .replace(/[-_]/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+
+  function populateSelect(select, values, formatter = label) {
+    values.forEach((value) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = formatter(value);
+      select.append(option);
+    });
+  }
+
+  function formatPrice(product) {
+    if (product.priceType === "fixed") return `$${product.unitPrice} / ${product.unit}`;
+    if (product.priceType === "from") return `From $${product.unitPrice}`;
+    if (product.priceType === "restricted") return "Restricted review";
+    return "Quote required";
+  }
+
+  function itemSubtotal(item) {
+    if (!["fixed", "from"].includes(item.priceType) || !Number(item.unitPrice)) return null;
+    return Number(item.unitPrice) * Math.max(1, Number(item.quantity) || 1);
+  }
+
+  function initFilters() {
+    const categories = Object.entries(window.WWBData.categoryProfiles).map(([value, profile]) => ({
+      value,
+      label: profile.label,
+    }));
+    categories.forEach((category) => {
+      const option = document.createElement("option");
+      option.value = category.value;
+      option.textContent = category.label;
+      els.category.append(option);
+    });
+
+    populateSelect(els.review, optionSets.reviewLevels, (value) => window.WWBData.reviewLabels[value]);
+    populateSelect(els.doc, optionSets.documents);
+    populateSelect(els.format, optionSets.formats);
+    populateSelect(els.type, optionSets.productTypes, (value) => value);
+    populateSelect(els.priceType, optionSets.priceTypes);
+    populateSelect(els.status, optionSets.statuses);
+  }
+
+  function filteredProducts() {
+    const query = filterState.search.trim().toLowerCase();
+    return currentProducts
+      .filter((product) => {
+        const searchable = [
+          product.name,
+          product.code,
+          product.categoryLabel,
+          product.family,
+          product.productType,
+          product.reviewLabel,
+          product.status,
+          product.description,
+          ...product.tags,
+          ...product.documentationAvailable,
+          ...product.availableFormats,
+        ]
+          .join(" ")
+          .toLowerCase();
+
+        return (
+          (filterState.category === "all" || product.category === filterState.category) &&
+          (filterState.review === "all" || product.reviewLevel === filterState.review) &&
+          (filterState.doc === "all" || product.documentationAvailable.includes(filterState.doc)) &&
+          (filterState.format === "all" || product.availableFormats.includes(filterState.format)) &&
+          (filterState.type === "all" || product.productType === filterState.type) &&
+          (filterState.priceType === "all" || product.priceType === filterState.priceType) &&
+          (filterState.status === "all" || product.status === filterState.status) &&
+          (!query || searchable.includes(query))
+        );
+      })
+      .sort((a, b) => {
+        if (filterState.sort === "name") return a.name.localeCompare(b.name);
+        if (filterState.sort === "category") return a.categoryLabel.localeCompare(b.categoryLabel) || a.name.localeCompare(b.name);
+        if (filterState.sort === "price") return (a.unitPrice || Number.MAX_SAFE_INTEGER) - (b.unitPrice || Number.MAX_SAFE_INTEGER) || a.name.localeCompare(b.name);
+        if (filterState.sort === "review") return a.reviewLabel.localeCompare(b.reviewLabel) || a.name.localeCompare(b.name);
+        return b.addedAt.localeCompare(a.addedAt) || a.name.localeCompare(b.name);
+      });
+  }
+
+  function renderActiveFilters() {
+    const active = [];
+    if (filterState.search) active.push(`Search: ${filterState.search}`);
+    ["category", "review", "doc", "format", "type", "priceType", "status"].forEach((key) => {
+      if (filterState[key] !== "all") active.push(`${label(key)}: ${key === "review" ? window.WWBData.reviewLabels[filterState[key]] : filterState[key]}`);
+    });
+
+    els.activeFilters.innerHTML = active.length
+      ? active.map((item) => `<span>${text(item)}</span>`).join("")
+      : `<span>No active filters</span>`;
+  }
+
+  function renderCategoryCards() {
+    els.categoryGrid.innerHTML = Object.entries(window.WWBData.categoryProfiles)
+      .map(([category, profile]) => {
+        const count = products.filter((product) => product.category === category).length;
+        return `
+          <article>
+            <strong>${text(profile.label)}</strong>
+            <span>${count} supply lines</span>
+            <p>${text(profile.storageShippingNotes)}</p>
+            <button class="button secondary" type="button" data-category-card="${text(category)}">View category</button>
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function renderFeaturedProducts() {
+    const featured = products.filter((product) => ["fixed", "from"].includes(product.priceType)).slice(0, 6);
+    els.featuredGrid.innerHTML = featured
+      .map(
+        (product) => `
+          <article>
+            <span>${text(product.categoryLabel)}</span>
+            <strong>${text(product.name)}</strong>
+            <p>${text(product.description)}</p>
+            <div class="mini-price">${text(formatPrice(product))}</div>
+            <button class="button primary" type="button" data-featured-add="${text(product.id)}">Add to quote</button>
+          </article>
+        `
+      )
+      .join("");
+  }
+
+  function renderProducts() {
+    const list = filteredProducts();
+    els.catalogCount.textContent = `${list.length} product${list.length === 1 ? "" : "s"} shown`;
+    renderActiveFilters();
+
+    if (!list.length) {
+      els.productGrid.className = "product-grid empty";
+      els.productGrid.innerHTML = `
+        <div class="empty-state">
+          <h3>No matching products</h3>
+          <p>Try clearing filters or searching by category, format, document type, or product name.</p>
+          <button class="button secondary" type="button" data-reset-empty>Clear filters</button>
+        </div>
+      `;
+      return;
+    }
+
+    els.productGrid.className = "product-grid";
+    els.productGrid.innerHTML = list
+      .map(
+        (product) => `
+          <article class="product-card">
+            <div class="product-card-head">
+              <span>${text(product.code)}</span>
+              <strong class="status ${text(product.status)}">${text(label(product.status))}</strong>
+            </div>
+            <div class="product-body">
+              <div class="product-topline">
+                <span>${text(product.categoryLabel)}</span>
+                <strong>${text(product.reviewLabel)}</strong>
+              </div>
+              <h3>${text(product.name)}</h3>
+              <p>${text(product.description)}</p>
+              <dl class="product-specs">
+                <div>
+                  <dt>Format</dt>
+                  <dd>${text(product.availableFormats[0])}</dd>
+                </div>
+                <div>
+                  <dt>MOQ</dt>
+                  <dd>${text(product.moq)}</dd>
+                </div>
+              </dl>
+              <div class="product-meta">
+                ${product.tags.map((tag) => `<span class="pill">${text(tag)}</span>`).join("")}
+              </div>
+              <div class="product-buybox">
+                <div class="product-price">
+                  <span>Pricing</span>
+                  <strong>${text(formatPrice(product))}</strong>
+                  <small>${text(product.pricingNote)} | ${text(product.leadTime)}</small>
+                </div>
+                <div class="checkout-route">${text(product.reviewLabel)}</div>
+                <div class="card-actions">
+                  <button class="button secondary" type="button" data-detail="${text(product.id)}">Details</button>
+                  <button class="button primary" type="button" data-add="${text(product.id)}">Request quote</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `
+      )
+      .join("");
+  }
+
+  function renderQuoteBag() {
+    const items = state.getQuoteItems();
+    const estimatedTotal = items.reduce((sum, item) => sum + (itemSubtotal(item) || 0), 0);
+    const hasQuoteItems = items.some((item) => item.quoteRequired);
+    els.quoteCount.textContent = items.length;
+    els.mobileQuoteCount.textContent = items.length;
+
+    if (!items.length) {
+      els.quoteBag.innerHTML = `
+        <div class="empty-state compact">
+          <h3>No products selected</h3>
+          <p>Add products from the catalog to build a sales review request.</p>
+        </div>
+      `;
+      return;
+    }
+
+    els.quoteBag.innerHTML = `
+      <div class="quote-list">
+        ${items
+          .map((item) => {
+            const product = products.find((entry) => entry.id === item.productId);
+            const formats = product?.availableFormats || [item.format];
+            return `
+              <article class="quote-item">
+                <div>
+                  <strong>${text(item.name)}</strong>
+                  <span>${text(item.category)} | ${text(item.packageSize)} | ${text(item.reviewLabel)}</span>
+                </div>
+                <label>
+                  Qty
+                  <input type="number" min="1" value="${Number(item.quantity) || 1}" data-quantity="${text(item.productId)}" />
+                </label>
+                <label>
+                  Format
+                  <select data-format="${text(item.productId)}">
+                    ${formats.map((format) => `<option value="${text(format)}" ${format === item.format ? "selected" : ""}>${text(format)}</option>`).join("")}
+                  </select>
+                </label>
+                <div class="quote-money">
+                  <span>${text(item.priceType === "restricted" ? "Restricted review" : item.priceType === "quote" ? "Quote required" : `$${item.unitPrice} / ${item.unit || "unit"}`)}</span>
+                  <strong>${itemSubtotal(item) ? `$${itemSubtotal(item).toLocaleString()}` : "TBD"}</strong>
+                </div>
+                <button type="button" class="icon-button" data-remove="${text(item.productId)}" aria-label="Remove ${text(item.name)}">Remove</button>
+              </article>
+            `;
+          })
+          .join("")}
+        <div class="quote-total">
+          <span>Estimated priced-item subtotal</span>
+          <strong>$${estimatedTotal.toLocaleString()}</strong>
+          ${hasQuoteItems ? `<p>Quote/restricted items need sales confirmation before a final total is issued.</p>` : ""}
+        </div>
+      </div>
+    `;
+  }
+
+  function productById(id) {
+    return products.find((product) => product.id === id);
+  }
+
+  function addToQuote(product, patch = {}) {
+    state.upsertQuoteItem(product, patch);
+    renderQuoteBag();
+    document.querySelector("#quote").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function relatedProducts(product) {
+    return products
+      .filter((entry) => entry.id !== product.id && entry.category === product.category)
+      .slice(0, 3);
+  }
+
+  function openProductDialog(product) {
+    if (!product) return;
+    lastFocusedElement = document.activeElement;
+    const restricted = product.reviewLevel !== "standard";
+    els.dialogContent.innerHTML = `
+      <div class="dialog-header">
+        <p class="eyebrow">${text(product.categoryLabel)}</p>
+        <h2 id="dialogTitle">${text(product.name)}</h2>
+        <p>${text(product.description)}</p>
+      </div>
+      ${restricted ? `<div class="restricted-warning"><strong>Review required:</strong> ${text(product.reviewLabel)} before quote confirmation.</div>` : ""}
+      <div class="detail-grid">
+        <section>
+          <h3>Formats and terms</h3>
+          <dl>
+            <div><dt>Available formats</dt><dd>${product.availableFormats.map(text).join(", ")}</dd></div>
+            <div><dt>MOQ</dt><dd>${text(product.moq)}</dd></div>
+            <div><dt>Package</dt><dd>${text(product.packageSize)}</dd></div>
+            <div><dt>Price/status</dt><dd>${text(formatPrice(product))}</dd></div>
+            <div><dt>Lead time</dt><dd>${text(product.leadTime)}</dd></div>
+            <div><dt>Status</dt><dd>${text(label(product.status))}</dd></div>
+          </dl>
+        </section>
+        <section>
+          <h3>Documentation and shipping</h3>
+          <dl>
+            <div><dt>Documents</dt><dd>${product.documentationAvailable.map(text).join(", ")}</dd></div>
+            <div><dt>Storage / shipping</dt><dd>${text(product.storageShippingNotes)}</dd></div>
+            <div><dt>Allowed buyer types</dt><dd>${product.allowedBuyerTypes.map(text).join(", ")}</dd></div>
+          </dl>
+        </section>
+      </div>
+      <form class="dialog-quote-form" id="dialogQuoteForm">
+        <label>
+          Quantity
+          <input type="number" name="quantity" min="1" value="1" />
+        </label>
+        <label>
+          Format / configuration
+          <select name="format">
+            ${product.availableFormats.map((format) => `<option value="${text(format)}">${text(format)}</option>`).join("")}
+          </select>
+        </label>
+        <button class="button primary" type="submit">Request quote for this product</button>
+      </form>
+      <section class="related-products">
+        <h3>Related products</h3>
+        <div>
+          ${relatedProducts(product)
+            .map((related) => `<button type="button" data-related="${text(related.id)}">${text(related.name)}</button>`)
+            .join("")}
+        </div>
+      </section>
+    `;
+    if (!els.dialog.open) els.dialog.showModal();
+    els.dialog.querySelector("input, select, button")?.focus();
+  }
+
+  function closeDialog() {
+    els.dialog.close();
+    lastFocusedElement?.focus();
+  }
+
+  function formDataForStorage(form) {
+    return validation.formObject(form);
+  }
+
+  function restoreForm(form, key) {
+    const values = state.getForm(key);
+    Object.entries(values).forEach(([name, value]) => {
+      const fields = [...form.elements].filter((field) => field.name === name);
+      fields.forEach((field) => {
+        if (field.type === "checkbox") {
+          field.checked = Array.isArray(value) ? value.includes(field.value) : value === field.value;
+        } else {
+          field.value = value;
+        }
+      });
+    });
+  }
+
+  function clearErrors(form, prefix = "") {
+    form.querySelectorAll(".field-error").forEach((node) => {
+      node.textContent = "";
+    });
+    form.querySelectorAll("[aria-invalid='true']").forEach((node) => {
+      node.removeAttribute("aria-invalid");
+    });
+    if (!prefix) els.quoteStatus.textContent = "";
+  }
+
+  function showErrors(form, errors, prefix = "") {
+    clearErrors(form, prefix);
+    Object.entries(errors).forEach(([name, message]) => {
+      const errorNode = form.querySelector(`[data-error-for="${prefix}${name}"]`);
+      if (errorNode) errorNode.textContent = message;
+      const field = form.elements[name];
+      if (field) field.setAttribute("aria-invalid", "true");
+    });
+  }
+
+  function quoteText(reference = "Pending") {
+    const items = state.getQuoteItems();
+    const data = validation.formObject(els.quoteForm);
+    return [
+      `WWB quote request: ${reference}`,
+      "",
+      "Selected products:",
+      ...items.map((item) => `- ${item.name} | Qty: ${item.quantity} | Format: ${item.format} | Price/status: ${itemSubtotal(item) ? `$${itemSubtotal(item)}` : item.priceType} | Review: ${item.reviewLabel}`),
+      "",
+      `Company: ${data.company || ""}`,
+      `Contact: ${data.contactName || ""}`,
+      `Email: ${data.email || ""}`,
+      `Phone / WhatsApp / Telegram: ${data.messaging || ""}`,
+      `Destination country: ${data.destination || ""}`,
+      `Buyer type: ${data.buyerType || ""}`,
+      `Documentation needed: ${(data.documents || []).join(", ") || "Not specified"}`,
+      `Shipping requirements: ${(data.shipping || []).join(", ") || "Not specified"}`,
+      `Notes: ${data.notes || ""}`,
+    ].join("\n");
+  }
+
+  async function copyText(value, statusNode) {
+    try {
+      await navigator.clipboard.writeText(value);
+      statusNode.textContent = "Copied to clipboard.";
+    } catch {
+      statusNode.textContent = "Copy blocked by browser. Select the generated request text and copy it manually.";
+    }
+  }
+
+  function wireEvents() {
+    [els.category, els.review, els.doc, els.format, els.type, els.priceType, els.status, els.sort].forEach((select) => {
+      select.addEventListener("change", () => {
+        filterState[select.id.replace("Filter", "").replace("sortSelect", "sort")] = select.value;
+        if (select === els.sort) filterState.sort = select.value;
+        renderProducts();
+      });
+    });
+
+    els.search.addEventListener("input", () => {
+      filterState.search = els.search.value;
+      renderProducts();
+    });
+
+    els.resetFilters.addEventListener("click", () => {
+      Object.assign(filterState, { category: "all", review: "all", doc: "all", format: "all", type: "all", priceType: "all", status: "all", search: "", sort: "recent" });
+      [els.category, els.review, els.doc, els.format, els.type, els.priceType, els.status].forEach((select) => (select.value = "all"));
+      els.search.value = "";
+      els.sort.value = "recent";
+      renderProducts();
+    });
+
+    els.categoryGrid.addEventListener("click", (event) => {
+      const category = event.target.closest("[data-category-card]")?.dataset.categoryCard;
+      if (!category) return;
+      filterState.category = category;
+      els.category.value = category;
+      renderProducts();
+      document.querySelector("#catalog").scrollIntoView({ behavior: "smooth" });
+    });
+
+    els.featuredGrid.addEventListener("click", (event) => {
+      const id = event.target.closest("[data-featured-add]")?.dataset.featuredAdd;
+      if (id) addToQuote(productById(id));
+    });
+
+    els.productGrid.addEventListener("click", (event) => {
+      const detailId = event.target.closest("[data-detail]")?.dataset.detail;
+      const addId = event.target.closest("[data-add]")?.dataset.add;
+      if (event.target.closest("[data-reset-empty]")) els.resetFilters.click();
+      if (detailId) openProductDialog(productById(detailId));
+      if (addId) addToQuote(productById(addId));
+    });
+
+    els.quoteBag.addEventListener("input", (event) => {
+      const id = event.target.dataset.quantity;
+      if (id) {
+        state.updateQuoteItem(id, { quantity: Math.max(1, Number(event.target.value) || 1) });
+        renderQuoteBag();
+      }
+    });
+
+    els.quoteBag.addEventListener("change", (event) => {
+      const id = event.target.dataset.format;
+      if (id) {
+        state.updateQuoteItem(id, { format: event.target.value });
+        renderQuoteBag();
+      }
+    });
+
+    els.quoteBag.addEventListener("click", (event) => {
+      const id = event.target.closest("[data-remove]")?.dataset.remove;
+      if (id) {
+        state.removeQuoteItem(id);
+        renderQuoteBag();
+      }
+    });
+
+    [els.quoteButton, els.mobileQuoteButton].forEach((button) => {
+      button.addEventListener("click", () => document.querySelector("#quote").scrollIntoView({ behavior: "smooth" }));
+    });
+
+    els.quoteForm.addEventListener("input", () => state.setForm("quoteForm", formDataForStorage(els.quoteForm)));
+    els.quoteForm.addEventListener("change", () => state.setForm("quoteForm", formDataForStorage(els.quoteForm)));
+    els.accountForm.addEventListener("input", () => state.setForm("accountForm", formDataForStorage(els.accountForm)));
+    els.accountForm.addEventListener("change", () => state.setForm("accountForm", formDataForStorage(els.accountForm)));
+
+    els.copyQuoteButton.addEventListener("click", () => copyText(lastQuoteText || quoteText(), els.quoteStatus));
+
+    els.quoteForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const items = state.getQuoteItems();
+      const data = validation.formObject(els.quoteForm);
+      const errors = validation.validateQuote(data, items);
+      if (Object.keys(errors).length) {
+        showErrors(els.quoteForm, errors);
+        els.quoteStatus.textContent = errors.items || "Fix the highlighted fields before submitting.";
+        return;
+      }
+
+      clearErrors(els.quoteForm);
+      els.submitQuoteButton.disabled = true;
+      els.quoteStatus.textContent = "Submitting quote request...";
+      try {
+        const result = await api.submitQuoteRequest({ items, request: data });
+        state.savePendingQuote(result);
+        lastQuoteText = quoteText(result.reference);
+        els.quoteStatus.textContent = `Quote request ${result.reference} saved locally for sales review.`;
+        state.clearQuoteItems();
+        state.setForm("quoteForm", {});
+        els.quoteForm.reset();
+        renderQuoteBag();
+      } catch (error) {
+        els.quoteStatus.textContent = error.message;
+      } finally {
+        els.submitQuoteButton.disabled = false;
+      }
+    });
+
+    els.accountForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = validation.formObject(els.accountForm);
+      const errors = validation.validateAccount(data);
+      if (Object.keys(errors).length) {
+        showErrors(els.accountForm, errors, "account-");
+        els.accountStatus.textContent = "Fix the highlighted fields before submitting.";
+        return;
+      }
+
+      clearErrors(els.accountForm, "account-");
+      els.submitAccountButton.disabled = true;
+      els.accountStatus.textContent = "Submitting account access request...";
+      try {
+        const result = await api.requestAccountAccess(data);
+        state.saveAccessRequest(result);
+        state.setForm("accountForm", {});
+        els.accountForm.reset();
+        els.accountStatus.textContent = `Account access request ${result.reference} saved locally.`;
+      } catch (error) {
+        els.accountStatus.textContent = error.message;
+      } finally {
+        els.submitAccountButton.disabled = false;
+      }
+    });
+
+    els.dialogClose.addEventListener("click", closeDialog);
+    els.dialog.addEventListener("click", (event) => {
+      if (event.target === els.dialog) closeDialog();
+      const relatedId = event.target.closest("[data-related]")?.dataset.related;
+      if (relatedId) openProductDialog(productById(relatedId));
+    });
+    els.dialog.addEventListener("submit", (event) => {
+      if (event.target.id !== "dialogQuoteForm") return;
+      event.preventDefault();
+      const title = els.dialog.querySelector("#dialogTitle")?.textContent;
+      const product = products.find((entry) => entry.name === title);
+      const data = new FormData(event.target);
+      addToQuote(product, { quantity: Number(data.get("quantity")) || 1, format: data.get("format") });
+      closeDialog();
+    });
+    els.dialog.addEventListener("keydown", trapDialogFocus);
+  }
+
+  function trapDialogFocus(event) {
+    if (event.key === "Escape") closeDialog();
+    if (event.key !== "Tab") return;
+    const focusables = [...els.dialog.querySelectorAll("button, input, select, textarea, a[href]")].filter((node) => !node.disabled);
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  async function init() {
+    initFilters();
+    renderCategoryCards();
+    renderFeaturedProducts();
+    restoreForm(els.quoteForm, "quoteForm");
+    restoreForm(els.accountForm, "accountForm");
+    renderQuoteBag();
+    wireEvents();
+    currentProducts = await api.fetchCatalog();
     renderProducts();
-  });
-});
-
-searchInput.addEventListener("input", renderProducts);
-sortSelect.addEventListener("change", renderProducts);
-
-productGrid.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-quote]");
-  const detailButton = event.target.closest("[data-detail]");
-  if (detailButton) {
-    openProductDialog(detailButton.dataset.detail);
-    return;
   }
-  if (!button) return;
 
-  addProductToQuote(button.dataset.quote);
-  button.textContent = "Added";
-});
-
-document.querySelector("#quoteButton").addEventListener("click", () => {
-  const target = document.querySelector("#login");
-  target.scrollIntoView({ behavior: "smooth" });
-  formNote.textContent = quoteItems.size
-    ? `${quoteItems.size} item(s) in the order bag. Log in to continue.`
-    : "Add products to the order bag first.";
-});
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  formNote.textContent = "Client login is ready for account connection.";
-});
-
-prepareOrderButton.addEventListener("click", () => {
-  formNote.textContent = quoteItems.size
-    ? "Order bag prepared. Sales desk confirmation is the next step."
-    : "Add products to the order bag before preparing an order.";
-});
-
-dialogClose.addEventListener("click", () => productDialog.close());
-
-dialogQuoteButton.addEventListener("click", () => {
-  addProductToQuote(activeProductName);
-  dialogQuoteButton.textContent = "Added to order bag";
-});
-
-productDialog.addEventListener("click", (event) => {
-  if (event.target === productDialog) productDialog.close();
-});
-
-function addProductToQuote(productName) {
-  quoteItems.add(productName);
-  quoteCount.textContent = quoteItems.size;
-  updateRequestField();
-}
-
-function openProductDialog(productName) {
-  const product = products.find((item) => item.name === productName);
-  if (!product) return;
-
-  activeProductName = product.name;
-  dialogVisual.className = `dialog-visual ${product.image}`;
-  dialogCategory.textContent = product.category;
-  dialogTitle.textContent = product.name;
-  dialogSummary.textContent = product.summary;
-  dialogFormat.textContent = product.format;
-  dialogTerms.textContent = product.price;
-  dialogTags.innerHTML = product.tags.map((tag) => `<span class="pill">${tag}</span>`).join("");
-  dialogQuoteButton.textContent = quoteItems.has(product.name) ? "Added to order bag" : "Add to order bag";
-  productDialog.showModal();
-}
-
-function updateRequestField() {
-  const selected = Array.from(quoteItems);
-  const currentValue = requestField.value.trim();
-  if (!selected.length || (currentValue && !currentValue.startsWith("Selected products:"))) return;
-
-  requestField.value = `Selected products:\n${selected.map((item) => `- ${item}`).join("\n")}\n\nCompany:\nDestination country:\nBuyer type:\nShipping lane or notes:`;
-}
-
-renderProducts();
+  init();
+})();
