@@ -2,6 +2,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const express = require("express");
 const fs = require("fs");
+const rateLimit = require("express-rate-limit");
 const path = require("path");
 
 dotenv.config();
@@ -12,9 +13,119 @@ const DISCOUNT_CODE = "SUMMER";
 const DISCOUNT_RATE = 0.05;
 const SHIPPING_STATUS = "Pending seller review";
 const SHIPPING_LABEL = "To be confirmed by seller after address review";
+const MAX_QTY_PER_LINE = positiveInteger(process.env.MAX_QTY_PER_LINE, 999);
+const MAX_CART_LINES = positiveInteger(process.env.MAX_CART_LINES, 50);
+const ORDER_RATE_LIMIT_MAX = positiveInteger(process.env.ORDER_RATE_LIMIT_MAX, 20);
+const CONTACT_RATE_LIMIT_MAX = positiveInteger(process.env.CONTACT_RATE_LIMIT_MAX, 10);
+const RATE_LIMIT_WINDOW_MS = positiveInteger(process.env.RATE_LIMIT_WINDOW_MS, 15 * 60 * 1000);
+const DATA_DIR = path.resolve(__dirname, "data");
+const ORDERS_PATH = path.join(DATA_DIR, "orders.jsonl");
 
-app.use(cors());
+app.use(corsGate);
 app.use(express.json({ limit: "1mb" }));
+
+const orderLimiter = rateLimit({
+  windowMs: RATE_LIMIT_WINDOW_MS,
+  limit: ORDER_RATE_LIMIT_MAX,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, error: "Too many order attempts. Try again later." },
+});
+
+const contactLimiter = rateLimit({
+  windowMs: RATE_LIMIT_WINDOW_MS,
+  limit: CONTACT_RATE_LIMIT_MAX,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, error: "Too many contact messages. Try again later." },
+});
+
+function positiveInteger(value, fallback) {
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : fallback;
+}
+
+function allowedOrigins() {
+  return String(process.env.CORS_ORIGINS || "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+}
+
+function isLocalhostOrigin(origin) {
+  return /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i.test(origin || "");
+}
+
+function isAllowedOrigin(origin) {
+  const configured = allowedOrigins();
+  const isProduction = process.env.NODE_ENV === "production";
+  if (!origin) return true;
+  if (configured.includes(origin)) return true;
+  return !isProduction && isLocalhostOrigin(origin);
+}
+
+function corsOptions() {
+  return {
+    origin(origin, callback) {
+      return callback(null, isAllowedOrigin(origin));
+    },
+  };
+}
+
+function corsGate(req, res, next) {
+  const origin = req.headers.origin;
+  if (!isAllowedOrigin(origin)) {
+    return res.status(403).json({ ok: false, error: `CORS blocked origin: ${origin}` });
+  }
+  return cors(corsOptions())(req, res, next);
+}
+
+function safeString(value, max = 500) {
+  return String(value || "").trim().slice(0, max);
+}
+
+function cleanCustomer(customer = {}) {
+  return {
+    fullName: safeString(customer.fullName, 120),
+    email: safeString(customer.email, 160).toLowerCase(),
+    contact: safeString(customer.contact, 160),
+    country: safeString(customer.country, 80),
+    city: safeString(customer.city, 80),
+    address: safeString(customer.address, 500),
+    postalCode: safeString(customer.postalCode, 40),
+  };
+}
+
+function ensureDataDir() {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+function saveOrder(order, notification) {
+  ensureDataDir();
+  const record = {
+    createdAt: order.createdAt,
+    orderId: order.orderId,
+    customer: order.customer,
+    paymentMethod: order.paymentMethod,
+    notes: order.notes,
+    lines: order.lines,
+    totals: order.totals,
+    notification,
+  };
+  fs.appendFileSync(ORDERS_PATH, `${JSON.stringify(record)}\n`, "utf8");
+}
+
+function recentOrders(limit = 50) {
+  if (!fs.existsSync(ORDERS_PATH)) return [];
+  const capped = Math.min(positiveInteger(limit, 50), 200);
+  return fs
+    .readFileSync(ORDERS_PATH, "utf8")
+    .split(/\r?\n/)
+    .filter(Boolean)
+    .slice(-capped)
+    .reverse()
+    .map((line) => JSON.parse(line));
+}
 
 function loadCatalog() {
   const dataPath = path.resolve(__dirname, "..", "data", "products.json");
@@ -83,7 +194,7 @@ function calculateOrder(items) {
     const variant = findVariant(product, item.sku);
     if (!variant) throw new Error(`Unknown SKU: ${item.sku}`);
     const quantity = Number(item.quantity);
-    if (!Number.isFinite(quantity) || quantity < 1) throw new Error(`Invalid quantity for ${item.sku}`);
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > MAX_QTY_PER_LINE) throw new Error(`Invalid quantity for ${item.sku}`);
     const totals = lineTotal(variant, quantity);
     return {
       productId: product.id,
@@ -125,18 +236,33 @@ function calculateOrder(items) {
 function validateOrder(body) {
   const errors = [];
   if (!Array.isArray(body.items) || !body.items.length) errors.push("Cart is empty.");
+  if (Array.isArray(body.items) && body.items.length > MAX_CART_LINES) errors.push(`Cart cannot exceed ${MAX_CART_LINES} lines.`);
   if (String(body.discountCode || "").toUpperCase() !== DISCOUNT_CODE) errors.push("Discount code must be SUMMER.");
   if (!["crypto", "paypal"].includes(body.paymentMethod)) errors.push("Payment method must be crypto or paypal.");
-  const customer = body.customer || {};
+  const customer = cleanCustomer(body.customer || {});
   if (!customer.fullName?.trim()) errors.push("Customer full name is required.");
   if (!email(customer.email)) errors.push("Valid customer email is required.");
   if (!customer.country?.trim()) errors.push("Country is required.");
   if (!customer.city?.trim()) errors.push("City is required.");
   if (!customer.address?.trim()) errors.push("Shipping address is required.");
   for (const item of body.items || []) {
-    if (!Number(item.quantity) || Number(item.quantity) < 1) errors.push("Quantities must be positive.");
+    const quantity = Number(item.quantity);
+    if (!Number.isInteger(quantity) || quantity < 1) errors.push("Quantities must be positive whole numbers.");
+    if (Number.isInteger(quantity) && quantity > MAX_QTY_PER_LINE) errors.push(`Quantity for ${item.sku || "item"} cannot exceed ${MAX_QTY_PER_LINE}.`);
   }
   return errors;
+}
+
+function validateContact(body = {}) {
+  const name = safeString(body.name, 120);
+  const contactEmail = safeString(body.email, 160).toLowerCase();
+  const message = safeString(body.message, 1500);
+  const errors = [];
+  if (!name) errors.push("Name is required.");
+  if (!email(contactEmail)) errors.push("Valid email is required.");
+  if (message.length < 10) errors.push("Message must be at least 10 characters.");
+  if (String(body.message || "").length > 1500) errors.push("Message is too long.");
+  return { errors, data: { name, email: contactEmail, message } };
 }
 
 function paymentInstructions(method, id, totals) {
@@ -230,7 +356,15 @@ app.get("/api/status", (_req, res) => {
   });
 });
 
-app.post("/api/orders", async (req, res) => {
+app.get("/api/admin/orders", (req, res) => {
+  const configuredToken = process.env.ADMIN_TOKEN;
+  const provided = String(req.headers.authorization || "").replace(/^Bearer\s+/i, "");
+  if (!configuredToken) return res.status(503).json({ ok: false, error: "Admin token is not configured." });
+  if (!provided || provided !== configuredToken) return res.status(401).json({ ok: false, error: "Unauthorized." });
+  res.json({ ok: true, orders: recentOrders(req.query.limit) });
+});
+
+app.post("/api/orders", orderLimiter, async (req, res) => {
   try {
     const errors = validateOrder(req.body || {});
     if (errors.length) return res.status(400).json({ ok: false, error: errors.join(" ") });
@@ -240,14 +374,20 @@ app.post("/api/orders", async (req, res) => {
     const order = {
       orderId: id,
       createdAt: new Date().toISOString(),
-      customer: req.body.customer,
+      customer: cleanCustomer(req.body.customer),
       paymentMethod: req.body.paymentMethod,
-      notes: req.body.notes || "",
+      notes: safeString(req.body.notes, 1000),
       lines: priced.lines,
       totals: priced.totals,
     };
 
-    const notification = await sendDiscordOrder(order);
+    let notification;
+    try {
+      notification = await sendDiscordOrder(order);
+    } catch (error) {
+      notification = { sent: false, warning: error.message || "Discord notification failed." };
+    }
+    saveOrder(order, notification);
     res.json({
       ok: true,
       orderId: id,
@@ -270,11 +410,13 @@ app.post("/api/orders", async (req, res) => {
   }
 });
 
-app.post("/api/contact", async (req, res) => {
+app.post("/api/contact", contactLimiter, async (req, res) => {
   try {
+    const validated = validateContact(req.body || {});
+    if (validated.errors.length) return res.status(400).json({ ok: false, error: validated.errors.join(" ") });
     const webhook = process.env.DISCORD_WEBHOOK_URL;
     if (!webhook) return res.status(503).json({ ok: false, error: "Contact backend webhook is not configured." });
-    const message = [`New WWB contact message`, `Name: ${req.body.name || "N/A"}`, `Email: ${req.body.email || "N/A"}`, `Message: ${req.body.message || ""}`].join("\n");
+    const message = [`New WWB contact message`, `Name: ${validated.data.name}`, `Email: ${validated.data.email}`, `Message: ${validated.data.message}`].join("\n");
     const response = await fetch(webhook, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -285,6 +427,13 @@ app.post("/api/contact", async (req, res) => {
   } catch (error) {
     res.status(400).json({ ok: false, error: error.message || "Could not send contact message." });
   }
+});
+
+app.use((error, _req, res, _next) => {
+  if (String(error.message || "").startsWith("CORS blocked origin:")) {
+    return res.status(403).json({ ok: false, error: error.message });
+  }
+  return res.status(500).json({ ok: false, error: "Server error." });
 });
 
 app.listen(PORT, () => {

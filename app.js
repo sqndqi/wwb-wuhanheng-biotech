@@ -124,7 +124,8 @@
   }
 
   function lineTotals(item) {
-    const quantity = Math.max(1, Number(item.quantity) || 1);
+    const maxQuantity = Number(window.WWB_MAX_QTY_PER_LINE || 999);
+    const quantity = Math.min(maxQuantity, Math.max(1, Number(item.quantity) || 1));
     const variant = item.variant || {};
     let unitPrice = numeric(variant.price);
     let bulkApplied = false;
@@ -433,7 +434,15 @@
   }
 
   function addToCart(product, variant, quantity = 1) {
-    state.addCartItem(product, variant, { quantity: Math.max(1, Number(quantity) || 1) });
+    const maxQuantity = Number(window.WWB_MAX_QTY_PER_LINE || 999);
+    const currentLines = state.getCartItems();
+    const lineId = `${product.id}__${variant.sku}`;
+    if (!currentLines.some((item) => item.lineId === lineId) && currentLines.length >= Number(window.WWB_MAX_CART_LINES || 50)) {
+      els.orderStatus.textContent = `Cart cannot exceed ${window.WWB_MAX_CART_LINES || 50} lines.`;
+      return;
+    }
+    const safeQuantity = Math.min(maxQuantity, Math.max(1, Number(quantity) || 1));
+    state.addCartItem(product, variant, { quantity: safeQuantity });
     renderCart();
     els.orderStatus.textContent = `${variant.sku} added to cart.`;
   }
@@ -646,7 +655,10 @@
       if (stepId) {
         const card = event.target.closest("[data-product-card]");
         const input = card?.querySelector("[data-card-qty]");
-        const next = Math.max(1, (Number(input?.value) || 1) + Number(event.target.closest("[data-card-step]").dataset.step || 0));
+        const next = Math.min(
+          Number(window.WWB_MAX_QTY_PER_LINE || 999),
+          Math.max(1, (Number(input?.value) || 1) + Number(event.target.closest("[data-card-step]").dataset.step || 0))
+        );
         if (input) input.value = next;
         return;
       }
@@ -675,7 +687,8 @@
     els.cartList.addEventListener("input", (event) => {
       const id = event.target.dataset.cartQty;
       if (id) {
-        state.updateCartItem(id, { quantity: Math.max(1, Number(event.target.value) || 1) });
+        const nextQuantity = Math.min(Number(window.WWB_MAX_QTY_PER_LINE || 999), Math.max(1, Number(event.target.value) || 1));
+        state.updateCartItem(id, { quantity: nextQuantity });
         renderCart();
       }
     });

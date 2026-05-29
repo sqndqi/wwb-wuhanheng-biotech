@@ -22,6 +22,7 @@ The catalog is generated from WWB price-list source material. `WWB Pricelist 21-
 - `scripts/export-sellauth-csv.js` - creates `sellauth-products.csv`
 - `scripts/sellauth-sync.js` - safe SellAuth dry-run/map/export workflow
 - `server/server.js` - Express backend with `/health`, `/api/status`, `/api/orders`, `/api/contact`
+- `server/data/orders.jsonl` - local append-only MVP order log, ignored by git
 - `server/.env.example` - backend environment template
 
 ## Catalog Organization
@@ -69,19 +70,40 @@ SELLAUTH_SHOP_ID=
 SELLAUTH_SHOP_SLUG=
 DISCORD_WEBHOOK_URL=
 PAYPAL_EMAIL=
+CORS_ORIGINS=http://localhost:8000,http://127.0.0.1:8000,https://sqndqi.github.io
+ADMIN_TOKEN=
+MAX_QTY_PER_LINE=999
+MAX_CART_LINES=50
+ORDER_RATE_LIMIT_MAX=20
+CONTACT_RATE_LIMIT_MAX=10
+RATE_LIMIT_WINDOW_MS=900000
 NODE_ENV=development
 ```
 
 Do not commit `.env`, API keys, Discord webhooks, or payment secrets.
 
+`CORS_ORIGINS` is a comma-separated allowlist. Localhost origins are allowed automatically when `NODE_ENV` is not `production`; production should include the GitHub Pages origin and any custom frontend domain.
+
+Order and contact write endpoints are rate-limited. Defaults are 20 order attempts and 10 contact messages per 15 minutes per IP. `/health` and `/api/status` are not rate-limited.
+
+The backend caps cart size with `MAX_CART_LINES` and line quantities with `MAX_QTY_PER_LINE`. Frontend validation mirrors these caps for friendly errors, but the backend is the source of truth.
+
+Orders are appended to `server/data/orders.jsonl`. The admin endpoint reads recent orders:
+
+```bash
+curl -H "Authorization: Bearer $ADMIN_TOKEN" "http://localhost:3000/api/admin/orders?limit=50"
+```
+
+If `ADMIN_TOKEN` is missing, the admin endpoint is disabled.
+
 ## API URL For GitHub Pages
 
 Local development defaults to `http://localhost:3000`.
 
-For production GitHub Pages, edit `js/config.js` and replace the backend URL with your deployed backend URL:
+For production GitHub Pages, edit `js/config.js` and set `deployedBackendUrl` to your deployed backend URL:
 
 ```js
-window.WWB_API_BASE_URL = window.WWB_API_BASE_URL || "https://your-backend-url.example";
+const deployedBackendUrl = "https://your-backend-url.example";
 ```
 
 GitHub Pages alone cannot process orders. The backend must be deployed separately.
@@ -145,7 +167,7 @@ The confirmation message tells the customer that payment is not complete yet and
 - Frontend: GitHub Pages
 - Backend: Render, Railway, Fly.io, or VPS
 
-Deploy `server/` separately and set `window.WWB_API_BASE_URL` in `js/config.js` to that backend URL.
+Deploy `server/` separately and set `deployedBackendUrl` in `js/config.js` to that backend URL. Set `CORS_ORIGINS` on the backend to the GitHub Pages origin and any custom domain.
 
 ## Testing Checklist
 
@@ -157,6 +179,10 @@ Deploy `server/` separately and set `window.WWB_API_BASE_URL` in `js/config.js` 
 - Backend starts
 - `GET /health` returns `{ ok: true }`
 - `GET /api/status` returns payment/status JSON
+- `POST /api/orders` accepts a valid cart and stores the order in `server/data/orders.jsonl`
+- `POST /api/orders` rejects zero, negative, decimal, non-numeric, or over-cap quantities
+- `POST /api/contact` rejects invalid emails and empty or huge messages
+- `GET /api/admin/orders` rejects missing/invalid tokens and works when `ADMIN_TOKEN` is configured
 - Frontend loads products
 - Search by product name and SKU works
 - Variant dropdown works
@@ -172,9 +198,9 @@ Deploy `server/` separately and set `window.WWB_API_BASE_URL` in `js/config.js` 
 ## Still Needed For Production
 
 - Deployed backend URL connected to GitHub Pages
-- Real persistent database/order storage
+- Production database/admin tooling beyond JSONL MVP storage
 - Admin dashboard
 - SellAuth import/write workflow confirmed against your account
 - Inventory and payment reconciliation
-- Rate limiting, abuse prevention, logging, and monitoring
+- Stronger abuse prevention, logging, alerting, and monitoring
 - Operational support/contact details
