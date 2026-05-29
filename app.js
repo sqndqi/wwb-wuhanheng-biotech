@@ -673,9 +673,10 @@
         <span>Due now</span><strong>${money(totals.total)}</strong>
       </div>
       <p><strong>Payment method:</strong> ${esc(instructions.method || result.paymentMethod || "")}</p>
-      <p>${esc(instructions.details || "")}</p>
+      <p><strong>Payment status:</strong> Not complete. Seller confirmation is required before the order is final.</p>
+      <p>${esc(instructions.details || "Seller will confirm payment instructions using your order reference.")}</p>
       ${instructions.paypalEmail ? `<p><strong>PayPal:</strong> ${esc(instructions.paypalEmail)}</p>` : ""}
-      <p class="support-note">Need help with your order? <a href="https://discord.gg/47pTnCJVXv" target="_blank" rel="noopener">Join the Discord support server</a>.</p>
+      <p class="support-note">Need help with your order? <a href="https://discord.gg/NSc3Vt3MEm" target="_blank" rel="noopener">Join Discord support</a>.</p>
     `;
   }
 
@@ -859,7 +860,7 @@
       }
       if (!backendOnline) {
         clearErrors(els.contactForm);
-        els.contactStatus.textContent = "Contact backend is offline. Use Discord support for now.";
+        els.contactStatus.innerHTML = 'Contact backend is offline. <a href="https://discord.gg/NSc3Vt3MEm" target="_blank" rel="noopener">Join Discord support</a>.';
         return;
       }
       clearErrors(els.contactForm);
@@ -871,7 +872,7 @@
         els.contactForm.reset();
         els.contactStatus.textContent = "Message sent. The seller will review it.";
       } catch (error) {
-        els.contactStatus.textContent = error.message || "Could not send message. Use Discord support for now.";
+        els.contactStatus.innerHTML = `${esc(error.message || "Could not send message.")} <a href="https://discord.gg/NSc3Vt3MEm" target="_blank" rel="noopener">Join Discord support</a>.`;
       } finally {
         button.disabled = false;
       }

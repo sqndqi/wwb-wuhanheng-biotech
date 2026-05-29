@@ -1102,7 +1102,21 @@ dd {
   font-weight: 900;
 }
 
+.payment-help {
+  display: block;
+  margin-top: 6px;
+  color: var(--blue-dark);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  font-weight: 850;
+}
+
 .support-note a {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+#contactStatus a {
   color: var(--blue);
   text-decoration: underline;
 }

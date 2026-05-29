@@ -244,6 +244,57 @@ function buildCatalog(rows) {
   });
 }
 
+function increment(map, key) {
+  const safeKey = key || "Unknown";
+  map.set(safeKey, (map.get(safeKey) || 0) + 1);
+}
+
+function mapToSortedObject(map) {
+  return Object.fromEntries(Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b)));
+}
+
+function auditCatalog({ inputRows, validRows, skippedRows, duplicateEvents, records, catalog }) {
+  const variants = catalog.flatMap((product) => product.variants.map((variant) => ({ product, variant })));
+  const categoryCounts = new Map();
+  const sourceCounts = new Map();
+  const otherRows = [];
+  const quoteRequired = [];
+
+  catalog.forEach((product) => {
+    increment(categoryCounts, product.category);
+    if (product.category === "Other") otherRows.push(product.name);
+  });
+
+  variants.forEach(({ product, variant }) => {
+    increment(sourceCounts, variant.sourceList || product.sourceList);
+    if (variant.price === null) quoteRequired.push(`${variant.sku} ${product.name} ${variant.label}`);
+  });
+
+  console.log("Catalog audit");
+  console.log(`- input CSV rows: ${inputRows}`);
+  console.log(`- valid rows: ${validRows}`);
+  console.log(`- skipped rows: ${skippedRows.length}`);
+  if (skippedRows.length) {
+    skippedRows.slice(0, 25).forEach((entry) => console.log(`  - row ${entry.rowNumber}: ${entry.reason}`));
+    if (skippedRows.length > 25) console.log(`  - ... ${skippedRows.length - 25} more skipped rows`);
+  }
+  console.log(`- generated product families: ${catalog.length}`);
+  console.log(`- generated variants: ${variants.length}`);
+  console.log(`- duplicate SKU rows: ${duplicateEvents.length}`);
+  if (duplicateEvents.length) {
+    duplicateEvents.forEach((entry) => {
+      console.log(`  - ${entry.sku}: kept ${entry.winnerSource}; replaced/ignored ${entry.loserSource}`);
+    });
+  }
+  console.log(`- count by category: ${JSON.stringify(mapToSortedObject(categoryCounts))}`);
+  console.log(`- count by sourceList: ${JSON.stringify(mapToSortedObject(sourceCounts))}`);
+  console.log(`- rows categorized as Other: ${otherRows.length}${otherRows.length ? ` (${otherRows.join(", ")})` : ""}`);
+  console.log(`- quote-required variants: ${quoteRequired.length}`);
+  if (quoteRequired.length) quoteRequired.forEach((entry) => console.log(`  - ${entry}`));
+  console.log(`- variants with bulk quote/no bulk price: ${variants.filter(({ variant }) => variant.bulkPrice === null).length}`);
+  console.log(`- source rows after SKU dedupe: ${records.length}`);
+}
+
 function main() {
   if (!fs.existsSync(inputPath)) {
     throw new Error(`Missing ${path.relative(root, inputPath)}. Create it before running import.`);
@@ -256,17 +307,46 @@ function main() {
   if (missing.length) throw new Error(`Missing CSV columns: ${missing.join(", ")}`);
 
   const recordsBySku = new Map();
-  rows.map((row) => parseRow(headers, row)).forEach((record) => {
+  const skippedRows = [];
+  const duplicateEvents = [];
+  rows.map((row, index) => ({ record: parseRow(headers, row), rowNumber: index + 2 })).forEach(({ record, rowNumber }) => {
+    if (!record.code || !record.name) {
+      skippedRows.push({ rowNumber, reason: !record.code && !record.name ? "missing code and name" : !record.code ? "missing code" : "missing name" });
+      return;
+    }
     const existing = recordsBySku.get(record.code);
     const incomingRank = sourcePriority[record.sourceList] || 0;
     const existingRank = sourcePriority[existing?.sourceList] || 0;
-    if (!existing || incomingRank >= existingRank) recordsBySku.set(record.code, record);
+    if (!existing || incomingRank >= existingRank) {
+      if (existing) {
+        duplicateEvents.push({
+          sku: record.code,
+          winnerSource: record.sourceList || "Unknown",
+          loserSource: existing.sourceList || "Unknown",
+        });
+      }
+      recordsBySku.set(record.code, record);
+    } else {
+      duplicateEvents.push({
+        sku: record.code,
+        winnerSource: existing.sourceList || "Unknown",
+        loserSource: record.sourceList || "Unknown",
+      });
+    }
   });
   const records = Array.from(recordsBySku.values());
   const catalog = buildCatalog(records);
   fs.writeFileSync(outputPath, `${JSON.stringify(catalog, null, 2)}\n`);
   const variantCount = catalog.reduce((sum, product) => sum + product.variants.length, 0);
   console.log(`Generated data/products.json with ${catalog.length} product families and ${variantCount} variants.`);
+  auditCatalog({
+    inputRows: rows.length,
+    validRows: rows.length - skippedRows.length,
+    skippedRows,
+    duplicateEvents,
+    records,
+    catalog,
+  });
 }
 
 main();
