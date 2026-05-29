@@ -7,4 +7,5 @@ dist/
 *.env
 server/.env
 server/data/*.jsonl
+data/sellauth-map.json
 data/sellauth-map.private.json

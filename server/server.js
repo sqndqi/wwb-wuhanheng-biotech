@@ -116,9 +116,10 @@ function saveOrder(order, notification) {
 }
 
 function recentOrders(limit = 50) {
-  if (!fs.existsSync(ORDERS_PATH)) return [];
+  if (!fs.existsSync(ORDERS_PATH)) return { orders: [], skippedMalformedLines: 0 };
   const capped = Math.min(positiveInteger(limit, 50), 200);
   const orders = [];
+  let skippedMalformedLines = 0;
   const lines = fs
     .readFileSync(ORDERS_PATH, "utf8")
     .split(/\r?\n/)
@@ -129,10 +130,11 @@ function recentOrders(limit = 50) {
     try {
       orders.push(JSON.parse(line));
     } catch {
+      skippedMalformedLines += 1;
       // Keep the admin endpoint usable if a JSONL line is partially written or corrupted.
     }
   }
-  return orders;
+  return { orders, skippedMalformedLines };
 }
 
 function maskEmail(value) {
@@ -399,8 +401,13 @@ app.get("/api/admin/orders", (req, res) => {
   if (!configuredToken) return res.status(503).json({ ok: false, error: "Admin token is not configured." });
   if (!provided || provided !== configuredToken) return res.status(401).json({ ok: false, error: "Unauthorized." });
   const full = String(req.query.full || "").toLowerCase() === "true";
-  const orders = recentOrders(req.query.limit);
-  res.json({ ok: true, masked: !full, orders: full ? orders : orders.map(maskOrder) });
+  const result = recentOrders(req.query.limit);
+  res.json({
+    ok: true,
+    masked: !full,
+    skippedMalformedLines: result.skippedMalformedLines,
+    orders: full ? result.orders : result.orders.map(maskOrder),
+  });
 });
 
 app.post("/api/orders", orderLimiter, async (req, res) => {

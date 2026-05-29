@@ -25,6 +25,8 @@ The catalog is generated from WWB price-list source material. `WWB Pricelist 21-
 - `server/data/orders.jsonl` - local append-only MVP order log, ignored by git
 - `server/.env.example` - backend environment template
 
+Root `.env.example` mirrors `server/.env.example` for deployment reference. `server/.env.example` is the source of truth for the Express backend.
+
 ## Catalog Organization
 
 The generated catalog currently contains 96 product families and 172 variants. Product families are organized into customer-facing groups:
@@ -94,7 +96,7 @@ Orders are appended to `server/data/orders.jsonl`. The admin endpoint reads rece
 curl -H "Authorization: Bearer $ADMIN_TOKEN" "http://localhost:3000/api/admin/orders?limit=50"
 ```
 
-List responses mask customer contact/address fields by default. Use `?full=true` with the same `ADMIN_TOKEN` only when you need full order details. If `ADMIN_TOKEN` is missing, the admin endpoint is disabled.
+List responses mask customer contact/address fields by default. Use `?full=true` with the same `ADMIN_TOKEN` only when you need full order details. If malformed JSONL lines are skipped, the response includes `skippedMalformedLines`. If `ADMIN_TOKEN` is missing, the admin endpoint is disabled.
 
 ## API URL For GitHub Pages
 
@@ -149,7 +151,7 @@ Sync/map existing SellAuth products:
 npm run sellauth:sync
 ```
 
-The sync script reads SellAuth environment variables, fetches existing products when possible, saves known IDs to `data/sellauth-map.json`, and regenerates `sellauth-products.csv`. Product creation is not fully automatic unless the API write schema is confirmed. The generated `sellauth-products.csv` is available for import and mapping.
+The sync script reads SellAuth environment variables, fetches existing products when possible, saves known IDs to ignored `data/sellauth-map.json`, and regenerates `sellauth-products.csv`. Product creation is not fully automatic unless the API write schema is confirmed. The generated `sellauth-products.csv` is available for import and mapping.
 
 ## Checkout And Payments
 
