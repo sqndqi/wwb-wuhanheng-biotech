@@ -28,6 +28,7 @@ The catalog is generated from WWB price-list source material. `WWB Pricelist 21-
 - `server/server.js` - Express backend with `/health`, `/api/status`, `/api/orders`, `/api/contact`
 - `server/data/orders.jsonl` - local append-only MVP order log, ignored by git
 - `server/.env.example` - backend environment template
+- `render.yaml` - Render web service blueprint for `server/`
 
 Root `.env.example` mirrors `server/.env.example` for deployment reference. `server/.env.example` is the source of truth for the Express backend.
 
@@ -173,15 +174,20 @@ The confirmation message tells the customer that payment is not complete yet and
 - Frontend: GitHub Pages
 - Backend: Render, Railway, Fly.io, or VPS
 
+Recommended fastest path: Render Web Service. This repo includes `render.yaml` with `rootDir: server`, `buildCommand: npm install`, `startCommand: npm start`, and `healthCheckPath: /health`.
+
 Deployment steps:
 
-1. Deploy `server/` to Render, Railway, Fly.io, or a VPS.
-2. In the backend environment, set `CORS_ORIGINS=https://sqndqi.github.io` plus any custom storefront domain.
-3. In the backend environment, set `ADMIN_TOKEN` to a long private random value. Treat it like a password.
-4. In the backend environment, set `DISCORD_WEBHOOK_URL` so order notifications reach the seller.
-5. Test the deployed backend directly: `GET /health` and `GET /api/status` must return `ok: true`.
-6. Edit `js/config.js` and set `const deployedBackendUrl = "https://your-deployed-backend.example";`.
-7. Push the frontend change and test checkout from GitHub Pages.
+1. In Render, create a new Blueprint or Web Service from `sqndqi/wwb-wuhanheng-biotech`.
+2. If using the Blueprint flow, select the root `render.yaml`. If using manual Web Service setup, set root directory to `server`, build command to `npm install`, start command to `npm start`, and health check path to `/health`.
+3. In the backend environment, set `CORS_ORIGINS=https://sqndqi.github.io` plus any custom storefront domain.
+4. In the backend environment, set `ADMIN_TOKEN` to a long private random value. Treat it like a password.
+5. In the backend environment, set `DISCORD_WEBHOOK_URL` so order notifications reach the seller.
+6. Set `PAYPAL_EMAIL` if PayPal instructions should show a seller email.
+7. Set SellAuth variables only if you are testing SellAuth mapping/import scripts from that environment: `SELLAUTH_API_KEY`, `SELLAUTH_SHOP_ID`, `SELLAUTH_SHOP_SLUG`.
+8. Test the deployed backend directly: `GET /health` and `GET /api/status` must return `ok: true`.
+9. Edit `js/config.js` and set `const deployedBackendUrl = "https://your-deployed-backend.example";`.
+10. Push the frontend change and test checkout from GitHub Pages.
 
 `server/data/orders.jsonl` is append-only MVP storage for early orders. It is ignored by git and should be replaced with a real database/admin dashboard when order volume grows.
 

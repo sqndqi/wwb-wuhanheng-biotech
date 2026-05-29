@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: wwb-order-backend
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGINS
+        value: https://sqndqi.github.io
+      - key: MAX_QTY_PER_LINE
+        value: "999"
+      - key: MAX_CART_LINES
+        value: "50"
+      - key: ORDER_RATE_LIMIT_MAX
+        value: "20"
+      - key: CONTACT_RATE_LIMIT_MAX
+        value: "10"
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: ADMIN_TOKEN
+        sync: false
+      - key: DISCORD_WEBHOOK_URL
+        sync: false
+      - key: PAYPAL_EMAIL
+        sync: false
+      - key: SELLAUTH_API_KEY
+        sync: false
+      - key: SELLAUTH_SHOP_ID
+        sync: false
+      - key: SELLAUTH_SHOP_SLUG
+        sync: false
