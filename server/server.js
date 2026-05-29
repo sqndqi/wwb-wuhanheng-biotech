@@ -22,6 +22,7 @@ const DATA_DIR = path.resolve(__dirname, "data");
 const ORDERS_PATH = path.join(DATA_DIR, "orders.jsonl");
 
 // Keep the admin order log resilient; malformed JSONL lines are counted and skipped.
+app.set("trust proxy", 1);
 app.use(corsGate);
 app.use(express.json({ limit: "1mb" }));
 
