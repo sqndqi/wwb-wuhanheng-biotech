@@ -31,6 +31,8 @@
     clearCartButton: document.querySelector("#clearCartButton"),
     orderStatus: document.querySelector("#orderStatus"),
     orderConfirmation: document.querySelector("#orderConfirmation"),
+    contactForm: document.querySelector("#contactForm"),
+    contactStatus: document.querySelector("#contactStatus"),
     dialog: document.querySelector("#productDialog"),
     dialogContent: document.querySelector("#dialogContent"),
     dialogClose: document.querySelector("#dialogClose"),
@@ -273,7 +275,7 @@
     if (filters.priceType !== "all") active.push(`Price: ${filters.priceType}`);
     if (filters.source !== "all") active.push(`Source: ${filters.source}`);
     if (filters.bulkOnly) active.push("10+ pricing only");
-    els.activeFilters.innerHTML = active.length ? active.map((entry) => `<span>${esc(entry)}</span>`).join("") : "<span>All products</span>";
+    els.activeFilters.innerHTML = active.length ? active.map((entry) => `<span class="active-filter-chip">${esc(entry)}</span>`).join("") : "<span class=\"active-filter-chip neutral\">All products</span>";
   }
 
   function selectedSkuForProduct(product) {
@@ -406,6 +408,33 @@
     });
   }
 
+  function reconcileCart() {
+    const current = state.getCartItems();
+    const next = [];
+    let removed = 0;
+
+    current.forEach((item) => {
+      const product = productById(item.productId);
+      const sku = item.variant?.sku || item.sku || item.code;
+      const variant = product ? variants(product).find((entry) => entry.sku === sku) : null;
+      if (!product || !variant) {
+        removed += 1;
+        return;
+      }
+      next.push({
+        ...item,
+        productId: product.id,
+        name: product.name,
+        category: product.category,
+        code: variant.sku,
+        variant,
+      });
+    });
+
+    if (removed) state.setCartItems(next);
+    return removed;
+  }
+
   function renderCart() {
     const items = currentCartItems();
     const totals = cartTotals(items);
@@ -455,7 +484,7 @@
           <span>Shipping</span><strong>${esc(totals.shippingLabel)}</strong>
           <span>Due now</span><strong>${money(totals.total)}</strong>
         </div>
-        <div class="promo-card">SUMMER applied: 5% off products. Shipping is handled by the seller after address review.</div>
+        <div class="promo-card"><strong>SUMMER 5% auto-applied.</strong> Shipping is handled by the seller after address review.</div>
       </div>
     `;
   }
@@ -605,6 +634,27 @@
     });
     const body = await response.json().catch(() => ({}));
     if (!response.ok || !body.ok) throw new Error(body.error || "Order backend is not online. Please contact seller.");
+    return body;
+  }
+
+  function validateContactForm(data) {
+    const errors = {};
+    if (!data.name?.trim()) errors.name = "Name is required.";
+    if (!validation.email(data.email)) errors.email = "Enter a valid email.";
+    const message = String(data.message || "").trim();
+    if (message.length < 10) errors.message = "Message must be at least 10 characters.";
+    if (message.length > 1500) errors.message = "Message cannot exceed 1500 characters.";
+    return errors;
+  }
+
+  async function submitContact(payload) {
+    const response = await fetch(`${window.WWB_API_BASE_URL.replace(/\/$/, "")}/api/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok || !body.ok) throw new Error(body.error || "Contact backend is not online. Please use Discord support.");
     return body;
   }
 
@@ -790,10 +840,40 @@
         state.saveOrder(result);
         renderConfirmation(result);
         els.orderStatus.textContent = `Order ${result.orderId} created. Payment instructions are below.`;
+        els.orderConfirmation.scrollIntoView({ behavior: "smooth", block: "start" });
       } catch (error) {
         els.orderStatus.textContent = error.message || "Order backend is not online. Please contact seller.";
       } finally {
         els.placeOrderButton.disabled = false;
+      }
+    });
+
+    els.contactForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = validation.formObject(els.contactForm);
+      const errors = validateContactForm(data);
+      if (Object.keys(errors).length) {
+        showErrors(els.contactForm, errors);
+        els.contactStatus.textContent = "Fix the highlighted fields before sending.";
+        return;
+      }
+      if (!backendOnline) {
+        clearErrors(els.contactForm);
+        els.contactStatus.textContent = "Contact backend is offline. Use Discord support for now.";
+        return;
+      }
+      clearErrors(els.contactForm);
+      const button = els.contactForm.querySelector("button[type='submit']");
+      button.disabled = true;
+      els.contactStatus.textContent = "Sending message...";
+      try {
+        await submitContact(data);
+        els.contactForm.reset();
+        els.contactStatus.textContent = "Message sent. The seller will review it.";
+      } catch (error) {
+        els.contactStatus.textContent = error.message || "Could not send message. Use Discord support for now.";
+      } finally {
+        button.disabled = false;
       }
     });
 
@@ -854,10 +934,12 @@
       await loadProducts();
       initFilters();
       restoreForm(els.checkoutForm, "checkoutForm");
+      const removed = reconcileCart();
       renderCart();
       renderProducts();
       wireEvents();
       await checkBackendStatus();
+      if (removed) els.orderStatus.textContent = `${removed} stale cart item${removed === 1 ? "" : "s"} removed because the catalog changed.`;
     } catch (error) {
       els.productGrid.classList.remove("loading");
       els.productGrid.innerHTML = `<div class="empty-state"><h3>Catalog failed to load</h3><p>${esc(error.message)}</p></div>`;

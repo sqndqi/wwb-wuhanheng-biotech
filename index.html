@@ -4,7 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="WWB / Wuhan Wansheng Biotechnology product ordering website." />
+    <meta property="og:title" content="WWB Product Catalog" />
+    <meta property="og:description" content="Browse WWB price-list products, add variants to cart, and submit an order for Crypto or PayPal payment instructions." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sqndqi.github.io/wwb-wuhanheng-biotech/" />
+    <meta property="og:image" content="https://sqndqi.github.io/wwb-wuhanheng-biotech/assets/ws-logo.svg" />
     <title>WWB | Wuhan Wansheng Biotechnology</title>
+    <link rel="icon" type="image/svg+xml" href="assets/ws-logo.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -135,7 +141,9 @@
           </div>
           <div class="active-filter-row" id="activeFilters" aria-live="polite"></div>
           <div class="product-grid loading" id="productGrid" aria-live="polite">
-            <article></article><article></article><article></article>
+            <article class="skeleton-card"><span></span><span></span><span></span></article>
+            <article class="skeleton-card"><span></span><span></span><span></span></article>
+            <article class="skeleton-card"><span></span><span></span><span></span></article>
           </div>
           <div class="catalog-table-wrap" id="catalogTableWrap" hidden>
             <table class="catalog-table">
@@ -215,7 +223,8 @@
           </label>
           <label>
             Discount code
-            <input name="discountCode" value="SUMMER" readonly aria-readonly="true" />
+            <input class="locked-discount" name="discountCode" value="SUMMER" readonly aria-readonly="true" aria-describedby="discountHelp" />
+            <small class="discount-help" id="discountHelp">Locked for this MVP: SUMMER 5% auto-applied.</small>
             <span class="field-error" data-error-for="discountCode"></span>
           </label>
           <label>
@@ -286,10 +295,30 @@
           <h2 id="contact-title">Need help with an order?</h2>
           <p>Need help with an order? Join our Discord support server and include your order reference.</p>
         </div>
-        <div class="contact-actions">
-          <a class="button secondary" href="#checkout">Go to checkout</a>
-          <a class="button ghost" href="https://discord.gg/47pTnCJVXv" target="_blank" rel="noopener">Discord support</a>
-        </div>
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="form-grid">
+            <label>
+              Name
+              <input name="name" autocomplete="name" required />
+              <span class="field-error" data-error-for="name"></span>
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" autocomplete="email" required />
+              <span class="field-error" data-error-for="email"></span>
+            </label>
+          </div>
+          <label>
+            Message
+            <textarea name="message" rows="4" required placeholder="Include your order reference if you have one."></textarea>
+            <span class="field-error" data-error-for="message"></span>
+          </label>
+          <div class="contact-actions">
+            <button class="button secondary" type="submit">Send message</button>
+            <a class="button ghost" href="https://discord.gg/47pTnCJVXv" target="_blank" rel="noopener">Discord support</a>
+          </div>
+          <p class="form-note" id="contactStatus" role="status" aria-live="polite"></p>
+        </form>
       </section>
 
       <section class="policy-section" id="terms" aria-labelledby="terms-title">
@@ -331,7 +360,7 @@
     </button>
 
     <dialog class="product-dialog" id="productDialog" aria-labelledby="dialogTitle">
-      <button class="dialog-close" id="dialogClose" type="button" aria-label="Close product details">x</button>
+      <button class="dialog-close" id="dialogClose" type="button" aria-label="Close">×</button>
       <div class="dialog-content" id="dialogContent"></div>
     </dialog>
 
@@ -343,6 +372,8 @@
       <div>
         <a href="#catalog">Catalog</a>
         <a href="#checkout">Checkout</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
         <a href="#terms">Policies</a>
         <a href="https://discord.gg/47pTnCJVXv" target="_blank" rel="noopener">Support</a>
       </div>

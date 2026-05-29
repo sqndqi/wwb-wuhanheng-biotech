@@ -148,6 +148,8 @@ main,
 .checkout-form input,
 .checkout-form select,
 .checkout-form textarea,
+.contact-form input,
+.contact-form textarea,
 .account-form input,
 .account-form select,
 .account-form textarea,
@@ -548,7 +550,7 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 12px;
+  margin: 10px 0 18px;
 }
 
 .active-filter-row span,
@@ -565,8 +567,17 @@ p {
 }
 
 .active-filter-row span {
+  min-height: 30px;
+  border: 1px solid rgba(24, 90, 141, 0.22);
+  padding: 0 12px;
   color: var(--blue-dark);
-  background: #e7f1f8;
+  background: #edf7fb;
+  box-shadow: 0 5px 14px rgba(20, 33, 43, 0.04);
+}
+
+.active-filter-row span.neutral {
+  color: var(--muted);
+  background: #f7fafb;
 }
 
 .catalog-toolbar {
@@ -612,10 +623,35 @@ p {
 
 .product-grid.loading article {
   min-height: 320px;
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
   border-radius: 8px;
   background: linear-gradient(90deg, #eef5f8, #f8fbfc, #eef5f8);
   background-size: 220% 100%;
   animation: skeleton 1.2s ease-in-out infinite;
+}
+
+.skeleton-card span {
+  display: block;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.skeleton-card span:first-child {
+  width: 36%;
+  height: 24px;
+}
+
+.skeleton-card span:nth-child(2) {
+  width: 78%;
+}
+
+.skeleton-card span:nth-child(3) {
+  width: 56%;
 }
 
 @keyframes skeleton {
@@ -1051,6 +1087,21 @@ dd {
   font-weight: 800;
 }
 
+.locked-discount {
+  border-color: #b8d8e8 !important;
+  color: var(--blue-dark) !important;
+  background: #edf7fb !important;
+  font-weight: 900;
+}
+
+.discount-help {
+  display: block;
+  margin-top: 6px;
+  color: var(--teal);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
 .support-note a {
   color: var(--blue);
   text-decoration: underline;
@@ -1079,9 +1130,14 @@ dd {
 
 .quote-form,
 .checkout-form,
-.account-form {
+.account-form,
+.contact-form {
   display: grid;
   gap: 16px;
+}
+
+.contact-form {
+  padding: 0;
 }
 
 .order-confirmation {

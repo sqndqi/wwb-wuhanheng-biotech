@@ -8,6 +8,8 @@ The frontend loads `data/products.json`, lets customers browse product families,
 
 Shipping is handled manually by the seller after the customer submits address and contact info. The storefront collects the address and order details, and the backend sends them to the seller. Shipping route, timing, and cost are confirmed separately if needed. SellAuth is payment-only and does not calculate shipping.
 
+Production checkout stays offline until `server/` is deployed and `js/config.js` has a real `deployedBackendUrl`. GitHub Pages by itself can browse products and manage the cart, but it cannot process orders or contact messages without the backend.
+
 The catalog is generated from WWB price-list source material. `WWB Pricelist 21-5-2026` is treated as the primary/latest normal product price source. `WWB Partnership Pricelist` is used for raw powder items. Older China Warehouse / May 11 rows are fallback data only when a newer SKU row is not present.
 
 ## Project Structure
@@ -110,7 +112,7 @@ For production GitHub Pages, edit `js/config.js` and set `deployedBackendUrl` to
 const deployedBackendUrl = "https://your-backend-url.example";
 ```
 
-GitHub Pages alone cannot process orders. The backend must be deployed separately.
+GitHub Pages alone cannot process orders or contact messages. The backend must be deployed separately, and the storefront checkout remains offline until `deployedBackendUrl` points to that deployed backend.
 
 ## Editing Products And Prices
 
@@ -175,11 +177,13 @@ Deployment steps:
 
 1. Deploy `server/` to Render, Railway, Fly.io, or a VPS.
 2. In the backend environment, set `CORS_ORIGINS=https://sqndqi.github.io` plus any custom storefront domain.
-3. In the backend environment, set `ADMIN_TOKEN` to a long private random value.
+3. In the backend environment, set `ADMIN_TOKEN` to a long private random value. Treat it like a password.
 4. In the backend environment, set `DISCORD_WEBHOOK_URL` so order notifications reach the seller.
 5. Test the deployed backend directly: `GET /health` and `GET /api/status` must return `ok: true`.
 6. Edit `js/config.js` and set `const deployedBackendUrl = "https://your-deployed-backend.example";`.
 7. Push the frontend change and test checkout from GitHub Pages.
+
+`server/data/orders.jsonl` is append-only MVP storage for early orders. It is ignored by git and should be replaced with a real database/admin dashboard when order volume grows.
 
 ## Testing Checklist
 
