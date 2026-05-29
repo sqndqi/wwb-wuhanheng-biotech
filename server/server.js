@@ -307,20 +307,22 @@ function validateContact(body = {}) {
 }
 
 function paymentInstructions(method, id, totals) {
-  const summary = `Order ${id} created. Payment is not complete yet. Seller will review your address and confirm shipping after order review.`;
+  const summary = `Order ${id} created. Payment instructions are ready. Shipping is reviewed after address submission.`;
   if (method === "paypal") {
     const paypalEmail = process.env.PAYPAL_EMAIL || "";
     return {
       method: "PayPal",
       summary,
-      details: `Continue with PayPal payment instructions using order reference ${id}. Product total: ${money(totals.total)}. Shipping is handled by the seller after address review.`,
+      details: paypalEmail
+        ? `Send ${money(totals.total)} to the PayPal email shown below and include order reference ${id}. Shipping is handled by the seller after address review.`
+        : `PayPal payment selected for order reference ${id}. Amount due: ${money(totals.total)}. Use the seller's PayPal instructions and include your order reference. Shipping is handled by the seller after address review.`,
       paypalEmail,
     };
   }
   return {
     method: "Crypto",
     summary,
-    details: `Continue with Crypto payment instructions using order reference ${id}. Product total: ${money(totals.total)}. Shipping is handled by the seller after address review.`,
+    details: `Crypto payment selected for order reference ${id}. Amount due: ${money(totals.total)}. Crypto payment instructions will be sent or reviewed through Discord/support. Shipping is handled by the seller after address review.`,
   };
 }
 

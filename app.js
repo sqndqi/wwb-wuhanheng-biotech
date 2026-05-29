@@ -663,7 +663,7 @@
     els.orderConfirmation.hidden = false;
     els.orderConfirmation.innerHTML = `
       <h3>Order created: ${esc(result.orderId)}</h3>
-      <p>Payment is not complete yet. Seller will review your address and confirm shipping after order review.</p>
+      <p>Your ${esc(instructions.method || result.paymentMethod || "payment")} instructions are shown below. Shipping is reviewed after address submission.</p>
       <div class="quote-total">
         <span>Subtotal</span><strong>${money(totals.subtotal)}</strong>
         <span>SUMMER discount</span><strong>-${money(totals.discount || totals.discountAmount)}</strong>
@@ -672,9 +672,11 @@
         <span>Due now</span><strong>${money(totals.total)}</strong>
       </div>
       <p><strong>Payment method:</strong> ${esc(instructions.method || result.paymentMethod || "")}</p>
-      <p><strong>Payment status:</strong> Not complete. Seller confirmation is required before the order is final.</p>
-      <p>${esc(instructions.details || "Seller will confirm payment instructions using your order reference.")}</p>
-      ${instructions.paypalEmail ? `<p><strong>PayPal:</strong> ${esc(instructions.paypalEmail)}</p>` : ""}
+      <p><strong>Payment status:</strong> Awaiting payment. Use the instructions below to complete payment for this order.</p>
+      <p>${esc(instructions.details || "Use the payment instructions shown for this order reference.")}</p>
+      ${instructions.paypalEmail ? `<p><strong>PayPal email:</strong> ${esc(instructions.paypalEmail)}</p>` : ""}
+      <p><strong>Order reference:</strong> ${esc(result.orderId)}</p>
+      <p><strong>Amount due:</strong> ${money(totals.total)}</p>
       <p class="support-note">Need help with your order? <a href="https://discord.gg/NSc3Vt3MEm" target="_blank" rel="noopener">Join Discord support</a>.</p>
     `;
   }

@@ -167,7 +167,7 @@ Supported payment methods shown to the customer:
 - Crypto
 - PayPal
 
-The confirmation message tells the customer that payment is not complete yet and the seller will review the address and confirm shipping after order review. Manual-flow payment remains in place unless SellAuth is truly wired.
+The confirmation message tells the customer that payment is awaiting completion, shows the selected Crypto or PayPal instructions, and notes that shipping is reviewed after address submission. Manual-flow payment remains in place unless SellAuth is truly wired.
 
 ## Deployment
 
