@@ -109,7 +109,6 @@ function saveOrder(order, notification) {
     orderId: order.orderId,
     customer: order.customer,
     paymentMethod: order.paymentMethod,
-    notes: order.notes,
     lines: order.lines,
     totals: order.totals,
     notification,
@@ -130,7 +129,9 @@ function recentOrders(limit = 50) {
   for (const line of lines) {
     if (orders.length >= capped) break;
     try {
-      orders.push(JSON.parse(line));
+      const parsed = JSON.parse(line);
+      delete parsed.notes;
+      orders.push(parsed);
     } catch {
       skippedMalformedLines += 1;
       // Keep the admin endpoint usable if a JSONL line is partially written or corrupted.
@@ -164,7 +165,6 @@ function maskOrder(order) {
       address: order.customer?.address ? "masked" : "",
       postalCode: order.customer?.postalCode ? "masked" : "",
     },
-    notes: order.notes ? "masked" : "",
   };
 }
 
@@ -364,7 +364,6 @@ async function sendDiscordOrder(order) {
           field("Product total", money(order.totals.productTotal), true),
           field("Shipping", order.totals.shippingStatus, true),
           field("Due now", money(order.totals.total), true),
-          field("Notes", order.notes || "None"),
         ],
         timestamp: order.createdAt,
       },
@@ -424,7 +423,6 @@ app.post("/api/orders", orderLimiter, async (req, res) => {
       createdAt: new Date().toISOString(),
       customer: cleanCustomer(req.body.customer),
       paymentMethod: req.body.paymentMethod,
-      notes: safeString(req.body.notes, 1000),
       lines: priced.lines,
       totals: priced.totals,
     };

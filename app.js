@@ -617,7 +617,6 @@
         address: data.address,
         postalCode: data.postalCode || "",
       },
-      notes: data.notes || "",
       items: currentCartItems().map((item) => ({
         productId: item.productId,
         sku: item.variant.sku,
