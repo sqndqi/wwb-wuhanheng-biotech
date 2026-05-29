@@ -1017,6 +1017,25 @@ fieldset input {
   font-weight: 800;
 }
 
+.backend-status {
+  width: fit-content;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.backend-status.online {
+  color: var(--teal);
+  background: var(--teal-soft);
+}
+
+.backend-status.offline {
+  color: var(--red);
+  background: #fff6f4;
+}
+
 .feature-band {
   padding: 38px;
   color: var(--white);

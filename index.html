@@ -59,7 +59,7 @@
         </article>
         <article>
           <strong>Simple cart</strong>
-          <span>Variant, quantity, subtotal, shipping, discount, final total</span>
+          <span>Variant, quantity, subtotal, discount, product total</span>
         </article>
         <article>
           <strong>Payment methods</strong>
@@ -133,6 +133,7 @@
         <form class="checkout-form" id="checkoutForm" novalidate>
           <p class="eyebrow">Checkout</p>
           <h2>Customer information</h2>
+          <p class="backend-status offline" id="backendStatus" role="status">Checking ordering system...</p>
           <div class="form-grid">
             <label>
               Full name
@@ -189,7 +190,7 @@
             <textarea name="notes" rows="4" placeholder="Optional order notes, preferred contact time, or shipping instructions"></textarea>
           </label>
           <div class="form-actions">
-            <button class="button primary" type="submit" id="placeOrderButton">Place order</button>
+            <button class="button primary" type="submit" id="placeOrderButton" disabled>Place order</button>
             <button class="button ghost" type="button" id="clearCartButton">Clear cart</button>
           </div>
           <p class="form-note" id="orderStatus" role="status" aria-live="polite"></p>
@@ -208,7 +209,7 @@
           <article>
             <span class="number">01</span>
             <h3>Place order</h3>
-            <p>Your cart and shipping details are sent to the seller backend.</p>
+            <p>Your cart, address, and contact details are sent to the seller backend.</p>
           </article>
           <article>
             <span class="number">02</span>
@@ -241,8 +242,8 @@
           <p>SUMMER is auto-filled and locked for now. It applies exactly 5% off priced cart items.</p>
         </details>
         <details>
-          <summary>How much is shipping?</summary>
-          <p>Shipping is $25. Orders above $150 subtotal receive free shipping.</p>
+          <summary>How is shipping handled?</summary>
+          <p>Shipping is confirmed by the seller after the address and order details are reviewed.</p>
         </details>
       </section>
 
@@ -250,7 +251,7 @@
         <div>
           <p class="eyebrow">Contact seller</p>
           <h2 id="contact-title">Need help with an order?</h2>
-          <p>Add verified seller email, Telegram, WhatsApp, or business address here when ready. For order support, use the checkout reference when contacting the seller.</p>
+          <p>Need help with an order? Join our Discord support server and include your order reference.</p>
         </div>
         <div class="contact-actions">
           <a class="button secondary" href="#checkout">Go to checkout</a>
@@ -278,7 +279,7 @@
           </article>
           <article>
             <h3>Shipping Policy</h3>
-            <p>Buyer must enter an accurate address. Shipping is $25, and orders above $150 subtotal ship free. Seller confirms shipping route before fulfillment. Tracking is provided if available. Lost or damaged package handling is reviewed case-by-case.</p>
+            <p>Buyer must enter an accurate address. Shipping route, timing, and cost are confirmed separately by the seller after address review. Tracking is provided if available. Lost or damaged package handling is reviewed case-by-case.</p>
           </article>
           <article>
             <h3>Refund / Replacement Policy</h3>
@@ -314,6 +315,7 @@
       </div>
     </footer>
 
+    <script src="js/config.js"></script>
     <script src="js/state.js"></script>
     <script src="js/validation.js"></script>
     <script src="app.js"></script>

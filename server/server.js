@@ -10,8 +10,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DISCOUNT_CODE = "SUMMER";
 const DISCOUNT_RATE = 0.05;
-const SHIPPING_FEE = 25;
-const FREE_SHIPPING_MINIMUM = 150;
+const SHIPPING_STATUS = "Pending seller review";
+const SHIPPING_LABEL = "To be confirmed by seller after address review";
 
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
@@ -104,22 +104,19 @@ function calculateOrder(items) {
 
   const subtotal = Math.round(lines.reduce((sum, line) => sum + (line.subtotal || 0), 0) * 100) / 100;
   const discount = Math.round(subtotal * DISCOUNT_RATE * 100) / 100;
-  const afterDiscount = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
-  const shipping = subtotal >= FREE_SHIPPING_MINIMUM || subtotal === 0 ? 0 : SHIPPING_FEE;
-  const total = Math.max(0, Math.round((afterDiscount + shipping) * 100) / 100);
+  const productTotal = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
   return {
     lines,
     totals: {
       subtotal,
       discount,
       discountAmount: discount,
-      afterDiscount,
-      shipping,
-      total,
+      productTotal,
+      total: productTotal,
       discountCode: DISCOUNT_CODE,
       discountRate: DISCOUNT_RATE,
-      shippingFee: SHIPPING_FEE,
-      freeShippingMinimum: FREE_SHIPPING_MINIMUM,
+      shippingStatus: SHIPPING_STATUS,
+      shippingLabel: SHIPPING_LABEL,
     },
   };
 }
@@ -142,20 +139,20 @@ function validateOrder(body) {
 }
 
 function paymentInstructions(method, id, totals) {
-  const summary = `Order ${id} created. Payment is not complete yet. Seller will confirm Crypto or PayPal payment instructions using this order reference.`;
+  const summary = `Order ${id} created. Payment is not complete yet. Seller will review your address and confirm shipping after order review.`;
   if (method === "paypal") {
     const paypalEmail = process.env.PAYPAL_EMAIL || "";
     return {
       method: "PayPal",
       summary,
-      details: `Use order reference ${id}. Final total: ${money(totals.total)}.`,
+      details: `Continue with PayPal payment instructions using order reference ${id}. Product total: ${money(totals.total)}. Shipping is handled by the seller after address review.`,
       paypalEmail,
     };
   }
   return {
     method: "Crypto",
     summary,
-    details: `Use order reference ${id}. Final total: ${money(totals.total)}. Wait for the matching wallet/network instructions from the seller.`,
+    details: `Continue with Crypto payment instructions using order reference ${id}. Product total: ${money(totals.total)}. Shipping is handled by the seller after address review.`,
   };
 }
 
@@ -196,8 +193,9 @@ async function sendDiscordOrder(order) {
           field("Items", itemText || "No items"),
           field("Subtotal", money(order.totals.subtotal), true),
           field("SUMMER discount", `-${money(order.totals.discount)}`, true),
-          field("Shipping", order.totals.shipping ? money(order.totals.shipping) : "Free", true),
-          field("Final total", money(order.totals.total), true),
+          field("Product total", money(order.totals.productTotal), true),
+          field("Shipping", order.totals.shippingStatus, true),
+          field("Due now", money(order.totals.total), true),
           field("Notes", order.notes || "None"),
         ],
         timestamp: order.createdAt,
@@ -255,7 +253,9 @@ app.post("/api/orders", async (req, res) => {
       subtotal: priced.totals.subtotal,
       discountCode: DISCOUNT_CODE,
       discountAmount: priced.totals.discount,
-      shipping: priced.totals.shipping,
+      productTotal: priced.totals.productTotal,
+      shippingStatus: priced.totals.shippingStatus,
+      shippingLabel: priced.totals.shippingLabel,
       total: priced.totals.total,
       paymentMethod: req.body.paymentMethod,
       totals: priced.totals,

@@ -1,7 +1,6 @@
 (function () {
-  window.WWB_API_BASE_URL = window.WWB_API_BASE_URL || "http://localhost:3000";
-
   let products = [];
+  let backendOnline = false;
   const state = window.WWBState;
   const validation = window.WWBValidation;
 
@@ -22,6 +21,7 @@
     mobileCartButton: document.querySelector("#mobileCartButton"),
     checkoutForm: document.querySelector("#checkoutForm"),
     placeOrderButton: document.querySelector("#placeOrderButton"),
+    backendStatus: document.querySelector("#backendStatus"),
     clearCartButton: document.querySelector("#clearCartButton"),
     orderStatus: document.querySelector("#orderStatus"),
     orderConfirmation: document.querySelector("#orderConfirmation"),
@@ -39,7 +39,13 @@
   };
 
   function esc(value) {
-    return String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+    return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
+    })[char]);
   }
 
   function money(value) {
@@ -124,10 +130,25 @@
   function cartTotals(items = state.getCartItems()) {
     const subtotal = Math.round(items.reduce((sum, item) => sum + (lineTotals(item).subtotal || 0), 0) * 100) / 100;
     const discount = Math.round(subtotal * 0.05 * 100) / 100;
-    const afterDiscount = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
-    const shipping = subtotal >= 150 || subtotal === 0 ? 0 : 25;
-    const total = Math.max(0, Math.round((afterDiscount + shipping) * 100) / 100);
-    return { subtotal, discount, afterDiscount, shipping, total };
+    const productTotal = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
+    return {
+      subtotal,
+      discount,
+      productTotal,
+      total: productTotal,
+      shippingStatus: "Pending seller review",
+      shippingLabel: "To be confirmed by seller after address review",
+    };
+  }
+
+  function setBackendStatus(online, message) {
+    backendOnline = online;
+    if (els.backendStatus) {
+      els.backendStatus.textContent = message || (online ? "Ordering system online" : "Ordering system offline");
+      els.backendStatus.classList.toggle("online", online);
+      els.backendStatus.classList.toggle("offline", !online);
+    }
+    if (els.placeOrderButton) els.placeOrderButton.disabled = !online;
   }
 
   function populate(select, values, format = (value) => value) {
@@ -300,10 +321,11 @@
         <div class="quote-total cart-total">
           <span>Subtotal</span><strong>${money(totals.subtotal)}</strong>
           <span>SUMMER discount 5%</span><strong>-${money(totals.discount)}</strong>
-          <span>Shipping ${totals.shipping ? "" : "(free over $150)"}</span><strong>${totals.shipping ? money(totals.shipping) : "Free"}</strong>
-          <span>Final total</span><strong>${money(totals.total)}</strong>
+          <span>Product total</span><strong>${money(totals.productTotal)}</strong>
+          <span>Shipping</span><strong>${esc(totals.shippingLabel)}</strong>
+          <span>Due now</span><strong>${money(totals.total)}</strong>
         </div>
-        <div class="promo-card">SUMMER applied: 5% off products. Shipping is $25 and free above $150 product subtotal.</div>
+        <div class="promo-card">SUMMER applied: 5% off products. Shipping is handled by the seller after address review.</div>
       </div>
     `;
   }
@@ -440,12 +462,13 @@
     els.orderConfirmation.hidden = false;
     els.orderConfirmation.innerHTML = `
       <h3>Order created: ${esc(result.orderId)}</h3>
-      <p>Payment is not complete yet. Seller will confirm Crypto or PayPal payment instructions using this order reference.</p>
+      <p>Payment is not complete yet. Seller will review your address and confirm shipping after order review.</p>
       <div class="quote-total">
         <span>Subtotal</span><strong>${money(totals.subtotal)}</strong>
         <span>SUMMER discount</span><strong>-${money(totals.discount || totals.discountAmount)}</strong>
-        <span>Shipping</span><strong>${Number(totals.shipping) ? money(totals.shipping) : "Free"}</strong>
-        <span>Final total</span><strong>${money(totals.total)}</strong>
+        <span>Product total</span><strong>${money(totals.productTotal || totals.total)}</strong>
+        <span>Shipping</span><strong>${esc(totals.shippingLabel || "To be confirmed by seller after address review")}</strong>
+        <span>Due now</span><strong>${money(totals.total)}</strong>
       </div>
       <p><strong>Payment method:</strong> ${esc(instructions.method || result.paymentMethod || "")}</p>
       <p>${esc(instructions.details || "")}</p>
@@ -540,6 +563,10 @@
     });
     els.checkoutForm.addEventListener("submit", async (event) => {
       event.preventDefault();
+      if (!backendOnline) {
+        els.orderStatus.textContent = "Ordering system offline. Please contact seller.";
+        return;
+      }
       const items = currentCartItems();
       const data = validation.formObject(els.checkoutForm);
       data.discountCode = "SUMMER";
@@ -592,6 +619,20 @@
     products = await response.json();
   }
 
+  async function checkBackendStatus() {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3500);
+    try {
+      const response = await fetch(`${window.WWB_API_BASE_URL.replace(/\/$/, "")}/api/status`, { signal: controller.signal });
+      const body = await response.json();
+      setBackendStatus(response.ok && body.ok, response.ok && body.ok ? "Ordering system online" : "Ordering system offline");
+    } catch {
+      setBackendStatus(false, "Ordering system offline");
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
   async function init() {
     try {
       await loadProducts();
@@ -600,6 +641,7 @@
       renderCart();
       renderProducts();
       wireEvents();
+      await checkBackendStatus();
     } catch (error) {
       els.productGrid.classList.remove("loading");
       els.productGrid.innerHTML = `<div class="empty-state"><h3>Catalog failed to load</h3><p>${esc(error.message)}</p></div>`;
