@@ -39,6 +39,7 @@ function money(value) {
 }
 
 function numeric(value) {
+  if (value === null || value === undefined || value === "" || value === "*") return null;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : null;
 }

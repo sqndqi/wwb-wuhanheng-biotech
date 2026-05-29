@@ -2,9 +2,11 @@
 
 Static GitHub Pages storefront plus a simple Express backend for order intake.
 
-The frontend loads `data/products.json`, lets customers add variants to a cart, applies the locked `SUMMER` 5% product discount, and sends checkout orders to the backend. The backend recalculates product totals from trusted catalog data before sending seller notifications.
+The frontend loads `data/products.json`, lets customers browse product families, select variants, add items to a cart, applies the locked `SUMMER` 5% product discount, and sends checkout orders to the backend. The backend recalculates product totals from trusted catalog data before sending seller notifications.
 
 Shipping is handled manually by the seller after the customer submits address and contact info. The storefront collects the address and order details, and the backend sends them to the seller. Shipping route, timing, and cost are confirmed separately if needed. SellAuth is payment-only and does not calculate shipping.
+
+The catalog is generated from WWB price-list source material. `WWB Pricelist 21-5-2026` is treated as the primary/latest normal product price source. `WWB Partnership Pricelist` is used for raw powder items. Older China Warehouse / May 11 rows are fallback data only when a newer SKU row is not present.
 
 ## Project Structure
 
@@ -21,6 +23,24 @@ Shipping is handled manually by the seller after the customer submits address an
 - `scripts/sellauth-sync.js` - safe SellAuth dry-run/map/export workflow
 - `server/server.js` - Express backend with `/health`, `/api/status`, `/api/orders`, `/api/contact`
 - `server/.env.example` - backend environment template
+
+## Catalog Organization
+
+The generated catalog currently contains 96 product families and 172 variants. Product families are organized into customer-facing groups:
+
+- Featured / Popular
+- GLP-1 / Metabolic
+- Peptides
+- Blends
+- Recovery / Repair
+- Cosmetic / Skin
+- Hormones / Fertility
+- Orals
+- Accessories / Water
+- Raw Powders
+- Other
+
+The storefront includes a featured products row, card view, compact table view, category/source/price filters, a bulk-pricing filter, and SKU/name search. Searching an exact SKU such as `TR5` keeps the Tirzepatide family visible and selects the matching variant.
 
 ## Run Frontend
 
@@ -73,7 +93,7 @@ Edit `data/raw-price-list.csv`.
 Required columns:
 
 ```csv
-code,name,category,dosage,packageSize,unitLabel,price,bulkMin,bulkPrice,sourceList
+code,name,category,dosage,packageSize,unitLabel,price,bulkMin,bulkPrice,sourceList,featured,sortGroup
 ```
 
 Then rebuild:
@@ -88,6 +108,8 @@ This regenerates:
 - `sellauth-products.csv`
 
 Bulk pricing rule: if quantity is greater than or equal to `bulkMin` and `bulkPrice` exists, the cart and backend apply `bulkPrice`. Empty or `*` bulk prices become bulk quote fields in the generated data.
+
+The importer groups rows by normalized product family name, deduplicates matching SKUs, and prefers newer source rows over older duplicates.
 
 ## SellAuth Automation
 

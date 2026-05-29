@@ -11,9 +11,15 @@
     source: document.querySelector("#sourceFilter"),
     sort: document.querySelector("#sortSelect"),
     resetFilters: document.querySelector("#resetFilters"),
+    bulkOnly: document.querySelector("#bulkOnlyFilter"),
+    cardViewButton: document.querySelector("#cardViewButton"),
+    tableViewButton: document.querySelector("#tableViewButton"),
     activeFilters: document.querySelector("#activeFilters"),
     catalogCount: document.querySelector("#catalogCount"),
+    featuredGrid: document.querySelector("#featuredGrid"),
     productGrid: document.querySelector("#productGrid"),
+    catalogTableWrap: document.querySelector("#catalogTableWrap"),
+    catalogTable: document.querySelector("#catalogTable"),
     cartList: document.querySelector("#cartList"),
     cartCount: document.querySelector("#cartCount"),
     mobileCartCount: document.querySelector("#mobileCartCount"),
@@ -36,7 +42,23 @@
     source: "all",
     search: "",
     sort: "featured",
+    bulkOnly: false,
+    view: "cards",
   };
+
+  const categoryOrder = [
+    "Featured / Popular",
+    "GLP-1 / Metabolic",
+    "Peptides",
+    "Blends",
+    "Recovery / Repair",
+    "Cosmetic / Skin",
+    "Hormones / Fertility",
+    "Orals",
+    "Accessories / Water",
+    "Raw Powders",
+    "Other",
+  ];
 
   function esc(value) {
     return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -53,6 +75,7 @@
   }
 
   function numeric(value) {
+    if (value === null || value === undefined || value === "" || value === "*") return null;
     const parsed = Number(value);
     return Number.isFinite(parsed) ? parsed : null;
   }
@@ -141,6 +164,14 @@
     };
   }
 
+  function cheapestVariant(product) {
+    return variants(product).slice().sort((a, b) => {
+      const aPrice = numeric(a.price) ?? Number.MAX_SAFE_INTEGER;
+      const bPrice = numeric(b.price) ?? Number.MAX_SAFE_INTEGER;
+      return aPrice - bPrice || a.sku.localeCompare(b.sku);
+    })[0];
+  }
+
   function setBackendStatus(online, message) {
     backendOnline = online;
     if (els.backendStatus) {
@@ -161,7 +192,12 @@
   }
 
   function initFilters() {
-    const categories = Array.from(new Set(products.map((product) => product.category))).sort();
+    const categories = Array.from(new Set(products.map((product) => product.category))).sort((a, b) => {
+      const aIndex = categoryOrder.indexOf(a);
+      const bIndex = categoryOrder.indexOf(b);
+      if (aIndex !== -1 || bIndex !== -1) return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+      return a.localeCompare(b);
+    });
     const sources = Array.from(new Set(products.map((product) => product.sourceList))).sort();
     populate(els.category, categories);
     populate(els.priceType, ["fixed", "from", "quote"], (value) => {
@@ -174,22 +210,30 @@
 
   function visibleProducts() {
     const query = filters.search.trim().toLowerCase();
+    const exactSkuMode = Boolean(query && products.some((product) => variants(product).some((variant) => variant.sku.toLowerCase() === query)));
     return products
       .filter((product) => {
+        const exactSkuMatch = variants(product).some((variant) => variant.sku.toLowerCase() === query);
         const haystack = [product.name, product.category, product.sourceList, ...variants(product).flatMap((variant) => [variant.sku, variant.label, variant.dosage, variant.packageSize])]
           .join(" ")
           .toLowerCase();
         return (
-          (!query || haystack.includes(query)) &&
+          (!query || (exactSkuMode ? exactSkuMatch : haystack.includes(query))) &&
           (filters.category === "all" || product.category === filters.category) &&
           (filters.priceType === "all" || productPriceType(product) === filters.priceType) &&
-          (filters.source === "all" || product.sourceList === filters.source)
+          (filters.source === "all" || product.sourceList === filters.source) &&
+          (!filters.bulkOnly || variants(product).some((variant) => numeric(variant.bulkPrice) !== null))
         );
       })
       .sort((a, b) => {
+        if (filters.sort === "featured") return Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || minPrice(a) - minPrice(b);
         if (filters.sort === "name") return a.name.localeCompare(b.name);
         if (filters.sort === "priceLow") return minPrice(a) - minPrice(b) || a.name.localeCompare(b.name);
-        if (filters.sort === "priceHigh") return minPrice(b) - minPrice(a) || a.name.localeCompare(b.name);
+        if (filters.sort === "priceHigh") {
+          const aPrice = minPrice(a) === Number.MAX_SAFE_INTEGER ? -1 : minPrice(a);
+          const bPrice = minPrice(b) === Number.MAX_SAFE_INTEGER ? -1 : minPrice(b);
+          return bPrice - aPrice || a.name.localeCompare(b.name);
+        }
         if (filters.sort === "category") return a.category.localeCompare(b.category) || a.name.localeCompare(b.name);
         return 0;
       });
@@ -201,7 +245,15 @@
     if (filters.category !== "all") active.push(`Category: ${filters.category}`);
     if (filters.priceType !== "all") active.push(`Price: ${filters.priceType}`);
     if (filters.source !== "all") active.push(`Source: ${filters.source}`);
+    if (filters.bulkOnly) active.push("10+ pricing only");
     els.activeFilters.innerHTML = active.length ? active.map((entry) => `<span>${esc(entry)}</span>`).join("") : "<span>All products</span>";
+  }
+
+  function selectedSkuForProduct(product) {
+    const query = filters.search.trim().toLowerCase();
+    if (!query) return cheapestVariant(product)?.sku;
+    const exact = variants(product).find((variant) => variant.sku.toLowerCase() === query);
+    return (exact || cheapestVariant(product))?.sku;
   }
 
   function optionMarkup(product, selectedSku = variants(product)[0]?.sku) {
@@ -225,17 +277,21 @@
     const list = visibleProducts();
     renderActiveFilters();
     els.catalogCount.textContent = `${list.length} product families / ${products.reduce((count, product) => count + variants(product).length, 0)} variants`;
+    renderFeaturedProducts();
 
     if (!list.length) {
       els.productGrid.classList.remove("loading");
       els.productGrid.innerHTML = `<div class="empty-state"><h3>No products found</h3><p>Try another search or clear filters.</p></div>`;
+      if (els.catalogTable) els.catalogTable.innerHTML = `<tr><td colspan="7">No products found.</td></tr>`;
       return;
     }
 
     els.productGrid.classList.remove("loading");
+    els.productGrid.hidden = filters.view !== "cards";
+    els.catalogTableWrap.hidden = filters.view !== "table";
     els.productGrid.innerHTML = list
       .map((product) => {
-        const variant = variants(product)[0];
+        const variant = variantBySku(product, selectedSkuForProduct(product));
         return `
           <article class="product-card" data-product-card="${esc(product.id)}">
             <div class="product-topline">
@@ -243,7 +299,6 @@
               <span class="source-chip">${esc(product.category)}</span>
             </div>
             <h3>${esc(product.name)}</h3>
-            <p>${esc(product.description)}</p>
             <div class="meta-row">
               <span>${esc(product.sourceList)}</span>
               <span>${variants(product).length} option${variants(product).length === 1 ? "" : "s"}</span>
@@ -259,14 +314,61 @@
               <small data-card-bulk>${esc(bulkLine(variant))}</small>
             </div>
             <div class="card-actions">
-              <label class="quantity-mini">Qty <input data-card-qty="${esc(product.id)}" type="number" min="1" value="1" inputmode="numeric" /></label>
+              <div class="quantity-mini quantity-stepper" aria-label="Quantity selector for ${esc(product.name)}">
+                <span>Qty</span>
+                <button type="button" data-card-step="${esc(product.id)}" data-step="-1" aria-label="Decrease quantity">-</button>
+                <input data-card-qty="${esc(product.id)}" type="number" min="1" value="1" inputmode="numeric" />
+                <button type="button" data-card-step="${esc(product.id)}" data-step="1" aria-label="Increase quantity">+</button>
+              </div>
               <button class="button primary" type="button" data-add="${esc(product.id)}">Add to cart</button>
-              <button class="button secondary" type="button" data-detail="${esc(product.id)}">Details</button>
+              <button class="button secondary" type="button" data-detail="${esc(product.id)}">View options</button>
             </div>
           </article>
         `;
       })
       .join("");
+    renderCatalogTable(list);
+  }
+
+  function renderFeaturedProducts() {
+    if (!els.featuredGrid) return;
+    const featured = products.filter((product) => product.featured).slice(0, 8);
+    els.featuredGrid.innerHTML = featured
+      .map((product) => {
+        const variant = cheapestVariant(product);
+        return `
+          <article class="featured-product">
+            <span>${esc(product.category)}</span>
+            <h3>${esc(product.name)}</h3>
+            <strong>${esc(productPriceLabel(product))}</strong>
+            <small>${esc(variant?.sku || "")} - ${esc(variant?.label || "")}</small>
+            <div>
+              <button class="button primary" type="button" data-feature-add="${esc(product.id)}">Add</button>
+              <button class="button secondary" type="button" data-feature-detail="${esc(product.id)}">Options</button>
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function renderCatalogTable(list) {
+    if (!els.catalogTable) return;
+    const rows = list
+      .flatMap((product) => variants(product).map((variant) => ({ product, variant })))
+      .map(({ product, variant }) => `
+        <tr data-table-row="${esc(product.id)}" data-sku="${esc(variant.sku)}">
+          <td><strong>${esc(product.name)}</strong></td>
+          <td>${esc(product.category)}</td>
+          <td><span class="product-code">${esc(variant.sku)}</span><br><small>${esc(variant.label)}</small></td>
+          <td>${esc(priceLine(variant))}</td>
+          <td>${esc(bulkLine(variant))}</td>
+          <td><input data-table-qty type="number" min="1" value="1" inputmode="numeric" aria-label="Quantity for ${esc(variant.sku)}" /></td>
+          <td><button class="button primary compact-add" type="button" data-table-add>Add</button></td>
+        </tr>
+      `)
+      .join("");
+    els.catalogTable.innerHTML = rows;
   }
 
   function currentCartItems() {
@@ -340,11 +442,13 @@
     return variants(product)
       .map(
         (variant) => `
-          <tr>
+          <tr data-modal-row="${esc(product.id)}" data-sku="${esc(variant.sku)}">
             <td>${esc(variant.sku)}</td>
             <td>${esc(variant.label)}</td>
             <td>${esc(priceLine(variant))}</td>
             <td>${esc(bulkLine(variant))}</td>
+            <td><input data-modal-qty type="number" min="1" value="1" inputmode="numeric" aria-label="Quantity for ${esc(variant.sku)}" /></td>
+            <td><button class="button primary compact-add" type="button" data-modal-add>Add</button></td>
           </tr>
         `
       )
@@ -362,7 +466,7 @@
       </div>
       <div class="variant-table-wrap">
         <table class="variant-table">
-          <thead><tr><th>SKU</th><th>Package</th><th>Price</th><th>Bulk</th></tr></thead>
+          <thead><tr><th>SKU</th><th>Package</th><th>Price</th><th>10+ price</th><th>Qty</th><th>Add</th></tr></thead>
           <tbody>${variantRows(product)}</tbody>
         </table>
       </div>
@@ -492,14 +596,45 @@
       filters.search = els.search.value;
       renderProducts();
     });
+    els.bulkOnly.addEventListener("change", () => {
+      filters.bulkOnly = els.bulkOnly.checked;
+      renderProducts();
+    });
+    els.cardViewButton.addEventListener("click", () => {
+      filters.view = "cards";
+      els.cardViewButton.classList.add("active");
+      els.tableViewButton.classList.remove("active");
+      els.cardViewButton.setAttribute("aria-pressed", "true");
+      els.tableViewButton.setAttribute("aria-pressed", "false");
+      renderProducts();
+    });
+    els.tableViewButton.addEventListener("click", () => {
+      filters.view = "table";
+      els.tableViewButton.classList.add("active");
+      els.cardViewButton.classList.remove("active");
+      els.tableViewButton.setAttribute("aria-pressed", "true");
+      els.cardViewButton.setAttribute("aria-pressed", "false");
+      renderProducts();
+    });
     els.resetFilters.addEventListener("click", () => {
-      Object.assign(filters, { category: "all", priceType: "all", source: "all", search: "", sort: "featured" });
+      Object.assign(filters, { category: "all", priceType: "all", source: "all", search: "", sort: "featured", bulkOnly: false });
       els.category.value = "all";
       els.priceType.value = "all";
       els.source.value = "all";
       els.search.value = "";
       els.sort.value = "featured";
+      els.bulkOnly.checked = false;
       renderProducts();
+    });
+
+    els.featuredGrid?.addEventListener("click", (event) => {
+      const addId = event.target.closest("[data-feature-add]")?.dataset.featureAdd;
+      const detailId = event.target.closest("[data-feature-detail]")?.dataset.featureDetail;
+      if (detailId) openProductDialog(productById(detailId));
+      if (addId) {
+        const product = productById(addId);
+        addToCart(product, cheapestVariant(product), 1);
+      }
     });
 
     els.productGrid.addEventListener("change", (event) => {
@@ -507,6 +642,14 @@
       if (id) updateCard(id);
     });
     els.productGrid.addEventListener("click", (event) => {
+      const stepId = event.target.closest("[data-card-step]")?.dataset.cardStep;
+      if (stepId) {
+        const card = event.target.closest("[data-product-card]");
+        const input = card?.querySelector("[data-card-qty]");
+        const next = Math.max(1, (Number(input?.value) || 1) + Number(event.target.closest("[data-card-step]").dataset.step || 0));
+        if (input) input.value = next;
+        return;
+      }
       const addId = event.target.closest("[data-add]")?.dataset.add;
       const detailId = event.target.closest("[data-detail]")?.dataset.detail;
       if (detailId) openProductDialog(productById(detailId));
@@ -517,6 +660,16 @@
         const quantity = card.querySelector("[data-card-qty]").value;
         addToCart(product, variant, quantity);
       }
+    });
+
+    els.catalogTable?.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-table-add]");
+      if (!button) return;
+      const row = event.target.closest("[data-table-row]");
+      const product = productById(row.dataset.tableRow);
+      const variant = variantBySku(product, row.dataset.sku);
+      const quantity = row.querySelector("[data-table-qty]").value;
+      addToCart(product, variant, quantity);
     });
 
     els.cartList.addEventListener("input", (event) => {
@@ -609,6 +762,16 @@
       const product = productById(event.target.dataset.productId);
       const form = new FormData(event.target);
       addToCart(product, variantBySku(product, form.get("variant")), form.get("quantity"));
+      closeDialog();
+    });
+    els.dialog.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-modal-add]");
+      if (!button) return;
+      const row = event.target.closest("[data-modal-row]");
+      const product = productById(row.dataset.modalRow);
+      const variant = variantBySku(product, row.dataset.sku);
+      const quantity = row.querySelector("[data-modal-qty]").value;
+      addToCart(product, variant, quantity);
       closeDialog();
     });
   }

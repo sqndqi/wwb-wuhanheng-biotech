@@ -40,10 +40,9 @@
       <section class="hero atlas-hero" aria-labelledby="hero-title">
         <div class="hero-content">
           <p class="eyebrow">WWB product ordering</p>
-          <h1 id="hero-title">Browse products, add to cart, place your order.</h1>
+          <h1 id="hero-title">WWB Product Catalog</h1>
           <p>
-            Select product variants from the WWB price list, apply the automatic SUMMER discount,
-            and submit your order details. Payment instructions are shown after the order is created.
+            Browse current price-list products, choose variants, and place an order request with Crypto or PayPal payment instructions.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#catalog">Browse products</a>
@@ -54,21 +53,31 @@
 
       <section class="trust-strip" aria-label="Ordering highlights">
         <article>
-          <strong>Visible pricing</strong>
-          <span>Source-list prices and 10+ bulk tiers where available</span>
+          <strong>96+ families</strong>
+          <span>Organized product groups from current WWB price lists</span>
         </article>
         <article>
-          <strong>Simple cart</strong>
-          <span>Variant, quantity, subtotal, discount, product total</span>
+          <strong>170+ variants</strong>
+          <span>SKU, package, price, and 10+ tiers where available</span>
         </article>
         <article>
-          <strong>Payment methods</strong>
-          <span>Crypto or PayPal instructions after order creation</span>
+          <strong>SUMMER 5%</strong>
+          <span>Auto-applied in cart and recalculated by backend</span>
         </article>
         <article>
-          <strong>Seller notification</strong>
-          <span>Backend sends order details to the seller Discord webhook</span>
+          <strong>Shipping review</strong>
+          <span>Address is collected and shipping is confirmed by seller</span>
         </article>
+      </section>
+
+      <section class="featured-section" aria-labelledby="featured-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Popular</p>
+            <h2 id="featured-title">Featured products</h2>
+          </div>
+        </div>
+        <div class="featured-product-grid" id="featuredGrid"></div>
       </section>
 
       <section class="catalog-shell" id="catalog" aria-labelledby="catalog-title">
@@ -105,6 +114,10 @@
               <option value="category">Category</option>
             </select>
           </label>
+          <label class="checkbox-filter">
+            <input id="bulkOnlyFilter" type="checkbox" />
+            Only products with 10+ pricing
+          </label>
           <button class="button secondary" type="button" id="resetFilters">Reset</button>
         </aside>
 
@@ -114,11 +127,31 @@
               <p class="eyebrow">Products</p>
               <h2 id="catalog-title">Price list catalog</h2>
             </div>
-            <span id="catalogCount">Loading products...</span>
+            <span id="catalogCount">Preparing catalog...</span>
+          </div>
+          <div class="catalog-toolbar" aria-label="Catalog view options">
+            <button class="view-toggle active" type="button" id="cardViewButton" aria-pressed="true">Card view</button>
+            <button class="view-toggle" type="button" id="tableViewButton" aria-pressed="false">Compact table</button>
           </div>
           <div class="active-filter-row" id="activeFilters" aria-live="polite"></div>
           <div class="product-grid loading" id="productGrid" aria-live="polite">
-            <p>Loading products...</p>
+            <article></article><article></article><article></article>
+          </div>
+          <div class="catalog-table-wrap" id="catalogTableWrap" hidden>
+            <table class="catalog-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>SKU / variant</th>
+                  <th>Price</th>
+                  <th>10+ price</th>
+                  <th>Qty</th>
+                  <th>Add</th>
+                </tr>
+              </thead>
+              <tbody id="catalogTable"></tbody>
+            </table>
           </div>
         </div>
       </section>

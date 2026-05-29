@@ -1,173 +1,173 @@
-code,name,category,dosage,packageSize,unitLabel,price,bulkMin,bulkPrice,sourceList
-TR5,Tirzepatide,Metabolic,5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026
-TR10,Tirzepatide,Metabolic,10mg,10 vials,kit,50,10,45,WWB Pricelist 21-5-2026
-TR15,Tirzepatide,Metabolic,15mg,10 vials,kit,60,10,55,WWB Pricelist 21-5-2026
-TR20,Tirzepatide,Metabolic,20mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026
-TR30,Tirzepatide,Metabolic,30mg,10 vials,kit,90,10,85,WWB Pricelist 21-5-2026
-TR40,Tirzepatide,Metabolic,40mg,10 vials,kit,110,10,105,WWB Pricelist 21-5-2026
-TR50,Tirzepatide,Metabolic,50mg,10 vials,kit,130,10,125,WWB Pricelist 21-5-2026
-TR60,Tirzepatide,Metabolic,60mg,10 vials,kit,150,10,145,WWB Pricelist 21-5-2026
-TR100,Tirzepatide,Metabolic,100mg,10 vials,kit,230,10,220,WWB Pricelist 21-5-2026
-SM2,Semaglutide,Metabolic,2mg,10 vials,kit,25,10,20,WWB Pricelist 21-5-2026
-SM5,Semaglutide,Metabolic,5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026
-SM10,Semaglutide,Metabolic,10mg,10 vials,kit,50,10,45,WWB Pricelist 21-5-2026
-SM15,Semaglutide,Metabolic,15mg,10 vials,kit,60,10,55,WWB Pricelist 21-5-2026
-SM20,Semaglutide,Metabolic,20mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026
-SM30,Semaglutide,Metabolic,30mg,10 vials,kit,90,10,85,WWB Pricelist 21-5-2026
-RT5,Retatrutide,Metabolic,5mg,10 vials,kit,55,10,50,WWB Pricelist 21-5-2026
-RT10,Retatrutide,Metabolic,10mg,10 vials,kit,80,10,75,WWB Pricelist 21-5-2026
-RT15,Retatrutide,Metabolic,15mg,10 vials,kit,100,10,95,WWB Pricelist 21-5-2026
-RT20,Retatrutide,Metabolic,20mg,10 vials,kit,120,10,115,WWB Pricelist 21-5-2026
-RT30,Retatrutide,Metabolic,30mg,10 vials,kit,160,10,155,WWB Pricelist 21-5-2026
-RT40,Retatrutide,Metabolic,40mg,10 vials,kit,200,10,190,WWB Pricelist 21-5-2026
-RT50,Retatrutide,Metabolic,50mg,10 vials,kit,240,10,230,WWB Pricelist 21-5-2026
-RT60,Retatrutide,Metabolic,60mg,10 vials,kit,280,10,270,WWB Pricelist 21-5-2026
-BT5,TB-500,Peptides,5mg,10 vials,kit,65,10,60,WWB Pricelist 21-5-2026
-BT10,TB-500,Peptides,10mg,10 vials,kit,120,10,115,WWB Pricelist 21-5-2026
-BT20,TB-500,Peptides,20mg,10 vials,kit,200,10,190,WWB Pricelist 21-5-2026
-B10F,TB-500,Peptides,TB-500 Frag 10mg,10 vials,kit,85,10,80,WWB Pricelist 21-5-2026
-BC5,BPC 157,Peptides,5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026
-BC10,BPC 157,Peptides,10mg,10 vials,kit,55,10,50,WWB Pricelist 21-5-2026
-BC20,BPC 157,Peptides,20mg,10 vials,kit,95,10,90,WWB Pricelist 21-5-2026
-BB10,BPC / TB / KPV blends,Peptide blends,"BPC157 5mg + TB500 5mg blend, 10mg",10 vials,kit,85,10,80,WWB Pricelist 21-5-2026
-BB20,BPC / TB / KPV blends,Peptide blends,"BPC157 10mg + TB500 10mg blend, 20mg",10 vials,kit,150,10,140,WWB Pricelist 21-5-2026
-BBK30,BPC / TB / KPV blends,Peptide blends,"BPC157 10mg + TB500 10mg + KPV 10mg blend, 30mg",10 vials,kit,180,10,170,WWB Pricelist 21-5-2026
-BBG50,GLOW / KLOW blends,Peptide blends,"GLOW GHK-CU 35mg + TB500 10mg + BPC157 5mg, 50mg",10 vials,kit,150,10,140,WWB Pricelist 21-5-2026
-BBG70,GLOW / KLOW blends,Peptide blends,"GLOW GHK-CU 50mg + TB500 10mg + BPC157 10mg, 70mg",10 vials,kit,170,10,160,WWB Pricelist 21-5-2026
-KL80,GLOW / KLOW blends,Peptide blends,"KLOW GHK-CU 50mg + TB500 10mg + BPC157 10mg + KPV 10mg, 80mg",10 vials,kit,190,10,180,WWB Pricelist 21-5-2026
-CP10,CJC-1295 / Ipamorelin,Peptides,"CJC-1295 without DAC 5mg + IPA 5mg blend, 10mg",10 vials,kit,90,10,85,WWB Pricelist 21-5-2026
-CP20,CJC-1295 / Ipamorelin,Peptides,"CJC-1295 without DAC 10mg + IPA 10mg blend, 20mg",10 vials,kit,160,10,150,WWB Pricelist 21-5-2026
-CND5,CJC-1295 / Ipamorelin,Peptides,CJC-1295 without DAC 5mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026
-CND10,CJC-1295 / Ipamorelin,Peptides,CJC-1295 without DAC 10mg,10 vials,kit,115,10,110,WWB Pricelist 21-5-2026
-CD2,CJC-1295 / Ipamorelin,Peptides,CJC-1295 with DAC 2mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026
-CD5,CJC-1295 / Ipamorelin,Peptides,CJC-1295 with DAC 5mg,10 vials,kit,130,10,120,WWB Pricelist 21-5-2026
-CD10,CJC-1295 / Ipamorelin,Peptides,CJC-1295 with DAC 10mg,10 vials,kit,240,10,230,WWB Pricelist 21-5-2026
-IP2,CJC-1295 / Ipamorelin,Peptides,Ipamorelin 2mg,10 vials,kit,30,10,25,WWB Pricelist 21-5-2026
-IP5,CJC-1295 / Ipamorelin,Peptides,Ipamorelin 5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026
-IP10,CJC-1295 / Ipamorelin,Peptides,Ipamorelin 10mg,10 vials,kit,60,10,55,WWB Pricelist 21-5-2026
-AU100,GHK / GHK-CU / AHK-CU,Peptides,AHK-CU 100mg,10 vials,kit,65,10,60,WWB Pricelist 21-5-2026
-GH50,GHK / GHK-CU / AHK-CU,Peptides,GHK Basic 50mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026
-CU50,GHK / GHK-CU / AHK-CU,Peptides,GHK-CU 50mg,10 vials,kit,30,10,25,WWB Pricelist 21-5-2026
-CU100,GHK / GHK-CU / AHK-CU,Peptides,GHK-CU 100mg,10 vials,kit,45,10,40,WWB Pricelist 21-5-2026
-NJ3100,NAD+,Peptides,NAD+ 100mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026
-NJ250,NAD+,Peptides,NAD+ 250mg,10 vials,kit,50,10,45,WWB Pricelist 21-5-2026
-NJ500,NAD+,Peptides,NAD+ 500mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026
-NJ1000,NAD+,Peptides,NAD+ 1000mg,10 vials,kit,120,10,110,WWB Pricelist 21-5-2026
-NJ100,NAD+,Peptides,NAD+ 100mg 10ML vial,NAD+ 100mg 10ML vial,vial,15,10,*,WWB Pricelist 21-5-2026
-H06,HGH 191AA Somatropin,Hormone / endocrine,6iu,10 vials,kit,40,10,*,WWB Pricelist 21-5-2026
-H10,HGH 191AA Somatropin,Hormone / endocrine,10iu,10 vials,kit,50,10,*,WWB Pricelist 21-5-2026
-H12,HGH 191AA Somatropin,Hormone / endocrine,12iu,10 vials,kit,60,10,*,WWB Pricelist 21-5-2026
-H15,HGH 191AA Somatropin,Hormone / endocrine,15iu,10 vials,kit,70,10,*,WWB Pricelist 21-5-2026
-H24,HGH 191AA Somatropin,Hormone / endocrine,24iu,10 vials,kit,100,10,*,WWB Pricelist 21-5-2026
-H36,HGH 191AA Somatropin,Hormone / endocrine,36iu,10 vials,kit,140,10,*,WWB Pricelist 21-5-2026
-H50,HGH 191AA Somatropin,Hormone / endocrine,50iu,10 vials,kit,190,10,*,WWB Pricelist 21-5-2026
-G75,HCG / HMG,Hormone / endocrine,HMG 75IU,10 vials,kit,60,10,55,WWB Pricelist 21-5-2026
-G2K,HCG / HMG,Hormone / endocrine,HCG 2000IU,10 vials,kit,45,10,40,WWB Pricelist 21-5-2026
-G5K,HCG / HMG,Hormone / endocrine,HCG 5000IU,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026
-G10K,HCG / HMG,Hormone / endocrine,HCG 10000IU,10 vials,kit,130,10,125,WWB Pricelist 21-5-2026
-SMO5,Tesamorelin / Sermorelin,Peptides,Sermorelin Acetate 5mg,10 vials,kit,65,10,60,WWB Pricelist 21-5-2026
-SMO10,Tesamorelin / Sermorelin,Peptides,Sermorelin Acetate 10mg,10 vials,kit,110,10,105,WWB Pricelist 21-5-2026
-SMO15,Tesamorelin / Sermorelin,Peptides,Sermorelin Acetate 15mg,10 vials,kit,175,10,165,WWB Pricelist 21-5-2026
-TSM2,Tesamorelin / Sermorelin,Peptides,Tesamorelin 2mg,10 vials,kit,50,10,45,WWB Pricelist 21-5-2026
-TSM5,Tesamorelin / Sermorelin,Peptides,Tesamorelin 5mg,10 vials,kit,75,10,70,WWB Pricelist 21-5-2026
-TSM10,Tesamorelin / Sermorelin,Peptides,Tesamorelin 10mg,10 vials,kit,130,10,125,WWB Pricelist 21-5-2026
-TSM20,Tesamorelin / Sermorelin,Peptides,Tesamorelin 20mg,10 vials,kit,250,10,240,WWB Pricelist 21-5-2026
-SK5,Selank / Semax,Peptides,Selank 5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026
-SK10,Selank / Semax,Peptides,Selank 10mg,10 vials,kit,55,10,50,WWB Pricelist 21-5-2026
-SK30,Selank / Semax,Peptides,Selank 30mg,10 vials,kit,120,10,110,WWB Pricelist 21-5-2026
-XA5,Selank / Semax,Peptides,Semax 5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026
-XA10,Selank / Semax,Peptides,Semax 10mg,10 vials,kit,55,10,50,WWB Pricelist 21-5-2026
-XA30,Selank / Semax,Peptides,Semax 30mg,10 vials,kit,120,10,110,WWB Pricelist 21-5-2026
-NSK30,Selank / Semax,Peptides,NA Selank amidate 30mg,10 vials,kit,130,10,120,WWB Pricelist 21-5-2026
-NXA30,Selank / Semax,Peptides,NA Semax amidate 30mg,10 vials,kit,130,10,120,WWB Pricelist 21-5-2026
-AOD2,Other peptide kits,Peptides,AOD9604 2mg,10 vials,kit,45,10,40,WWB Pricelist 21-5-2026
-AOD5,Other peptide kits,Peptides,AOD9604 5mg,10 vials,kit,85,10,80,WWB Pricelist 21-5-2026
-CGL5,Other peptide kits,Peptides,Cagrilintide 5mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026
-CGL10,Other peptide kits,Peptides,Cagrilintide 10mg,10 vials,kit,120,10,115,WWB Pricelist 21-5-2026
-GTT,Other peptide kits,Peptides,Glutathione 1500mg,10 vials,kit,85,10,80,WWB Pricelist 21-5-2026
-MS10,Other peptide kits,Peptides,MOTS-C 10mg,10 vials,kit,55,10,50,WWB Pricelist 21-5-2026
-MS40,Other peptide kits,Peptides,MOTS-C 40mg,10 vials,kit,170,10,160,WWB Pricelist 21-5-2026
-PTD5,Other peptide kits,Peptides,PTD-DBM 5mg,10 vials,kit,195,10,185,WWB Pricelist 21-5-2026
-TA5,Other peptide kits,Peptides,Thymosin Alpha-1 5mg,10 vials,kit,75,10,70,WWB Pricelist 21-5-2026
-TA10,Other peptide kits,Peptides,Thymosin Alpha-1 10mg,10 vials,kit,130,10,125,WWB Pricelist 21-5-2026
-BA03,BAC Water,Supplies,3ml,10 vials,kit,10,10,*,WWB Pricelist 21-5-2026
-B157,Oral metabolic products,Orals,BPC-157 Arg 500mcg x 100 tablets,BPC-157 Arg 500mcg x 100 tablets,bottle,45,10,43,WWB Pricelist 21-5-2026
-BC500,Oral metabolic products,Orals,BPC-157 500mcg x 60 capsules,BPC-157 500mcg x 60 capsules,bottle,35,10,33,WWB Pricelist 21-5-2026
-T500,Oral metabolic products,Orals,Tesofensine 500mcg x 100 tablets,Tesofensine 500mcg x 100 tablets,bottle,35,10,33,WWB Pricelist 21-5-2026
-BAM50,Oral metabolic products,Orals,BAM15 50mg x 60 capsules,BAM15 50mg x 60 capsules,bottle,80,10,75,WWB Pricelist 21-5-2026
-TR500,Oral metabolic products,Orals,Tirzepatide 500mcg x 25 tablets,Tirzepatide 500mcg x 25 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026
-SM500,Oral metabolic products,Orals,Semaglutide 500mcg x 25 tablets,Semaglutide 500mcg x 25 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026
-SMM3,Oral metabolic products,Orals,Semaglutide 3mg x 25 tablets,Semaglutide 3mg x 25 tablets,bottle,55,10,53,WWB Pricelist 21-5-2026
-SMM7,Oral metabolic products,Orals,Semaglutide 7mg x 25 tablets,Semaglutide 7mg x 25 tablets,bottle,85,10,83,WWB Pricelist 21-5-2026
-AMQ50,Oral metabolic products,Orals,5-amino-1mq 50mg x 25 tablets,5-amino-1mq 50mg x 25 tablets,bottle,35,10,33,WWB Pricelist 21-5-2026
-ORF6,Oral metabolic products,Orals,Orforglipron 6mg x 100 tablets,Orforglipron 6mg x 100 tablets,bottle,115,10,110,WWB Pricelist 21-5-2026
-ORF12,Oral metabolic products,Orals,Orforglipron 12mg x 100 tablets,Orforglipron 12mg x 100 tablets,bottle,195,10,190,WWB Pricelist 21-5-2026
-SLU250,SLU-PP-332 oral series,Orals,250mcg x 100 tablets,250mcg x 100 tablets,bottle,18,10,16,WWB Pricelist 21-5-2026
-SLU500,SLU-PP-332 oral series,Orals,500mcg x 100 tablets,500mcg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026
-SLU1000,SLU-PP-332 oral series,Orals,1mg x 100 tablets,1mg x 100 tablets,bottle,23,10,21,WWB Pricelist 21-5-2026
-SLU5,SLU-PP-332 oral series,Orals,5mg x 100 tablets,5mg x 100 tablets,bottle,38,10,36,WWB Pricelist 21-5-2026
-SLU20,SLU-PP-332 oral series,Orals,20mg x 100 tablets,20mg x 100 tablets,bottle,68,10,63,WWB Pricelist 21-5-2026
-SL50,SLU-PP-332 oral series,Orals,50mg x 100 tablets,50mg x 100 tablets,bottle,110,10,105,WWB Pricelist 21-5-2026
-SL100,SLU-PP-332 oral series,Orals,100mg x 60 capsules,100mg x 60 capsules,bottle,145,10,140,WWB Pricelist 21-5-2026
-SD100,Prescription oral review lines,Orals,Sildenafil 100mg x 100 tablets,Sildenafil 100mg x 100 tablets,bottle,15,10,13,WWB Pricelist 21-5-2026
-DT20,Prescription oral review lines,Orals,Tadalafil 20mg x 100 tablets,Tadalafil 20mg x 100 tablets,bottle,15,10,13,WWB Pricelist 21-5-2026
-DAP30,Prescription oral review lines,Orals,Dapoxetine 30mg x 100 tablets,Dapoxetine 30mg x 100 tablets,bottle,30,10,28,WWB Pricelist 21-5-2026
-ISO10,Prescription oral review lines,Orals,Isotretinoin 10mg x 100 tablets,Isotretinoin 10mg x 100 tablets,bottle,18,10,16,WWB Pricelist 21-5-2026
-LV5,Prescription oral review lines,Orals,Ivermectin 5mg x 100 tablets,Ivermectin 5mg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026
-MD5,Prescription oral review lines,Orals,Minoxidil 5mg x 100 tablets,Minoxidil 5mg x 100 tablets,bottle,15,10,13,WWB Pricelist 21-5-2026
-TM40,Prescription oral review lines,Orals,Telmisartan 40mg x 100 tablets,Telmisartan 40mg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026
-MB20,Prescription oral review lines,Orals,Methylene Blue 20mg x 100 tablets,Methylene Blue 20mg x 100 tablets,bottle,18,10,16,WWB Pricelist 21-5-2026
-X10,Restricted endocrine orals,Orals,ANAVAR 10mg x 100 tablets,ANAVAR 10mg x 100 tablets,bottle,40,10,*,WWB Pricelist 21-5-2026
-X25,Restricted endocrine orals,Orals,ANAVAR 25mg x 100 tablets,ANAVAR 25mg x 100 tablets,bottle,55,10,*,WWB Pricelist 21-5-2026
-X50,Restricted endocrine orals,Orals,ANAVAR 50mg x 100 tablets,ANAVAR 50mg x 100 tablets,bottle,80,10,*,WWB Pricelist 21-5-2026
-OXP50,Restricted endocrine orals,Orals,ANADROL 50mg x 100 tablets,ANADROL 50mg x 100 tablets,bottle,35,10,33,WWB Pricelist 21-5-2026
-D10,Restricted endocrine orals,Orals,DIANABOL 10mg x 100 tablets,DIANABOL 10mg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026
-D20,Restricted endocrine orals,Orals,DIANABOL 20mg x 100 tablets,DIANABOL 20mg x 100 tablets,bottle,25,10,23,WWB Pricelist 21-5-2026
-D50,Restricted endocrine orals,Orals,DIANABOL 50mg x 100 tablets,DIANABOL 50mg x 100 tablets,bottle,40,10,38,WWB Pricelist 21-5-2026
-CB40,Restricted endocrine orals,Orals,CLENBUTEROL 40mcg x 100 tablets,CLENBUTEROL 40mcg x 100 tablets,bottle,15,10,13,WWB Pricelist 21-5-2026
-CD50,Restricted endocrine orals,Orals,Clomid 50mg x 100 tablets,Clomid 50mg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026
-LZ25,Restricted endocrine orals,Orals,Letrozole 2.5mg x 100 tablets,Letrozole 2.5mg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026
-CG25,Restricted endocrine orals,Orals,Cabergoline 0.25mg x 100 tablets,Cabergoline 0.25mg x 100 tablets,bottle,75,10,70,WWB Pricelist 21-5-2026
-C250,Injectable review lines,Injectables,Test Cypionate 250mg,10ML vial,vial,15,10,*,WWB Pricelist 21-5-2026
-E250,Injectable review lines,Injectables,Test Enanthate 250mg,10ML vial,vial,15,10,*,WWB Pricelist 21-5-2026
-P100,Injectable review lines,Injectables,Test P 100mg,10ML vial,vial,10,10,*,WWB Pricelist 21-5-2026
-R100,Injectable review lines,Injectables,Tren A 100mg,10ML vial,vial,20,10,*,WWB Pricelist 21-5-2026
-M100,Injectable review lines,Injectables,Primobolan E 100mg,10ML vial,vial,45,10,*,WWB Pricelist 21-5-2026
-N200,Injectable review lines,Injectables,DECA 200mg,10ML vial,vial,16,10,*,WWB Pricelist 21-5-2026
-LC120,Injectable review lines,Injectables,Lipo-C 120mg blend,10ML vial,vial,,10,55,WWB Pricelist 21-5-2026
-LC500,Injectable review lines,Injectables,L-Carnitine 500mg,10ML vial,vial,,10,60,WWB Pricelist 21-5-2026
-TE10,Teriparatide,Raw powders,1g raw powder,1g raw powder,g,205,,*,WWB Partnership Pricelist
-AB10,Abaloparatide,Raw powders,1g raw powder,1g raw powder,g,288,,*,WWB Partnership Pricelist
-TT20,Testagen,Raw powders,20mg,10 vials,kit,175,,*,WWB Partnership Pricelist
-KY19,KY19382,Raw powders,1g raw powder,1g raw powder,g,102,,*,WWB Partnership Pricelist
-BG39,Infigratinib (BGJ-398),Raw powders,1g raw powder,1g raw powder,g,126,,*,WWB Partnership Pricelist
-ED01,Erdafitinib,Raw powders,1g raw powder,1g raw powder,g,156,,*,WWB Partnership Pricelist
-TYR3,TYRA-300 (Dabogratinib),Raw powders,1g raw powder,1g raw powder,g,612,,*,WWB Partnership Pricelist
-AS58,ASP5878,Raw powders,1g raw powder,1g raw powder,g,186,,*,WWB Partnership Pricelist
-DE13,Debio 1347,Raw powders,1g raw powder,1g raw powder,g,192,,*,WWB Partnership Pricelist
-AZ45,AZD4547,Raw powders,1g raw powder,1g raw powder,g,126,,*,WWB Partnership Pricelist
-PE01,Pemigatinib,Raw powders,1g raw powder,1g raw powder,g,204,,*,WWB Partnership Pricelist
-FU01,Futibatinib,Raw powders,1g raw powder,1g raw powder,g,234,,*,WWB Partnership Pricelist
-RO01,Rogaratinib,Raw powders,1g raw powder,1g raw powder,g,216,,*,WWB Partnership Pricelist
-VO11,Vosoritide,Raw powders,1g raw powder,1g raw powder,g,714,,*,WWB Partnership Pricelist
-NV22,Navepegritide,Raw powders,1g raw powder,1g raw powder,g,672,,*,WWB Partnership Pricelist
-KG10,Kartogenin,Raw powders,1g raw powder,1g raw powder,g,57,,*,WWB Partnership Pricelist
-LV90,Lorecivivint,Raw powders,1g raw powder,1g raw powder,g,288,,*,WWB Partnership Pricelist
-SF18,Sprifermin,Raw powders,1g raw powder,1g raw powder,g,960,,*,WWB Partnership Pricelist
-TX10,TPX-100,Raw powders,1g raw powder,1g raw powder,g,312,,*,WWB Partnership Pricelist
-LN43,LNA043,Raw powders,1g raw powder,1g raw powder,g,540,,*,WWB Partnership Pricelist
-BM02,BMP-2,Raw powders,1g raw powder,1g raw powder,g,1680,,*,WWB Partnership Pricelist
-BM07,BMP-7,Raw powders,1g raw powder,1g raw powder,g,1860,,*,WWB Partnership Pricelist
-RM85,Romosozumab,Raw powders,1g raw powder,1g raw powder,g,1320,,*,WWB Partnership Pricelist
-WY66,WAY-316606,Raw powders,1g raw powder,1g raw powder,g,114,,*,WWB Partnership Pricelist
-RC77,Recifercept,Raw powders,1g raw powder,1g raw powder,g,588,,*,WWB Partnership Pricelist
-CH21,CHIR99021,Raw powders,1g raw powder,1g raw powder,g,51,,*,WWB Partnership Pricelist
-SB42,SB431542,Raw powders,1g raw powder,1g raw powder,g,39,,*,WWB Partnership Pricelist
-PM55,Purmorphamine,Raw powders,1g raw powder,1g raw powder,g,72,,*,WWB Partnership Pricelist
-BI06,BIO (6-BIO),Raw powders,1g raw powder,1g raw powder,g,87,,*,WWB Partnership Pricelist
-CB37,CBL0137,Raw powders,1g raw powder,1g raw powder,g,186,,*,WWB Partnership Pricelist
-DY34,Dynasore,Raw powders,1g raw powder,1g raw powder,g,105,,*,WWB Partnership Pricelist
-PT02,Pitstop 2,Raw powders,1g raw powder,1g raw powder,g,168,,*,WWB Partnership Pricelist
-DN42,Dynole 34-2,Raw powders,1g raw powder,1g raw powder,g,192,,*,WWB Partnership Pricelist
-CP25,Chlorpromazine,Raw powders,1g raw powder,1g raw powder,g,21,,*,WWB Partnership Pricelist
-MZ10,Meclozine,Raw powders,1g raw powder,1g raw powder,g,20,,*,WWB Partnership Pricelist
+code,name,category,dosage,packageSize,unitLabel,price,bulkMin,bulkPrice,sourceList,featured,sortGroup
+TR5,Tirzepatide,Metabolic,5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026,,
+TR10,Tirzepatide,Metabolic,10mg,10 vials,kit,50,10,45,WWB Pricelist 21-5-2026,,
+TR15,Tirzepatide,Metabolic,15mg,10 vials,kit,60,10,55,WWB Pricelist 21-5-2026,,
+TR20,Tirzepatide,Metabolic,20mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026,,
+TR30,Tirzepatide,Metabolic,30mg,10 vials,kit,90,10,85,WWB Pricelist 21-5-2026,,
+TR40,Tirzepatide,Metabolic,40mg,10 vials,kit,110,10,105,WWB Pricelist 21-5-2026,,
+TR50,Tirzepatide,Metabolic,50mg,10 vials,kit,130,10,125,WWB Pricelist 21-5-2026,,
+TR60,Tirzepatide,Metabolic,60mg,10 vials,kit,150,10,145,WWB Pricelist 21-5-2026,,
+TR100,Tirzepatide,Metabolic,100mg,10 vials,kit,230,10,220,WWB Pricelist 21-5-2026,,
+SM2,Semaglutide,Metabolic,2mg,10 vials,kit,25,10,20,WWB Pricelist 21-5-2026,,
+SM5,Semaglutide,Metabolic,5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026,,
+SM10,Semaglutide,Metabolic,10mg,10 vials,kit,50,10,45,WWB Pricelist 21-5-2026,,
+SM15,Semaglutide,Metabolic,15mg,10 vials,kit,60,10,55,WWB Pricelist 21-5-2026,,
+SM20,Semaglutide,Metabolic,20mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026,,
+SM30,Semaglutide,Metabolic,30mg,10 vials,kit,90,10,85,WWB Pricelist 21-5-2026,,
+RT5,Retatrutide,Metabolic,5mg,10 vials,kit,55,10,50,WWB Pricelist 21-5-2026,,
+RT10,Retatrutide,Metabolic,10mg,10 vials,kit,80,10,75,WWB Pricelist 21-5-2026,,
+RT15,Retatrutide,Metabolic,15mg,10 vials,kit,100,10,95,WWB Pricelist 21-5-2026,,
+RT20,Retatrutide,Metabolic,20mg,10 vials,kit,120,10,115,WWB Pricelist 21-5-2026,,
+RT30,Retatrutide,Metabolic,30mg,10 vials,kit,160,10,155,WWB Pricelist 21-5-2026,,
+RT40,Retatrutide,Metabolic,40mg,10 vials,kit,200,10,190,WWB Pricelist 21-5-2026,,
+RT50,Retatrutide,Metabolic,50mg,10 vials,kit,240,10,230,WWB Pricelist 21-5-2026,,
+RT60,Retatrutide,Metabolic,60mg,10 vials,kit,280,10,270,WWB Pricelist 21-5-2026,,
+BT5,TB-500,Peptides,5mg,10 vials,kit,65,10,60,WWB Pricelist 21-5-2026,,
+BT10,TB-500,Peptides,10mg,10 vials,kit,120,10,115,WWB Pricelist 21-5-2026,,
+BT20,TB-500,Peptides,20mg,10 vials,kit,200,10,190,WWB Pricelist 21-5-2026,,
+B10F,TB-500,Peptides,TB-500 Frag 10mg,10 vials,kit,85,10,80,WWB Pricelist 21-5-2026,,
+BC5,BPC 157,Peptides,5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026,,
+BC10,BPC 157,Peptides,10mg,10 vials,kit,55,10,50,WWB Pricelist 21-5-2026,,
+BC20,BPC 157,Peptides,20mg,10 vials,kit,95,10,90,WWB Pricelist 21-5-2026,,
+BB10,BPC / TB / KPV blends,Peptide blends,"BPC157 5mg + TB500 5mg blend, 10mg",10 vials,kit,85,10,80,WWB Pricelist 21-5-2026,
+BB20,BPC / TB / KPV blends,Peptide blends,"BPC157 10mg + TB500 10mg blend, 20mg",10 vials,kit,150,10,140,WWB Pricelist 21-5-2026,
+BBK30,BPC / TB / KPV blends,Peptide blends,"BPC157 10mg + TB500 10mg + KPV 10mg blend, 30mg",10 vials,kit,180,10,170,WWB Pricelist 21-5-2026,
+BBG50,GLOW / KLOW blends,Peptide blends,"GLOW GHK-CU 35mg + TB500 10mg + BPC157 5mg, 50mg",10 vials,kit,150,10,140,WWB Pricelist 21-5-2026,
+BBG70,GLOW / KLOW blends,Peptide blends,"GLOW GHK-CU 50mg + TB500 10mg + BPC157 10mg, 70mg",10 vials,kit,170,10,160,WWB Pricelist 21-5-2026,
+KL80,GLOW / KLOW blends,Peptide blends,"KLOW GHK-CU 50mg + TB500 10mg + BPC157 10mg + KPV 10mg, 80mg",10 vials,kit,190,10,180,WWB Pricelist 21-5-2026,
+CP10,CJC-1295 / Ipamorelin,Peptides,"CJC-1295 without DAC 5mg + IPA 5mg blend, 10mg",10 vials,kit,90,10,85,WWB Pricelist 21-5-2026,
+CP20,CJC-1295 / Ipamorelin,Peptides,"CJC-1295 without DAC 10mg + IPA 10mg blend, 20mg",10 vials,kit,160,10,150,WWB Pricelist 21-5-2026,
+CND5,CJC-1295 / Ipamorelin,Peptides,CJC-1295 without DAC 5mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026,,
+CND10,CJC-1295 / Ipamorelin,Peptides,CJC-1295 without DAC 10mg,10 vials,kit,115,10,110,WWB Pricelist 21-5-2026,,
+CD2,CJC-1295 / Ipamorelin,Peptides,CJC-1295 with DAC 2mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026,,
+CD5,CJC-1295 / Ipamorelin,Peptides,CJC-1295 with DAC 5mg,10 vials,kit,130,10,120,WWB Pricelist 21-5-2026,,
+CD10,CJC-1295 / Ipamorelin,Peptides,CJC-1295 with DAC 10mg,10 vials,kit,240,10,230,WWB Pricelist 21-5-2026,,
+IP2,CJC-1295 / Ipamorelin,Peptides,Ipamorelin 2mg,10 vials,kit,30,10,25,WWB Pricelist 21-5-2026,,
+IP5,CJC-1295 / Ipamorelin,Peptides,Ipamorelin 5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026,,
+IP10,CJC-1295 / Ipamorelin,Peptides,Ipamorelin 10mg,10 vials,kit,60,10,55,WWB Pricelist 21-5-2026,,
+AU100,GHK / GHK-CU / AHK-CU,Peptides,AHK-CU 100mg,10 vials,kit,65,10,60,WWB Pricelist 21-5-2026,,
+GH50,GHK / GHK-CU / AHK-CU,Peptides,GHK Basic 50mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026,,
+CU50,GHK / GHK-CU / AHK-CU,Peptides,GHK-CU 50mg,10 vials,kit,30,10,25,WWB Pricelist 21-5-2026,,
+CU100,GHK / GHK-CU / AHK-CU,Peptides,GHK-CU 100mg,10 vials,kit,45,10,40,WWB Pricelist 21-5-2026,,
+NJ3100,NAD+,Peptides,NAD+ 100mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026,,
+NJ250,NAD+,Peptides,NAD+ 250mg,10 vials,kit,50,10,45,WWB Pricelist 21-5-2026,,
+NJ500,NAD+,Peptides,NAD+ 500mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026,,
+NJ1000,NAD+,Peptides,NAD+ 1000mg,10 vials,kit,120,10,110,WWB Pricelist 21-5-2026,,
+NJ100,NAD+,Peptides,NAD+ 100mg 10ML vial,NAD+ 100mg 10ML vial,vial,15,10,*,WWB Pricelist 21-5-2026,,
+H06,HGH 191AA Somatropin,Hormone / endocrine,6iu,10 vials,kit,40,10,*,WWB Pricelist 21-5-2026,,
+H10,HGH 191AA Somatropin,Hormone / endocrine,10iu,10 vials,kit,50,10,*,WWB Pricelist 21-5-2026,,
+H12,HGH 191AA Somatropin,Hormone / endocrine,12iu,10 vials,kit,60,10,*,WWB Pricelist 21-5-2026,,
+H15,HGH 191AA Somatropin,Hormone / endocrine,15iu,10 vials,kit,70,10,*,WWB Pricelist 21-5-2026,,
+H24,HGH 191AA Somatropin,Hormone / endocrine,24iu,10 vials,kit,100,10,*,WWB Pricelist 21-5-2026,,
+H36,HGH 191AA Somatropin,Hormone / endocrine,36iu,10 vials,kit,140,10,*,WWB Pricelist 21-5-2026,,
+H50,HGH 191AA Somatropin,Hormone / endocrine,50iu,10 vials,kit,190,10,*,WWB Pricelist 21-5-2026,,
+G75,HCG / HMG,Hormone / endocrine,HMG 75IU,10 vials,kit,60,10,55,WWB Pricelist 21-5-2026,,
+G2K,HCG / HMG,Hormone / endocrine,HCG 2000IU,10 vials,kit,45,10,40,WWB Pricelist 21-5-2026,,
+G5K,HCG / HMG,Hormone / endocrine,HCG 5000IU,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026,,
+G10K,HCG / HMG,Hormone / endocrine,HCG 10000IU,10 vials,kit,130,10,125,WWB Pricelist 21-5-2026,,
+SMO5,Tesamorelin / Sermorelin,Peptides,Sermorelin Acetate 5mg,10 vials,kit,65,10,60,WWB Pricelist 21-5-2026,,
+SMO10,Tesamorelin / Sermorelin,Peptides,Sermorelin Acetate 10mg,10 vials,kit,110,10,105,WWB Pricelist 21-5-2026,,
+SMO15,Tesamorelin / Sermorelin,Peptides,Sermorelin Acetate 15mg,10 vials,kit,175,10,165,WWB Pricelist 21-5-2026,,
+TSM2,Tesamorelin / Sermorelin,Peptides,Tesamorelin 2mg,10 vials,kit,50,10,45,WWB Pricelist 21-5-2026,,
+TSM5,Tesamorelin / Sermorelin,Peptides,Tesamorelin 5mg,10 vials,kit,75,10,70,WWB Pricelist 21-5-2026,,
+TSM10,Tesamorelin / Sermorelin,Peptides,Tesamorelin 10mg,10 vials,kit,130,10,125,WWB Pricelist 21-5-2026,,
+TSM20,Tesamorelin / Sermorelin,Peptides,Tesamorelin 20mg,10 vials,kit,250,10,240,WWB Pricelist 21-5-2026,,
+SK5,Selank / Semax,Peptides,Selank 5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026,,
+SK10,Selank / Semax,Peptides,Selank 10mg,10 vials,kit,55,10,50,WWB Pricelist 21-5-2026,,
+SK30,Selank / Semax,Peptides,Selank 30mg,10 vials,kit,120,10,110,WWB Pricelist 21-5-2026,,
+XA5,Selank / Semax,Peptides,Semax 5mg,10 vials,kit,35,10,30,WWB Pricelist 21-5-2026,,
+XA10,Selank / Semax,Peptides,Semax 10mg,10 vials,kit,55,10,50,WWB Pricelist 21-5-2026,,
+XA30,Selank / Semax,Peptides,Semax 30mg,10 vials,kit,120,10,110,WWB Pricelist 21-5-2026,,
+NSK30,Selank / Semax,Peptides,NA Selank amidate 30mg,10 vials,kit,130,10,120,WWB Pricelist 21-5-2026,,
+NXA30,Selank / Semax,Peptides,NA Semax amidate 30mg,10 vials,kit,130,10,120,WWB Pricelist 21-5-2026,,
+AOD2,Other peptide kits,Peptides,AOD9604 2mg,10 vials,kit,45,10,40,WWB Pricelist 21-5-2026,,
+AOD5,Other peptide kits,Peptides,AOD9604 5mg,10 vials,kit,85,10,80,WWB Pricelist 21-5-2026,,
+CGL5,Other peptide kits,Peptides,Cagrilintide 5mg,10 vials,kit,70,10,65,WWB Pricelist 21-5-2026,,
+CGL10,Other peptide kits,Peptides,Cagrilintide 10mg,10 vials,kit,120,10,115,WWB Pricelist 21-5-2026,,
+GTT,Other peptide kits,Peptides,Glutathione 1500mg,10 vials,kit,85,10,80,WWB Pricelist 21-5-2026,,
+MS10,Other peptide kits,Peptides,MOTS-C 10mg,10 vials,kit,55,10,50,WWB Pricelist 21-5-2026,,
+MS40,Other peptide kits,Peptides,MOTS-C 40mg,10 vials,kit,170,10,160,WWB Pricelist 21-5-2026,,
+PTD5,Other peptide kits,Peptides,PTD-DBM 5mg,10 vials,kit,195,10,185,WWB Pricelist 21-5-2026,,
+TA5,Other peptide kits,Peptides,Thymosin Alpha-1 5mg,10 vials,kit,75,10,70,WWB Pricelist 21-5-2026,,
+TA10,Other peptide kits,Peptides,Thymosin Alpha-1 10mg,10 vials,kit,130,10,125,WWB Pricelist 21-5-2026,,
+BA03,BAC Water,Supplies,3ml,10 vials,kit,10,10,*,WWB Pricelist 21-5-2026,,
+B157,Oral metabolic products,Orals,BPC-157 Arg 500mcg x 100 tablets,BPC-157 Arg 500mcg x 100 tablets,bottle,45,10,43,WWB Pricelist 21-5-2026,,
+BC500,Oral metabolic products,Orals,BPC-157 500mcg x 60 capsules,BPC-157 500mcg x 60 capsules,bottle,35,10,33,WWB Pricelist 21-5-2026,,
+T500,Oral metabolic products,Orals,Tesofensine 500mcg x 100 tablets,Tesofensine 500mcg x 100 tablets,bottle,35,10,33,WWB Pricelist 21-5-2026,,
+BAM50,Oral metabolic products,Orals,BAM15 50mg x 60 capsules,BAM15 50mg x 60 capsules,bottle,80,10,75,WWB Pricelist 21-5-2026,,
+TR500,Oral metabolic products,Orals,Tirzepatide 500mcg x 25 tablets,Tirzepatide 500mcg x 25 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026,,
+SM500,Oral metabolic products,Orals,Semaglutide 500mcg x 25 tablets,Semaglutide 500mcg x 25 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026,,
+SMM3,Oral metabolic products,Orals,Semaglutide 3mg x 25 tablets,Semaglutide 3mg x 25 tablets,bottle,55,10,53,WWB Pricelist 21-5-2026,,
+SMM7,Oral metabolic products,Orals,Semaglutide 7mg x 25 tablets,Semaglutide 7mg x 25 tablets,bottle,85,10,83,WWB Pricelist 21-5-2026,,
+AMQ50,Oral metabolic products,Orals,5-amino-1mq 50mg x 25 tablets,5-amino-1mq 50mg x 25 tablets,bottle,35,10,33,WWB Pricelist 21-5-2026,,
+ORF6,Oral metabolic products,Orals,Orforglipron 6mg x 100 tablets,Orforglipron 6mg x 100 tablets,bottle,115,10,110,WWB Pricelist 21-5-2026,,
+ORF12,Oral metabolic products,Orals,Orforglipron 12mg x 100 tablets,Orforglipron 12mg x 100 tablets,bottle,195,10,190,WWB Pricelist 21-5-2026,,
+SLU250,SLU-PP-332 oral series,Orals,250mcg x 100 tablets,250mcg x 100 tablets,bottle,18,10,16,WWB Pricelist 21-5-2026,,
+SLU500,SLU-PP-332 oral series,Orals,500mcg x 100 tablets,500mcg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026,,
+SLU1000,SLU-PP-332 oral series,Orals,1mg x 100 tablets,1mg x 100 tablets,bottle,23,10,21,WWB Pricelist 21-5-2026,,
+SLU5,SLU-PP-332 oral series,Orals,5mg x 100 tablets,5mg x 100 tablets,bottle,38,10,36,WWB Pricelist 21-5-2026,,
+SLU20,SLU-PP-332 oral series,Orals,20mg x 100 tablets,20mg x 100 tablets,bottle,68,10,63,WWB Pricelist 21-5-2026,,
+SL50,SLU-PP-332 oral series,Orals,50mg x 100 tablets,50mg x 100 tablets,bottle,110,10,105,WWB Pricelist 21-5-2026,,
+SL100,SLU-PP-332 oral series,Orals,100mg x 60 capsules,100mg x 60 capsules,bottle,145,10,140,WWB Pricelist 21-5-2026,,
+SD100,Prescription oral review lines,Orals,Sildenafil 100mg x 100 tablets,Sildenafil 100mg x 100 tablets,bottle,15,10,13,WWB Pricelist 21-5-2026,,
+DT20,Prescription oral review lines,Orals,Tadalafil 20mg x 100 tablets,Tadalafil 20mg x 100 tablets,bottle,15,10,13,WWB Pricelist 21-5-2026,,
+DAP30,Prescription oral review lines,Orals,Dapoxetine 30mg x 100 tablets,Dapoxetine 30mg x 100 tablets,bottle,30,10,28,WWB Pricelist 21-5-2026,,
+ISO10,Prescription oral review lines,Orals,Isotretinoin 10mg x 100 tablets,Isotretinoin 10mg x 100 tablets,bottle,18,10,16,WWB Pricelist 21-5-2026,,
+LV5,Prescription oral review lines,Orals,Ivermectin 5mg x 100 tablets,Ivermectin 5mg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026,,
+MD5,Prescription oral review lines,Orals,Minoxidil 5mg x 100 tablets,Minoxidil 5mg x 100 tablets,bottle,15,10,13,WWB Pricelist 21-5-2026,,
+TM40,Prescription oral review lines,Orals,Telmisartan 40mg x 100 tablets,Telmisartan 40mg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026,,
+MB20,Prescription oral review lines,Orals,Methylene Blue 20mg x 100 tablets,Methylene Blue 20mg x 100 tablets,bottle,18,10,16,WWB Pricelist 21-5-2026,,
+X10,Restricted endocrine orals,Orals,ANAVAR 10mg x 100 tablets,ANAVAR 10mg x 100 tablets,bottle,40,10,*,WWB Pricelist 21-5-2026,,
+X25,Restricted endocrine orals,Orals,ANAVAR 25mg x 100 tablets,ANAVAR 25mg x 100 tablets,bottle,55,10,*,WWB Pricelist 21-5-2026,,
+X50,Restricted endocrine orals,Orals,ANAVAR 50mg x 100 tablets,ANAVAR 50mg x 100 tablets,bottle,80,10,*,WWB Pricelist 21-5-2026,,
+OXP50,Restricted endocrine orals,Orals,ANADROL 50mg x 100 tablets,ANADROL 50mg x 100 tablets,bottle,35,10,33,WWB Pricelist 21-5-2026,,
+D10,Restricted endocrine orals,Orals,DIANABOL 10mg x 100 tablets,DIANABOL 10mg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026,,
+D20,Restricted endocrine orals,Orals,DIANABOL 20mg x 100 tablets,DIANABOL 20mg x 100 tablets,bottle,25,10,23,WWB Pricelist 21-5-2026,,
+D50,Restricted endocrine orals,Orals,DIANABOL 50mg x 100 tablets,DIANABOL 50mg x 100 tablets,bottle,40,10,38,WWB Pricelist 21-5-2026,,
+CB40,Restricted endocrine orals,Orals,CLENBUTEROL 40mcg x 100 tablets,CLENBUTEROL 40mcg x 100 tablets,bottle,15,10,13,WWB Pricelist 21-5-2026,,
+CD50,Restricted endocrine orals,Orals,Clomid 50mg x 100 tablets,Clomid 50mg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026,,
+LZ25,Restricted endocrine orals,Orals,Letrozole 2.5mg x 100 tablets,Letrozole 2.5mg x 100 tablets,bottle,20,10,18,WWB Pricelist 21-5-2026,,
+CG25,Restricted endocrine orals,Orals,Cabergoline 0.25mg x 100 tablets,Cabergoline 0.25mg x 100 tablets,bottle,75,10,70,WWB Pricelist 21-5-2026,,
+C250,Injectable review lines,Injectables,Test Cypionate 250mg,10ML vial,vial,15,10,*,WWB Pricelist 21-5-2026,,
+E250,Injectable review lines,Injectables,Test Enanthate 250mg,10ML vial,vial,15,10,*,WWB Pricelist 21-5-2026,,
+P100,Injectable review lines,Injectables,Test P 100mg,10ML vial,vial,10,10,*,WWB Pricelist 21-5-2026,,
+R100,Injectable review lines,Injectables,Tren A 100mg,10ML vial,vial,20,10,*,WWB Pricelist 21-5-2026,,
+M100,Injectable review lines,Injectables,Primobolan E 100mg,10ML vial,vial,45,10,*,WWB Pricelist 21-5-2026,,
+N200,Injectable review lines,Injectables,DECA 200mg,10ML vial,vial,16,10,*,WWB Pricelist 21-5-2026,,
+LC120,Injectable review lines,Injectables,Lipo-C 120mg blend,10ML vial,vial,,10,55,WWB Pricelist 21-5-2026,,
+LC500,Injectable review lines,Injectables,L-Carnitine 500mg,10ML vial,vial,,10,60,WWB Pricelist 21-5-2026,,
+TE10,Teriparatide,Raw powders,1g raw powder,1g raw powder,g,205,,*,WWB Partnership Pricelist,,
+AB10,Abaloparatide,Raw powders,1g raw powder,1g raw powder,g,288,,*,WWB Partnership Pricelist,,
+TT20,Testagen,Raw powders,20mg,10 vials,kit,175,,*,WWB Partnership Pricelist,,
+KY19,KY19382,Raw powders,1g raw powder,1g raw powder,g,102,,*,WWB Partnership Pricelist,,
+BG39,Infigratinib (BGJ-398),Raw powders,1g raw powder,1g raw powder,g,126,,*,WWB Partnership Pricelist,,
+ED01,Erdafitinib,Raw powders,1g raw powder,1g raw powder,g,156,,*,WWB Partnership Pricelist,,
+TYR3,TYRA-300 (Dabogratinib),Raw powders,1g raw powder,1g raw powder,g,612,,*,WWB Partnership Pricelist,,
+AS58,ASP5878,Raw powders,1g raw powder,1g raw powder,g,186,,*,WWB Partnership Pricelist,,
+DE13,Debio 1347,Raw powders,1g raw powder,1g raw powder,g,192,,*,WWB Partnership Pricelist,,
+AZ45,AZD4547,Raw powders,1g raw powder,1g raw powder,g,126,,*,WWB Partnership Pricelist,,
+PE01,Pemigatinib,Raw powders,1g raw powder,1g raw powder,g,204,,*,WWB Partnership Pricelist,,
+FU01,Futibatinib,Raw powders,1g raw powder,1g raw powder,g,234,,*,WWB Partnership Pricelist,,
+RO01,Rogaratinib,Raw powders,1g raw powder,1g raw powder,g,216,,*,WWB Partnership Pricelist,,
+VO11,Vosoritide,Raw powders,1g raw powder,1g raw powder,g,714,,*,WWB Partnership Pricelist,,
+NV22,Navepegritide,Raw powders,1g raw powder,1g raw powder,g,672,,*,WWB Partnership Pricelist,,
+KG10,Kartogenin,Raw powders,1g raw powder,1g raw powder,g,57,,*,WWB Partnership Pricelist,,
+LV90,Lorecivivint,Raw powders,1g raw powder,1g raw powder,g,288,,*,WWB Partnership Pricelist,,
+SF18,Sprifermin,Raw powders,1g raw powder,1g raw powder,g,960,,*,WWB Partnership Pricelist,,
+TX10,TPX-100,Raw powders,1g raw powder,1g raw powder,g,312,,*,WWB Partnership Pricelist,,
+LN43,LNA043,Raw powders,1g raw powder,1g raw powder,g,540,,*,WWB Partnership Pricelist,,
+BM02,BMP-2,Raw powders,1g raw powder,1g raw powder,g,1680,,*,WWB Partnership Pricelist,,
+BM07,BMP-7,Raw powders,1g raw powder,1g raw powder,g,1860,,*,WWB Partnership Pricelist,,
+RM85,Romosozumab,Raw powders,1g raw powder,1g raw powder,g,1320,,*,WWB Partnership Pricelist,,
+WY66,WAY-316606,Raw powders,1g raw powder,1g raw powder,g,114,,*,WWB Partnership Pricelist,,
+RC77,Recifercept,Raw powders,1g raw powder,1g raw powder,g,588,,*,WWB Partnership Pricelist,,
+CH21,CHIR99021,Raw powders,1g raw powder,1g raw powder,g,51,,*,WWB Partnership Pricelist,,
+SB42,SB431542,Raw powders,1g raw powder,1g raw powder,g,39,,*,WWB Partnership Pricelist,,
+PM55,Purmorphamine,Raw powders,1g raw powder,1g raw powder,g,72,,*,WWB Partnership Pricelist,,
+BI06,BIO (6-BIO),Raw powders,1g raw powder,1g raw powder,g,87,,*,WWB Partnership Pricelist,,
+CB37,CBL0137,Raw powders,1g raw powder,1g raw powder,g,186,,*,WWB Partnership Pricelist,,
+DY34,Dynasore,Raw powders,1g raw powder,1g raw powder,g,105,,*,WWB Partnership Pricelist,,
+PT02,Pitstop 2,Raw powders,1g raw powder,1g raw powder,g,168,,*,WWB Partnership Pricelist,,
+DN42,Dynole 34-2,Raw powders,1g raw powder,1g raw powder,g,192,,*,WWB Partnership Pricelist,,
+CP25,Chlorpromazine,Raw powders,1g raw powder,1g raw powder,g,21,,*,WWB Partnership Pricelist,,
+MZ10,Meclozine,Raw powders,1g raw powder,1g raw powder,g,20,,*,WWB Partnership Pricelist,,
