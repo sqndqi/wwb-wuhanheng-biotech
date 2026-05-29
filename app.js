@@ -666,11 +666,112 @@
     return body;
   }
 
+  function copyValueButton(label, value, actionLabel) {
+    if (!value) return "";
+    return `<button class="copy-button" type="button" data-copy-value="${esc(value)}" data-copy-label="${esc(actionLabel || label)}">${esc(label)}</button>`;
+  }
+
+  function cryptoCard(network, ticker, address) {
+    if (!address) return "";
+    return `
+      <article class="payment-method-card">
+        <div class="payment-method-head">
+          <div>
+            <span>${esc(ticker)}</span>
+            <h5>${esc(network)}</h5>
+          </div>
+          ${copyValueButton("Copy address", address, `${ticker} address`)}
+        </div>
+        <code class="payment-address" tabindex="0">${esc(address)}</code>
+        <div class="qr-placeholder" aria-label="${esc(network)} QR code placeholder">QR coming soon</div>
+        <p class="network-note">Send only on this network.</p>
+      </article>
+    `;
+  }
+
+  function renderCryptoPanel(instructions, totals, orderId) {
+    const cryptoAddresses = instructions.crypto || instructions.cryptoAddresses || {};
+    const hasCryptoAddresses = Boolean(cryptoAddresses.ethereum || cryptoAddresses.bitcoin || cryptoAddresses.solana);
+    if (!hasCryptoAddresses) {
+      return `
+        <section class="payment-panel">
+          <div class="payment-panel-head">
+            <span class="payment-status-chip">Awaiting payment</span>
+            <h4>Complete crypto payment</h4>
+            <strong>${money(totals.total)}</strong>
+          </div>
+          <p>${esc(instructions.details || "Crypto addresses are not configured yet. Use Discord support for payment instructions.")}</p>
+          <a class="button primary" href="https://discord.gg/NSc3Vt3MEm" target="_blank" rel="noopener">Open Discord support</a>
+        </section>
+      `;
+    }
+    return `
+      <section class="payment-panel">
+        <div class="payment-panel-head">
+          <span class="payment-status-chip">Awaiting payment</span>
+          <h4>Complete crypto payment</h4>
+          <strong>${money(totals.total)}</strong>
+        </div>
+        <div class="payment-reference">
+          <span>Order reference</span>
+          <code>${esc(orderId)}</code>
+          ${copyValueButton("Copy reference", orderId, "order reference")}
+        </div>
+        <p class="payment-warning">
+          Send only to the matching network address. Wrong-network transfers may be lost. Include or send your order reference: ${esc(orderId)}.
+        </p>
+        <div class="crypto-network-grid">
+          ${cryptoCard("Ethereum", "ETH", cryptoAddresses.ethereum)}
+          ${cryptoCard("Bitcoin", "BTC", cryptoAddresses.bitcoin)}
+          ${cryptoCard("Solana", "SOL", cryptoAddresses.solana)}
+        </div>
+        <div class="payment-proof-box">
+          <strong>After sending payment</strong>
+          <p>Open Discord support and send your order reference plus payment screenshot/hash.</p>
+          <a class="button primary" href="https://discord.gg/NSc3Vt3MEm" target="_blank" rel="noopener">Open Discord support</a>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderPaypalPanel(instructions, totals, orderId) {
+    const paypalEmail = instructions.paypal?.email || instructions.paypalEmail || "";
+    return `
+      <section class="payment-panel">
+        <div class="payment-panel-head">
+          <span class="payment-status-chip">Awaiting payment</span>
+          <h4>Complete PayPal payment</h4>
+          <strong>${money(totals.total)}</strong>
+        </div>
+        <div class="payment-reference">
+          <span>Order reference</span>
+          <code>${esc(orderId)}</code>
+          ${copyValueButton("Copy reference", orderId, "order reference")}
+        </div>
+        ${
+          paypalEmail
+            ? `<div class="paypal-destination">
+                <span>PayPal email</span>
+                <code class="payment-address" tabindex="0">${esc(paypalEmail)}</code>
+                ${copyValueButton("Copy PayPal email", paypalEmail, "PayPal email")}
+              </div>`
+            : `<p class="payment-warning">PayPal email is not configured yet. Use Discord support for payment instructions.</p>`
+        }
+        <p class="payment-warning">Send the amount due and include your order reference in the PayPal note if possible.</p>
+        <div class="payment-proof-box">
+          <strong>Need help?</strong>
+          <p>Open Discord support and include your order reference.</p>
+          <a class="button primary" href="https://discord.gg/NSc3Vt3MEm" target="_blank" rel="noopener">Open Discord support</a>
+        </div>
+      </section>
+    `;
+  }
+
   function renderConfirmation(result) {
     const instructions = result.paymentInstructions || {};
     const totals = result.totals || result;
-    const cryptoAddresses = instructions.cryptoAddresses || {};
-    const hasCryptoAddresses = Boolean(cryptoAddresses.ethereum || cryptoAddresses.bitcoin || cryptoAddresses.solana);
+    const method = String(instructions.method || result.paymentMethod || "").toLowerCase();
+    const orderId = instructions.orderReference || result.orderId;
     els.orderConfirmation.hidden = false;
     els.orderConfirmation.innerHTML = `
       <h3>Order created: ${esc(result.orderId)}</h3>
@@ -684,22 +785,42 @@
       </div>
       <p><strong>Payment method:</strong> ${esc(instructions.method || result.paymentMethod || "")}</p>
       <p><strong>Payment status:</strong> Awaiting payment. Use the instructions below to complete payment for this order.</p>
-      <p>${esc(instructions.details || "Use the payment instructions shown for this order reference.")}</p>
-      ${instructions.paypalEmail ? `<p><strong>PayPal email:</strong> ${esc(instructions.paypalEmail)}</p>` : ""}
-      ${hasCryptoAddresses ? `
-        <div class="payment-addresses">
-          ${cryptoAddresses.ethereum ? `<p><strong>Ethereum:</strong> <code>${esc(cryptoAddresses.ethereum)}</code></p>` : ""}
-          ${cryptoAddresses.bitcoin ? `<p><strong>Bitcoin:</strong> <code>${esc(cryptoAddresses.bitcoin)}</code></p>` : ""}
-          ${cryptoAddresses.solana ? `<p><strong>Solana:</strong> <code>${esc(cryptoAddresses.solana)}</code></p>` : ""}
-        </div>
-      ` : ""}
+      ${method === "crypto" ? renderCryptoPanel(instructions, totals, orderId) : renderPaypalPanel(instructions, totals, orderId)}
       <p><strong>Order reference:</strong> ${esc(result.orderId)}</p>
       <p><strong>Amount due:</strong> ${money(totals.total)}</p>
       <p class="support-note">Need help with your order? <a href="https://discord.gg/NSc3Vt3MEm" target="_blank" rel="noopener">Join Discord support</a>.</p>
     `;
   }
 
+  async function copyPaymentValue(button) {
+    const value = button.dataset.copyValue || "";
+    const original = button.textContent;
+    try {
+      await navigator.clipboard.writeText(value);
+      button.textContent = "Copied";
+    } catch {
+      const range = document.createRange();
+      const code = button.closest(".payment-method-card, .paypal-destination, .payment-reference")?.querySelector("code");
+      if (code) {
+        range.selectNodeContents(code);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        code.focus();
+      }
+      button.textContent = "Copy manually";
+    }
+    setTimeout(() => {
+      button.textContent = original;
+    }, 1800);
+  }
+
   function wireEvents() {
+    els.orderConfirmation?.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-copy-value]");
+      if (button) copyPaymentValue(button);
+    });
+
     [els.category, els.priceType, els.source].forEach((select) => {
       select.addEventListener("change", () => {
         filters[select.id.replace("Filter", "")] = select.value;

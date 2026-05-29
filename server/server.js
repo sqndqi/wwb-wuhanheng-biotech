@@ -335,25 +335,36 @@ function validateContact(body = {}) {
 function paymentInstructions(method, id, totals) {
   const shippingText = totals.shippingFee > 0 ? `Shipping fee ${money(totals.shippingFee)} is included in the amount due.` : "Shipping is reviewed after address submission.";
   const summary = `Order ${id} created. Payment instructions are ready. ${shippingText}`;
+  const common = {
+    status: "Awaiting payment",
+    orderReference: id,
+    amountDue: totals.total,
+  };
   if (method === "paypal") {
     const paypalEmail = process.env.PAYPAL_EMAIL || "";
     return {
       method: "PayPal",
+      ...common,
       summary,
       details: paypalEmail
         ? `Send ${money(totals.total)} to the PayPal email shown below and include order reference ${id}.`
         : `PayPal payment selected for order reference ${id}. Amount due: ${money(totals.total)}. PayPal email is not configured yet; use Discord support for payment instructions and include your order reference.`,
       paypalEmail,
+      paypal: {
+        email: paypalEmail,
+      },
     };
   }
   const addresses = cryptoAddresses();
   const hasCryptoAddress = Object.values(addresses).some(Boolean);
   return {
     method: "Crypto",
+    ...common,
     summary,
     details: hasCryptoAddress
       ? `Send ${money(totals.total)} using one of the listed crypto addresses and include/contact support with order reference ${id}. Crypto payment is manual and is not automatically detected.`
       : `Crypto payment selected for order reference ${id}. Amount due: ${money(totals.total)}. Crypto addresses are not configured yet; use Discord support for payment instructions and include your order reference.`,
+    crypto: addresses,
     cryptoAddresses: addresses,
   };
 }
