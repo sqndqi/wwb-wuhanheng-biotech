@@ -118,13 +118,50 @@ function saveOrder(order, notification) {
 function recentOrders(limit = 50) {
   if (!fs.existsSync(ORDERS_PATH)) return [];
   const capped = Math.min(positiveInteger(limit, 50), 200);
-  return fs
+  const orders = [];
+  const lines = fs
     .readFileSync(ORDERS_PATH, "utf8")
     .split(/\r?\n/)
     .filter(Boolean)
-    .slice(-capped)
-    .reverse()
-    .map((line) => JSON.parse(line));
+    .reverse();
+  for (const line of lines) {
+    if (orders.length >= capped) break;
+    try {
+      orders.push(JSON.parse(line));
+    } catch {
+      // Keep the admin endpoint usable if a JSONL line is partially written or corrupted.
+    }
+  }
+  return orders;
+}
+
+function maskEmail(value) {
+  const raw = String(value || "");
+  const [name, domain] = raw.split("@");
+  if (!name || !domain) return raw ? "masked" : "";
+  return `${name.slice(0, 2)}***@${domain}`;
+}
+
+function maskText(value) {
+  const raw = String(value || "");
+  if (!raw) return "";
+  return raw.length <= 4 ? "****" : `${raw.slice(0, 2)}***${raw.slice(-2)}`;
+}
+
+function maskOrder(order) {
+  return {
+    ...order,
+    customer: {
+      fullName: maskText(order.customer?.fullName),
+      email: maskEmail(order.customer?.email),
+      contact: maskText(order.customer?.contact),
+      country: order.customer?.country || "",
+      city: order.customer?.city || "",
+      address: order.customer?.address ? "masked" : "",
+      postalCode: order.customer?.postalCode ? "masked" : "",
+    },
+    notes: order.notes ? "masked" : "",
+  };
 }
 
 function loadCatalog() {
@@ -361,7 +398,9 @@ app.get("/api/admin/orders", (req, res) => {
   const provided = String(req.headers.authorization || "").replace(/^Bearer\s+/i, "");
   if (!configuredToken) return res.status(503).json({ ok: false, error: "Admin token is not configured." });
   if (!provided || provided !== configuredToken) return res.status(401).json({ ok: false, error: "Unauthorized." });
-  res.json({ ok: true, orders: recentOrders(req.query.limit) });
+  const full = String(req.query.full || "").toLowerCase() === "true";
+  const orders = recentOrders(req.query.limit);
+  res.json({ ok: true, masked: !full, orders: full ? orders : orders.map(maskOrder) });
 });
 
 app.post("/api/orders", orderLimiter, async (req, res) => {

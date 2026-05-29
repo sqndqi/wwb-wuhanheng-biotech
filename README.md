@@ -94,7 +94,7 @@ Orders are appended to `server/data/orders.jsonl`. The admin endpoint reads rece
 curl -H "Authorization: Bearer $ADMIN_TOKEN" "http://localhost:3000/api/admin/orders?limit=50"
 ```
 
-If `ADMIN_TOKEN` is missing, the admin endpoint is disabled.
+List responses mask customer contact/address fields by default. Use `?full=true` with the same `ADMIN_TOKEN` only when you need full order details. If `ADMIN_TOKEN` is missing, the admin endpoint is disabled.
 
 ## API URL For GitHub Pages
 
@@ -167,7 +167,15 @@ The confirmation message tells the customer that payment is not complete yet and
 - Frontend: GitHub Pages
 - Backend: Render, Railway, Fly.io, or VPS
 
-Deploy `server/` separately and set `deployedBackendUrl` in `js/config.js` to that backend URL. Set `CORS_ORIGINS` on the backend to the GitHub Pages origin and any custom domain.
+Deployment steps:
+
+1. Deploy `server/` to Render, Railway, Fly.io, or a VPS.
+2. In the backend environment, set `CORS_ORIGINS=https://sqndqi.github.io` plus any custom storefront domain.
+3. In the backend environment, set `ADMIN_TOKEN` to a long private random value.
+4. In the backend environment, set `DISCORD_WEBHOOK_URL` so order notifications reach the seller.
+5. Test the deployed backend directly: `GET /health` and `GET /api/status` must return `ok: true`.
+6. Edit `js/config.js` and set `const deployedBackendUrl = "https://your-deployed-backend.example";`.
+7. Push the frontend change and test checkout from GitHub Pages.
 
 ## Testing Checklist
 

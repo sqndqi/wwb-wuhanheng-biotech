@@ -80,6 +80,21 @@
     return Number.isFinite(parsed) ? parsed : null;
   }
 
+  function quantityLimit() {
+    return Number(window.WWB_MAX_QTY_PER_LINE || 999);
+  }
+
+  function parseQuantity(value) {
+    const raw = String(value ?? "").trim();
+    const max = quantityLimit();
+    if (!raw) return { ok: false, message: "Quantity is required." };
+    if (!/^\d+$/.test(raw)) return { ok: false, message: "Quantity must be a whole number." };
+    const parsed = Number(raw);
+    if (!Number.isSafeInteger(parsed) || parsed < 1) return { ok: false, value: parsed, message: "Quantity must be at least 1." };
+    if (parsed > max) return { ok: false, value: parsed, message: `Quantity cannot exceed ${max}.` };
+    return { ok: true, value: parsed };
+  }
+
   function productById(id) {
     return products.find((product) => product.id === id);
   }
@@ -124,8 +139,19 @@
   }
 
   function lineTotals(item) {
-    const maxQuantity = Number(window.WWB_MAX_QTY_PER_LINE || 999);
-    const quantity = Math.min(maxQuantity, Math.max(1, Number(item.quantity) || 1));
+    const parsedQuantity = parseQuantity(item.quantity);
+    if (!parsedQuantity.ok) {
+      return {
+        quantity: item.quantity,
+        unitPrice: null,
+        bulkApplied: false,
+        needsPrice: true,
+        invalid: true,
+        error: parsedQuantity.message,
+        subtotal: null,
+      };
+    }
+    const quantity = parsedQuantity.value;
     const variant = item.variant || {};
     let unitPrice = numeric(variant.price);
     let bulkApplied = false;
@@ -415,6 +441,7 @@
                     <strong>${line.subtotal !== null ? money(line.subtotal) : "TBD"}</strong>
                   </div>
                 </div>
+                ${line.invalid ? `<p class="inline-error">${esc(line.error)}</p>` : ""}
                 <small>${esc(bulkLine(item.variant))}</small>
                 <button class="link-button danger" type="button" data-remove="${esc(item.lineId)}">Remove</button>
               </article>
@@ -434,15 +461,18 @@
   }
 
   function addToCart(product, variant, quantity = 1) {
-    const maxQuantity = Number(window.WWB_MAX_QTY_PER_LINE || 999);
     const currentLines = state.getCartItems();
     const lineId = `${product.id}__${variant.sku}`;
     if (!currentLines.some((item) => item.lineId === lineId) && currentLines.length >= Number(window.WWB_MAX_CART_LINES || 50)) {
       els.orderStatus.textContent = `Cart cannot exceed ${window.WWB_MAX_CART_LINES || 50} lines.`;
       return;
     }
-    const safeQuantity = Math.min(maxQuantity, Math.max(1, Number(quantity) || 1));
-    state.addCartItem(product, variant, { quantity: safeQuantity });
+    const parsedQuantity = parseQuantity(quantity);
+    if (!parsedQuantity.ok) {
+      els.orderStatus.textContent = parsedQuantity.message;
+      return;
+    }
+    state.addCartItem(product, variant, { quantity: parsedQuantity.value });
     renderCart();
     els.orderStatus.textContent = `${variant.sku} added to cart.`;
   }
@@ -499,7 +529,16 @@
     const node = els.dialog.querySelector("#dialogEstimate");
     if (!form || !node) return;
     const variant = variantBySku(product, form.elements.variant.value);
-    const quantity = Math.max(1, Number(form.elements.quantity.value) || 1);
+    const parsedQuantity = parseQuantity(form.elements.quantity.value);
+    if (!parsedQuantity.ok) {
+      node.innerHTML = `
+        <span>${esc(priceLine(variant))}</span>
+        <span>${esc(bulkLine(variant))}</span>
+        <strong>${esc(parsedQuantity.message)}</strong>
+      `;
+      return;
+    }
+    const quantity = parsedQuantity.value;
     const line = lineTotals({ variant, quantity });
     node.innerHTML = `
       <span>${esc(priceLine(variant))}</span>
@@ -553,7 +592,7 @@
       items: currentCartItems().map((item) => ({
         productId: item.productId,
         sku: item.variant.sku,
-        quantity: Number(item.quantity) || 1,
+        quantity: Number(item.quantity),
       })),
     };
   }
@@ -656,7 +695,7 @@
         const card = event.target.closest("[data-product-card]");
         const input = card?.querySelector("[data-card-qty]");
         const next = Math.min(
-          Number(window.WWB_MAX_QTY_PER_LINE || 999),
+          quantityLimit(),
           Math.max(1, (Number(input?.value) || 1) + Number(event.target.closest("[data-card-step]").dataset.step || 0))
         );
         if (input) input.value = next;
@@ -687,8 +726,9 @@
     els.cartList.addEventListener("input", (event) => {
       const id = event.target.dataset.cartQty;
       if (id) {
-        const nextQuantity = Math.min(Number(window.WWB_MAX_QTY_PER_LINE || 999), Math.max(1, Number(event.target.value) || 1));
-        state.updateCartItem(id, { quantity: nextQuantity });
+        const parsedQuantity = parseQuantity(event.target.value);
+        state.updateCartItem(id, { quantity: parsedQuantity.ok ? parsedQuantity.value : event.target.value });
+        if (!parsedQuantity.ok) els.orderStatus.textContent = parsedQuantity.message;
         renderCart();
       }
     });

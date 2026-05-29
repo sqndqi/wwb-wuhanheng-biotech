@@ -1173,6 +1173,13 @@ fieldset input {
   font-weight: 800;
 }
 
+.inline-error {
+  margin: 0;
+  color: var(--red);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
 [aria-invalid="true"] {
   border-color: var(--red) !important;
 }

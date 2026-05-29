@@ -1,7 +1,8 @@
 (function () {
-  // Local development uses localhost. For GitHub Pages production, set this to
-  // the deployed backend URL, for example: "https://wwb-api.example.com".
+  // PRODUCTION BACKEND URL: paste your deployed backend URL between the quotes.
   const deployedBackendUrl = "";
+
+  // Local development fallback. Do not remove unless you no longer run locally.
   const localBackendUrl = "http://localhost:3000";
 
   window.WWB_API_BASE_URL = window.WWB_API_BASE_URL || deployedBackendUrl || localBackendUrl;
