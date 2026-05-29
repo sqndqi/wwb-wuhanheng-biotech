@@ -2,6 +2,8 @@
 
 Static GitHub Pages storefront plus a simple Express backend for order intake.
 
+Last production verification pass: 2026-05-29.
+
 The frontend loads `data/products.json`, lets customers browse product families, select variants, add items to a cart, applies the locked `SUMMER` 5% product discount, and sends checkout orders to the backend. The backend recalculates product totals from trusted catalog data before sending seller notifications.
 
 Shipping is handled manually by the seller after the customer submits address and contact info. The storefront collects the address and order details, and the backend sends them to the seller. Shipping route, timing, and cost are confirmed separately if needed. SellAuth is payment-only and does not calculate shipping.
