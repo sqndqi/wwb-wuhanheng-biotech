@@ -22,6 +22,16 @@ services:
         value: "10"
       - key: RATE_LIMIT_WINDOW_MS
         value: "900000"
+      - key: SHIPPING_MODE
+        value: flat
+      - key: SHIPPING_FEE
+        value: "25"
+      - key: CRYPTO_ETH_ADDRESS
+        value: 0x8683BEE446293C5317f45CA96011054b1661f996
+      - key: CRYPTO_BTC_ADDRESS
+        value: bc1qmeaawq4wxpgkpahgwzwuwhvgp505c95zttsk84
+      - key: CRYPTO_SOL_ADDRESS
+        value: 8L7jw2pNkx81RBDLM5JBA5Liew1gbsdZbVBtXuLWKKyS
       - key: ADMIN_TOKEN
         sync: false
       - key: DISCORD_WEBHOOK_URL

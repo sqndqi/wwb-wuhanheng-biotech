@@ -1163,6 +1163,30 @@ dd {
   background: #eef8f6;
 }
 
+.payment-addresses {
+  display: grid;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 1px solid #cfe4e1;
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.payment-addresses p {
+  margin: 0;
+}
+
+.payment-addresses code {
+  display: block;
+  margin-top: 4px;
+  padding: 8px;
+  overflow-wrap: anywhere;
+  border-radius: 6px;
+  color: var(--blue-dark);
+  background: #eef8f6;
+  font-size: 0.86rem;
+}
+
 .account-panel {
   padding: 0;
   border: 0;

@@ -1,6 +1,12 @@
 (function () {
   let products = [];
   let backendOnline = false;
+  let serverSettings = {
+    shippingMode: "flat",
+    shippingFee: 25,
+    shippingStatus: "Flat shipping fee",
+    shippingLabel: "$25",
+  };
   const state = window.WWBState;
   const validation = window.WWBValidation;
 
@@ -183,13 +189,16 @@
     const subtotal = Math.round(items.reduce((sum, item) => sum + (lineTotals(item).subtotal || 0), 0) * 100) / 100;
     const discount = Math.round(subtotal * 0.05 * 100) / 100;
     const productTotal = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
+    const shippingFee = serverSettings.shippingMode === "review" ? 0 : Math.max(0, Number(serverSettings.shippingFee || 0));
+    const total = Math.round((productTotal + shippingFee) * 100) / 100;
     return {
       subtotal,
       discount,
       productTotal,
-      total: productTotal,
-      shippingStatus: "Pending seller review",
-      shippingLabel: "To be confirmed by seller after address review",
+      shippingFee,
+      total,
+      shippingStatus: serverSettings.shippingStatus,
+      shippingLabel: serverSettings.shippingMode === "review" ? "To be confirmed by seller after address review" : money(shippingFee),
     };
   }
 
@@ -484,7 +493,7 @@
           <span>Shipping</span><strong>${esc(totals.shippingLabel)}</strong>
           <span>Due now</span><strong>${money(totals.total)}</strong>
         </div>
-        <div class="promo-card"><strong>SUMMER 5% auto-applied.</strong> Shipping is handled by the seller after address review.</div>
+        <div class="promo-card"><strong>SUMMER 5% auto-applied.</strong> ${totals.shippingFee > 0 ? `${money(totals.shippingFee)} flat shipping is added after the product discount.` : "Shipping is handled by the seller after address review."}</div>
       </div>
     `;
   }
@@ -660,14 +669,16 @@
   function renderConfirmation(result) {
     const instructions = result.paymentInstructions || {};
     const totals = result.totals || result;
+    const cryptoAddresses = instructions.cryptoAddresses || {};
+    const hasCryptoAddresses = Boolean(cryptoAddresses.ethereum || cryptoAddresses.bitcoin || cryptoAddresses.solana);
     els.orderConfirmation.hidden = false;
     els.orderConfirmation.innerHTML = `
       <h3>Order created: ${esc(result.orderId)}</h3>
-      <p>Your ${esc(instructions.method || result.paymentMethod || "payment")} instructions are shown below. Shipping is reviewed after address submission.</p>
+      <p>Your ${esc(instructions.method || result.paymentMethod || "payment")} instructions are shown below. Payment is manual and is not automatically detected.</p>
       <div class="quote-total">
         <span>Subtotal</span><strong>${money(totals.subtotal)}</strong>
-        <span>SUMMER discount</span><strong>-${money(totals.discount || totals.discountAmount)}</strong>
-        <span>Product total</span><strong>${money(totals.productTotal || totals.total)}</strong>
+        <span>SUMMER discount</span><strong>-${money(totals.discount ?? totals.discountAmount)}</strong>
+        <span>Product total</span><strong>${money(totals.productTotal ?? totals.total)}</strong>
         <span>Shipping</span><strong>${esc(totals.shippingLabel || "To be confirmed by seller after address review")}</strong>
         <span>Due now</span><strong>${money(totals.total)}</strong>
       </div>
@@ -675,6 +686,13 @@
       <p><strong>Payment status:</strong> Awaiting payment. Use the instructions below to complete payment for this order.</p>
       <p>${esc(instructions.details || "Use the payment instructions shown for this order reference.")}</p>
       ${instructions.paypalEmail ? `<p><strong>PayPal email:</strong> ${esc(instructions.paypalEmail)}</p>` : ""}
+      ${hasCryptoAddresses ? `
+        <div class="payment-addresses">
+          ${cryptoAddresses.ethereum ? `<p><strong>Ethereum:</strong> <code>${esc(cryptoAddresses.ethereum)}</code></p>` : ""}
+          ${cryptoAddresses.bitcoin ? `<p><strong>Bitcoin:</strong> <code>${esc(cryptoAddresses.bitcoin)}</code></p>` : ""}
+          ${cryptoAddresses.solana ? `<p><strong>Solana:</strong> <code>${esc(cryptoAddresses.solana)}</code></p>` : ""}
+        </div>
+      ` : ""}
       <p><strong>Order reference:</strong> ${esc(result.orderId)}</p>
       <p><strong>Amount due:</strong> ${money(totals.total)}</p>
       <p class="support-note">Need help with your order? <a href="https://discord.gg/NSc3Vt3MEm" target="_blank" rel="noopener">Join Discord support</a>.</p>
@@ -923,6 +941,15 @@
     try {
       const response = await fetch(`${window.WWB_API_BASE_URL.replace(/\/$/, "")}/api/status`, { signal: controller.signal });
       const body = await response.json();
+      if (response.ok && body.ok) {
+        serverSettings = {
+          shippingMode: body.shippingMode || "flat",
+          shippingFee: Number(body.shippingFee || 0),
+          shippingStatus: body.shippingStatus || "Flat shipping fee",
+          shippingLabel: body.shippingLabel || money(body.shippingFee || 0),
+        };
+        renderCart();
+      }
       setBackendStatus(response.ok && body.ok, response.ok && body.ok ? "Ordering system online" : "Ordering system offline");
     } catch {
       setBackendStatus(false, "Ordering system offline");

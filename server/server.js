@@ -11,8 +11,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DISCOUNT_CODE = "SUMMER";
 const DISCOUNT_RATE = 0.05;
-const SHIPPING_STATUS = "Pending seller review";
-const SHIPPING_LABEL = "To be confirmed by seller after address review";
+const SHIPPING_MODE = String(process.env.SHIPPING_MODE || "flat").toLowerCase() === "review" ? "review" : "flat";
+const SHIPPING_FEE = Math.max(0, Number(process.env.SHIPPING_FEE || 25) || 0);
 const MAX_QTY_PER_LINE = positiveInteger(process.env.MAX_QTY_PER_LINE, 999);
 const MAX_CART_LINES = positiveInteger(process.env.MAX_CART_LINES, 50);
 const ORDER_RATE_LIMIT_MAX = positiveInteger(process.env.ORDER_RATE_LIMIT_MAX, 20);
@@ -190,6 +190,29 @@ function money(value) {
   return `$${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 }
 
+function shippingTotals() {
+  if (SHIPPING_MODE === "review") {
+    return {
+      shippingFee: 0,
+      shippingStatus: "Pending seller review",
+      shippingLabel: "To be confirmed by seller after address review",
+    };
+  }
+  return {
+    shippingFee: Math.round(SHIPPING_FEE * 100) / 100,
+    shippingStatus: "Flat shipping fee",
+    shippingLabel: money(SHIPPING_FEE),
+  };
+}
+
+function cryptoAddresses() {
+  return {
+    ethereum: safeString(process.env.CRYPTO_ETH_ADDRESS, 120),
+    bitcoin: safeString(process.env.CRYPTO_BTC_ADDRESS, 120),
+    solana: safeString(process.env.CRYPTO_SOL_ADDRESS, 120),
+  };
+}
+
 function numeric(value) {
   if (value === null || value === undefined || value === "" || value === "*") return null;
   const parsed = Number(value);
@@ -258,6 +281,8 @@ function calculateOrder(items) {
   const subtotal = Math.round(lines.reduce((sum, line) => sum + (line.subtotal || 0), 0) * 100) / 100;
   const discount = Math.round(subtotal * DISCOUNT_RATE * 100) / 100;
   const productTotal = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
+  const shipping = shippingTotals();
+  const total = Math.round((productTotal + shipping.shippingFee) * 100) / 100;
   return {
     lines,
     totals: {
@@ -265,11 +290,12 @@ function calculateOrder(items) {
       discount,
       discountAmount: discount,
       productTotal,
-      total: productTotal,
+      shippingFee: shipping.shippingFee,
+      total,
       discountCode: DISCOUNT_CODE,
       discountRate: DISCOUNT_RATE,
-      shippingStatus: SHIPPING_STATUS,
-      shippingLabel: SHIPPING_LABEL,
+      shippingStatus: shipping.shippingStatus,
+      shippingLabel: shipping.shippingLabel,
     },
   };
 }
@@ -307,22 +333,28 @@ function validateContact(body = {}) {
 }
 
 function paymentInstructions(method, id, totals) {
-  const summary = `Order ${id} created. Payment instructions are ready. Shipping is reviewed after address submission.`;
+  const shippingText = totals.shippingFee > 0 ? `Shipping fee ${money(totals.shippingFee)} is included in the amount due.` : "Shipping is reviewed after address submission.";
+  const summary = `Order ${id} created. Payment instructions are ready. ${shippingText}`;
   if (method === "paypal") {
     const paypalEmail = process.env.PAYPAL_EMAIL || "";
     return {
       method: "PayPal",
       summary,
       details: paypalEmail
-        ? `Send ${money(totals.total)} to the PayPal email shown below and include order reference ${id}. Shipping is handled by the seller after address review.`
-        : `PayPal payment selected for order reference ${id}. Amount due: ${money(totals.total)}. Use the seller's PayPal instructions and include your order reference. Shipping is handled by the seller after address review.`,
+        ? `Send ${money(totals.total)} to the PayPal email shown below and include order reference ${id}.`
+        : `PayPal payment selected for order reference ${id}. Amount due: ${money(totals.total)}. PayPal email is not configured yet; use Discord support for payment instructions and include your order reference.`,
       paypalEmail,
     };
   }
+  const addresses = cryptoAddresses();
+  const hasCryptoAddress = Object.values(addresses).some(Boolean);
   return {
     method: "Crypto",
     summary,
-    details: `Crypto payment selected for order reference ${id}. Amount due: ${money(totals.total)}. Crypto payment instructions will be sent or reviewed through Discord/support. Shipping is handled by the seller after address review.`,
+    details: hasCryptoAddress
+      ? `Send ${money(totals.total)} using one of the listed crypto addresses and include/contact support with order reference ${id}. Crypto payment is manual and is not automatically detected.`
+      : `Crypto payment selected for order reference ${id}. Amount due: ${money(totals.total)}. Crypto addresses are not configured yet; use Discord support for payment instructions and include your order reference.`,
+    cryptoAddresses: addresses,
   };
 }
 
@@ -364,8 +396,17 @@ async function sendDiscordOrder(order) {
           field("Subtotal", money(order.totals.subtotal), true),
           field("SUMMER discount", `-${money(order.totals.discount)}`, true),
           field("Product total", money(order.totals.productTotal), true),
-          field("Shipping", order.totals.shippingStatus, true),
+          field("Shipping fee", order.totals.shippingFee ? money(order.totals.shippingFee) : order.totals.shippingStatus, true),
           field("Due now", money(order.totals.total), true),
+          field(
+            "Payment destination",
+            order.paymentMethod === "paypal"
+              ? process.env.PAYPAL_EMAIL || "PayPal email not configured"
+              : Object.values(cryptoAddresses()).some(Boolean)
+                ? "Crypto selected: ETH / BTC / SOL receiving addresses configured"
+                : "Crypto selected: addresses not configured",
+            true
+          ),
         ],
         timestamp: order.createdAt,
       },
@@ -394,6 +435,12 @@ app.get("/api/status", (_req, res) => {
     ok: true,
     payments: ["crypto", "paypal"],
     mode: "manual",
+    shippingMode: SHIPPING_MODE,
+    shippingFee: shippingTotals().shippingFee,
+    shippingStatus: shippingTotals().shippingStatus,
+    shippingLabel: shippingTotals().shippingLabel,
+    paypalConfigured: Boolean(process.env.PAYPAL_EMAIL),
+    cryptoConfigured: Object.values(cryptoAddresses()).some(Boolean),
     sellauthConfigured: Boolean(process.env.SELLAUTH_API_KEY && process.env.SELLAUTH_SHOP_ID && process.env.SELLAUTH_SHOP_SLUG),
   });
 });
@@ -443,6 +490,7 @@ app.post("/api/orders", orderLimiter, async (req, res) => {
       discountCode: DISCOUNT_CODE,
       discountAmount: priced.totals.discount,
       productTotal: priced.totals.productTotal,
+      shippingFee: priced.totals.shippingFee,
       shippingStatus: priced.totals.shippingStatus,
       shippingLabel: priced.totals.shippingLabel,
       total: priced.totals.total,

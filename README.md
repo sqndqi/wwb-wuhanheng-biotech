@@ -6,7 +6,7 @@ Last production verification pass: 2026-05-29.
 
 The frontend loads `data/products.json`, lets customers browse product families, select variants, add items to a cart, applies the locked `SUMMER` 5% product discount, and sends checkout orders to the backend. The backend recalculates product totals from trusted catalog data before sending seller notifications.
 
-Shipping is handled manually by the seller after the customer submits address and contact info. The storefront collects the address and order details, and the backend sends them to the seller. Shipping route, timing, and cost are confirmed separately if needed. SellAuth is payment-only and does not calculate shipping.
+Shipping is configurable in the backend. Production defaults to a flat `$25` shipping fee (`SHIPPING_MODE=flat`, `SHIPPING_FEE=25`) added after the `SUMMER` product discount. If `SHIPPING_MODE=review`, the old seller-review/no automatic fee behavior is used. SellAuth is payment-only and does not calculate shipping.
 
 Production checkout stays offline until `server/` is deployed and `js/config.js` has a real `deployedBackendUrl`. GitHub Pages by itself can browse products and manage the cart, but it cannot process orders or contact messages without the backend.
 
@@ -77,6 +77,11 @@ SELLAUTH_SHOP_ID=
 SELLAUTH_SHOP_SLUG=
 DISCORD_WEBHOOK_URL=
 PAYPAL_EMAIL=
+CRYPTO_ETH_ADDRESS=0x8683BEE446293C5317f45CA96011054b1661f996
+CRYPTO_BTC_ADDRESS=bc1qmeaawq4wxpgkpahgwzwuwhvgp505c95zttsk84
+CRYPTO_SOL_ADDRESS=8L7jw2pNkx81RBDLM5JBA5Liew1gbsdZbVBtXuLWKKyS
+SHIPPING_MODE=flat
+SHIPPING_FEE=25
 CORS_ORIGINS=http://localhost:8000,http://127.0.0.1:8000,https://sqndqi.github.io
 ADMIN_TOKEN=
 MAX_QTY_PER_LINE=999
@@ -87,7 +92,7 @@ RATE_LIMIT_WINDOW_MS=900000
 NODE_ENV=development
 ```
 
-Do not commit `.env`, API keys, Discord webhooks, or payment secrets.
+Do not commit `.env`, API keys, Discord webhooks, private keys, seed phrases, or payment secrets. Crypto wallet addresses in the example are public receiving addresses only.
 
 `CORS_ORIGINS` is a comma-separated allowlist. Localhost origins are allowed automatically when `NODE_ENV` is not `production`; production should include the GitHub Pages origin and any custom frontend domain.
 
@@ -160,7 +165,7 @@ The sync script reads SellAuth environment variables, fetches existing products 
 
 ## Checkout And Payments
 
-This MVP does not process payments automatically. Checkout creates an order, the backend recalculates product totals, and the seller receives order and address details by Discord webhook if configured.
+This MVP does not process payments automatically. Checkout creates an order, the backend recalculates product totals, adds configured shipping, and the seller receives order and address details by Discord webhook if configured.
 
 Supported payment methods shown to the customer:
 
@@ -168,6 +173,16 @@ Supported payment methods shown to the customer:
 - PayPal
 
 The confirmation message tells the customer that payment is awaiting completion, shows the selected Crypto or PayPal instructions, and notes that shipping is reviewed after address submission. Manual-flow payment remains in place unless SellAuth is truly wired.
+
+`SUMMER` applies only to the product subtotal. Shipping is added after discount when `SHIPPING_MODE=flat`.
+
+PayPal instructions use `PAYPAL_EMAIL` when configured. Crypto instructions use the public receiving address env vars:
+
+- `CRYPTO_ETH_ADDRESS`
+- `CRYPTO_BTC_ADDRESS`
+- `CRYPTO_SOL_ADDRESS`
+
+If payment destination env vars are missing, checkout falls back to a clear Discord support instruction. Never store or commit private keys, seed phrases, or webhook secrets.
 
 ## Deployment
 
@@ -184,10 +199,12 @@ Deployment steps:
 4. In the backend environment, set `ADMIN_TOKEN` to a long private random value. Treat it like a password.
 5. In the backend environment, set `DISCORD_WEBHOOK_URL` so order notifications reach the seller.
 6. Set `PAYPAL_EMAIL` if PayPal instructions should show a seller email.
-7. Set SellAuth variables only if you are testing SellAuth mapping/import scripts from that environment: `SELLAUTH_API_KEY`, `SELLAUTH_SHOP_ID`, `SELLAUTH_SHOP_SLUG`.
-8. Test the deployed backend directly: `GET /health` and `GET /api/status` must return `ok: true`.
-9. Edit `js/config.js` and set `const deployedBackendUrl = "https://your-deployed-backend.example";`.
-10. Push the frontend change and test checkout from GitHub Pages.
+7. Set `SHIPPING_MODE=flat` and `SHIPPING_FEE=25` to charge the flat shipping fee, or `SHIPPING_MODE=review` for no automatic shipping fee.
+8. Set the public crypto receiving addresses: `CRYPTO_ETH_ADDRESS`, `CRYPTO_BTC_ADDRESS`, `CRYPTO_SOL_ADDRESS`.
+9. Set SellAuth variables only if you are testing SellAuth mapping/import scripts from that environment: `SELLAUTH_API_KEY`, `SELLAUTH_SHOP_ID`, `SELLAUTH_SHOP_SLUG`.
+10. Test the deployed backend directly: `GET /health` and `GET /api/status` must return `ok: true`.
+11. Edit `js/config.js` and set `const deployedBackendUrl = "https://your-deployed-backend.example";`.
+12. Push the frontend change and test checkout from GitHub Pages.
 
 `server/data/orders.jsonl` is append-only MVP storage for early orders. It is ignored by git and should be replaced with a real database/admin dashboard when order volume grows.
 
@@ -211,7 +228,7 @@ Deployment steps:
 - Add product to cart
 - Quantity `10` applies bulk price
 - `SUMMER` discount applies 5% to product subtotal
-- Shipping displays as pending seller review
+- Shipping displays the configured flat fee, or pending seller review when `SHIPPING_MODE=review`
 - Checkout rejects missing fields
 - Checkout submits to backend when backend is online
 - Discord receives order if `DISCORD_WEBHOOK_URL` is configured
