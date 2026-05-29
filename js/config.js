@@ -1,6 +1,6 @@
 (function () {
   // PRODUCTION BACKEND URL: paste your deployed backend URL between the quotes.
-  const deployedBackendUrl = "";
+  const deployedBackendUrl = "https://wwb-api-crhx.onrender.com";
 
   // Local development fallback. Do not remove unless you no longer run locally.
   const localBackendUrl = "http://localhost:3000";
